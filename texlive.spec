@@ -71,8 +71,8 @@ Patch303:       texlive-source-x11r7.patch
 Patch304:       texlive-source-xdvi-numlock.patch
 Patch305:       texlive-source-xdvizilla.patch
 Patch306:       texlive-source-CVE-2007-0650.patch
-Obsoletes:      tetex < 3.0
-Provides:       tetex = 3.0
+Obsoletes:      tetex < 1:3.0
+Provides:       tetex = 1:3.0
 Provides:       perl(Htex::dimen)
 Provides:       perl(Htex::papers)
 Provides:       perl(Pts::string)
@@ -81,11 +81,13 @@ Requires:       bison
 Requires:       ed
 Requires:       flex
 Requires:       texlive-texmf = %{version}
-Requires:       texlive-fonts = %{version}-%{release}
+Requires:       texlive-fonts = %{version}
 # make sure fonts package installed before running post - since
 # fmtutil-sys is symlink to fmtutil
 Requires(post): %{_bindir}/fmtutil
-BuildRequires:  flex bison ed
+BuildRequires:  bison
+BuildRequires:  ed
+BuildRequires:  flex
 BuildRequires:  desktop-file-utils
 BuildRequires:  ncurses-devel
 BuildRequires:  zlib-devel
@@ -171,7 +173,7 @@ Summary:        A DVI to PDF converter
 BuildRequires:  texlive-texmf-dvipdfm = %{version}
 Requires:       texlive-texmf-dvipdfm = %{version}
 Obsoletes:      tetex-dvipdfm
-Provides:       tetex-dvipdfm
+Provides:       tetex-dvipdfm = 1:3.0
 
 %description dvipdfm
 dvidpfm is a DVI to PDF translator for use with TeX.
@@ -259,7 +261,8 @@ text formatting system).
 %package latex
 Summary:        The LaTeX front end for the TeX text formatting system
 Group:          Publishing
-Requires:       texlive = %{version}, texlive-dvips = %{version}
+Requires:       texlive = %{version}
+Requires:       texlive-dvips = %{version}
 Requires:       netpbm
 # make sure main and fonts package installed before running post
 Requires(post): %{_bindir}/fmtutil
@@ -335,7 +338,6 @@ Provides:       %{_lib}kpathsea-devel = %{epoch}:%{version}-%{release}
 Obsoletes:      tetex-devel
 Provides:       tetex-devel
 Provides:       kpathsea-devel = %{epoch}:%{version}-%{release}
-Requires:       ufsparse-common-devel
 
 %description -n %{libkpathsea_d}
 This package contains the development files for kpathsea.
@@ -500,12 +502,14 @@ mkdir -p %{buildroot}%{_texmf_var}/web2c
 mkdir -p %{buildroot}%{_texmf_var}
 mkdir -p %{buildroot}%{_texmf_conf}
 
-export TEXMFSYSVAR=%{buildroot}%{_texmf_var}
-export TEXMFSYSCONFIG=%{buildroot}%{_texmf_conf}
+#export TEXMFSYSVAR=%{buildroot}%{_texmf_var}
+#export TEXMFSYSCONFIG=%{buildroot}%{_texmf_conf}
 
 export LD_LIBRARY_PATH=`pwd`/texk/kpathsea/.libs
 
-%{makeinstall}
+%{makeinstall} \
+        texmf=%{buildroot}%{_texmf_main} \
+        texmfmain=%{buildroot}%{_texmf_main}
 
 rm -f %{buildroot}%{_infodir}/dir*
 
@@ -887,6 +891,7 @@ rm -rf %{buildroot}
 %doc %{_texmf_main}/doc/bibtex8/
 %dir /var/lib/texmf
 %dir %{_texmf_var}/web2c/
+%if 0
 %{_texmf_var}/web2c/updmap.log
 %dir %{_texmf_var}/web2c/aleph
 %ghost %{_texmf_var}/web2c/aleph/aleph.fmt
@@ -910,6 +915,7 @@ rm -rf %{buildroot}
 %ghost %{_texmf_var}/web2c/tex/tex.log
 %dir %{_texmf_var}/web2c/pdftex
 %ghost %{_texmf_var}/web2c/pdftex/*
+%endif
 
 %files afm
 %defattr(0755,root,root,0755)
@@ -927,10 +933,12 @@ rm -rf %{buildroot}
 %{_bindir}/mptopdf
 %defattr(-,root,root,0755)
 #
+%if 0
 %ghost %{_texmf_var}/web2c/metapost/metafun.log
 %ghost %{_texmf_var}/web2c/metapost/metafun.mem
 %ghost %{_texmf_var}/web2c/xetex/cont-en.fmt
 %ghost %{_texmf_var}/web2c/xetex/cont-en.log
+%endif
 
 %files dvilj
 %defattr(0644,root,root,0755)
@@ -962,9 +970,12 @@ rm -rf %{buildroot}
 %{_mandir}/man1/dvipdfm.1*
 %{_mandir}/man1/dvipdft.1*
 %{_texmf_main}/dvipdfm/
+%exclude %{_texmf_main}/dvipdfm/dvipdfmx.cfg
+%if 0
 %{_texmf_var}/fonts/map/dvipdfm/updmap/dvipdfm.map
 %{_texmf_var}/fonts/map/dvipdfm/updmap/dvipdfm_dl14.map
 %{_texmf_var}/fonts/map/dvipdfm/updmap/dvipdfm_ndl14.map
+%endif
 
 %files dvips
 %defattr(0644,root,root,0755)
@@ -1069,11 +1080,14 @@ rm -rf %{buildroot}
 %{_texmf_main}/web2c/mktexnam
 %{_texmf_main}/web2c/mktexupd
 #
+%if 0
 %{_texmf_var}/web2c/xetex/xelatex.fmt
 %{_texmf_var}/web2c/xetex/xelatex.log
 %{_texmf_var}/web2c/xetex/xetex.fmt
 %{_texmf_var}/web2c/xetex/xetex.log
+%endif
 #
+%if 0
 %{_texmf_var}/fonts/map/dvips/updmap/builtin35.map
 %{_texmf_var}/fonts/map/dvips/updmap/download35.map
 %{_texmf_var}/fonts/map/dvips/updmap/ps2pk.map
@@ -1083,6 +1097,7 @@ rm -rf %{buildroot}
 %{_texmf_var}/fonts/map/pdftex/updmap/pdftex.map
 %{_texmf_var}/fonts/map/pdftex/updmap/pdftex_dl14.map
 %{_texmf_var}/fonts/map/pdftex/updmap/pdftex_ndl14.map
+%endif
 
 %files latex
 %defattr(0755,root,root,0755)
