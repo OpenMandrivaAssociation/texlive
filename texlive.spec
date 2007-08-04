@@ -409,7 +409,7 @@ chmod -x texk/dvipdfm/encodings.c
 
 %patch200 -p1
 %patch201 -p1
-%patch202 -p1 -b .pdftex
+%patch202 -p1
 %patch203 -p1
 %patch204 -p1
 
