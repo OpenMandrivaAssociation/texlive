@@ -15,7 +15,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 1
+Release:        %mkrel 2
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -50,6 +50,7 @@ Patch108:       texlive-12e_fix_vpe_invocation.patch
 Patch109:       texlive-texdoc.patch
 Patch111:       texlive-xdvi.patch
 Patch112:       texlive-use_xdvi.bin.patch
+Patch113:       texlive-libpoppler_new.patch
 Patch114:       texlive-dvips_fontbug_fix_upstream.patch
 Patch115:       texlive-maketexmf.patch
 Patch117:       texlive-fmtutil_keep_failedlog.patch
@@ -105,7 +106,7 @@ BuildRequires:  texlive-texmf = %{version}
 BuildRequires:  chrpath
 BuildRequires:  freetype-devel
 BuildRequires:  freetype2-devel
-#BuildRequires: libpoppler-devel
+BuildRequires: libpoppler-devel
 BuildRequires:  tiff-devel
 #BuildRequires: w3c-libwww-devel
 BuildRequires:  texinfo
@@ -397,6 +398,7 @@ chmod -x texk/dvipdfm/encodings.c
 %patch109 -p3
 %patch111 -p3
 %patch112 -p3
+%patch113 -p3
 %patch114 -p3
 %patch115 -p3
 %patch117 -p3
@@ -438,8 +440,7 @@ popd
 # icu: includes some changes
 # md5: the aladdin md5 code (not a library)
 # type1: a library, but created specifically for ttf2pk
-# xpdf: may soon be replaced by libpoppler and removed
-%{__rm} -r libs/{curl,expat,freetype,freetype2,gd,howto,jpeg,libgnuw32,libgsw32,libpng,libttf,ncurses,obsdcompat,regex,t1lib,teckit,unzip,zlib}/
+%{__rm} -r libs/{curl,expat,freetype,freetype2,gd,howto,jpeg,libgnuw32,libgsw32,libpng,libttf,ncurses,obsdcompat,regex,t1lib,teckit,unzip,xpdf,zlib}/
 
 %build
 set -x
