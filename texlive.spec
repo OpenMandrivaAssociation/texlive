@@ -772,7 +772,8 @@ rm -rf %{buildroot}
 %{_bindir}/mpstools
 %{_bindir}/mtxtools
 %{_bindir}/pdftools
-%{_bindir}/pdftosrc
+# FIXME: currently (incorrectly?) disabled by Ubuntu patch
+#%{_bindir}/pdftosrc
 %{_bindir}/ps2eps
 %{_bindir}/pstopdf
 %{_bindir}/rlxtools
