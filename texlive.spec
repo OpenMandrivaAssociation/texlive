@@ -873,12 +873,12 @@ rm -rf %{buildroot}
 %defattr(-,root,root,0755)
 %{_texmf_main}/texconfig/
 %{_texmf_main}/bibtex/
-%exclude %{_texmf_main}/web2c/aleph.pool
-%exclude %{_texmf_main}/web2c/mf.pool
-%exclude %{_texmf_main}/web2c/omega.pool
-%exclude %{_texmf_main}/web2c/pdftex.pool
-%exclude %{_texmf_main}/web2c/tex.pool
-%exclude %{_texmf_main}/web2c/xetex.pool
+%{_texmf_main}/web2c/aleph.pool
+%{_texmf_main}/web2c/mf.pool
+%{_texmf_main}/web2c/omega.pool
+%{_texmf_main}/web2c/pdftex.pool
+%{_texmf_main}/web2c/tex.pool
+%{_texmf_main}/web2c/xetex.pool
 %{_infodir}/dvipng.info*
 %doc %{_texmf_main}/doc/bibtex8/
 %dir /var/lib/texmf
