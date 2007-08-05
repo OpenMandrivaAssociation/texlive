@@ -21,18 +21,18 @@ Summary:        Binaries for the TeX formatting system
 Group:          Publishing
 License:        Distributable
 URL:            http://tug.org/texlive/
+# svn co svn://tug.org/texlive/trunk/Build/source
+# cd source; find . -type d -name .svn | xargs rm -r; tar cvvjf ../source.tar.bz2 *; cd ..
 Source0:        http://tug.org/svn/texlive/branches/branch2007/Master/source/source.tar.bz2
 Source10:       texlive.cron
 # Source30 is http://xdvi.sourceforge.net/xdvi48x48.gif converted to png
 Source30:       xdvi48x48.png
 # Fedora
 Patch5:         texlive-2007-browser.patch
-Patch6:         texlive-2007-tkdep.patch
 Patch8:         texlive-2007-xprint.patch
 Patch10:        texlive-2007-dvipdfm-security.patch
 Patch11:        texlive-2007-makej.patch
 Patch15:        texlive-2007-xdvi-keepflag.patch
-Patch19:        texlive-2007-kpse-extensions.patch
 # mpeters contributed patches
 # fixes man pages to utf-8
 Patch41:        texlive-2007-kuesterei-man.patch
@@ -51,13 +51,11 @@ Patch109:       texlive-texdoc.patch
 Patch111:       texlive-xdvi.patch
 Patch112:       texlive-use_xdvi.bin.patch
 Patch113:       texlive-libpoppler_new.patch
-Patch114:       texlive-dvips_fontbug_fix_upstream.patch
 Patch115:       texlive-maketexmf.patch
 Patch117:       texlive-fmtutil_keep_failedlog.patch
 Patch118:       texlive-builtin-searchpath-fix.patch
 Patch119:       texlive-checklib_fixes.patch
 Patch120:       texlive-dvipdfm_timezone.patch
-Patch123:       texlive-fix_makempx_installation.patch
 # Mandriva
 Patch200:       texlive-paths.patch
 Patch201:       texlive-ttf2pk-freetype.patch
@@ -357,30 +355,24 @@ This package contains the static development files for kpathsea.
 
 %prep
 %setup -q -T -c -a0
-%{_bindir}/find . -name autom4te.cache | %{_bindir}/xargs -t %{__rm} -r
+%{_bindir}/find . -name autom4te.cache | %{_bindir}/xargs -t %{__rm} -r || :
 
 # fix for debuginfo rpmlint happiness
 chmod -x texk/dvipdfm/macglyphs.h
 chmod -x texk/dvipdfm/ttf.c
 chmod -x texk/dvipdfm/encodings.c
 
-######
 # Red Hat-specific TeX configuration patches
-######
 # Use htmlview first
 %patch5 -p1 -b .browser
-%patch6 -p1 -b .tkdep
 %patch8 -p1 -b .xprint
-######
 # TeX patches
-######
 # Don't use tmpnam() in dvipdfm.
 %patch10 -p1 -b .dvipdfm-security
 # Fix parallel builds.
 %patch11 -p1 -b .makej
 # Fix xdvi - navigation with a spacebar does not keep position (RH bug #168124)
 %patch15 -p1 -b .xdvi-keepflag
-%patch19 -p0 -b .kpse-extensions
 
 # fix non utf man pages
 %patch41 -p1 -b .notutf8
@@ -399,13 +391,11 @@ chmod -x texk/dvipdfm/encodings.c
 %patch111 -p3
 %patch112 -p3
 %patch113 -p3
-%patch114 -p3
 %patch115 -p3
 %patch117 -p3
 %patch118 -p3
 %patch119 -p3
 %patch120 -p3
-%patch123 -p3
 
 %patch200 -p1
 %patch201 -p1
