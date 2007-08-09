@@ -1,3 +1,5 @@
+%bcond_without  obsolete_tetex
+
 %define default_letter_paper 1
 %define disable_lcdf_typetools 1
 
@@ -15,14 +17,14 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 2
+Release:        %mkrel 3
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
 License:        Distributable
 URL:            http://tug.org/texlive/
-# svn co svn://tug.org/texlive/trunk/Build/source
-# cd source; find . -type d -name .svn | xargs rm -r; tar cvvjf ../source.tar.bz2 *; cd ..
+# svn export svn://tug.org/texlive/trunk/Build/source
+# (cd source && tar cvjf ../source.tar.bz2 *)
 Source0:        http://tug.org/svn/texlive/branches/branch2007/Master/source/source.tar.bz2
 Source10:       texlive.cron
 # Source30 is http://xdvi.sourceforge.net/xdvi48x48.gif converted to png
@@ -70,8 +72,13 @@ Patch303:       texlive-source-x11r7.patch
 Patch304:       texlive-source-xdvi-numlock.patch
 Patch305:       texlive-source-xdvizilla.patch
 Patch306:       texlive-source-CVE-2007-0650.patch
+%if %with %obsolete_tetex
 Obsoletes:      tetex < 1:3.0
 Provides:       tetex = 1:3.0
+%else
+Provides:       tetex
+%endif
+# XXX
 Provides:       perl(Htex::dimen)
 Provides:       perl(Htex::papers)
 Provides:       perl(Pts::string)
@@ -80,7 +87,7 @@ Requires:       bison
 Requires:       ed
 Requires:       flex
 Requires:       texlive-texmf = %{version}
-Requires:       texlive-fonts = %{version}
+Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
 # make sure fonts package installed before running post - since
 # fmtutil-sys is symlink to fmtutil
 Requires(post): %{_bindir}/fmtutil
@@ -130,7 +137,9 @@ documentation for TeX.
 %package afm
 Summary:        A converter for PostScript(TM) font metric files, for use with TeX
 Group:          Publishing
+%if %with %obsolete_tetex
 Obsoletes:      tetex-afm
+%endif
 Provides:       tetex-afm
 Requires:       texlive-texmf-afm = %{version}
 BuildRequires:  texlive-texmf-afm = %{version}
@@ -157,7 +166,9 @@ documentation for TeX.
 Summary:        Document engineering system based on TeX
 Group:          Publishing
 Requires:       texlive-texmf-context = %{version}
+%if %with %obsolete_tetex
 Obsoletes:      tetex-context
+%endif
 Provides:       tetex-context
 
 %description context
@@ -171,8 +182,10 @@ Group:          Publishing
 Summary:        A DVI to PDF converter
 BuildRequires:  texlive-texmf-dvipdfm = %{version}
 Requires:       texlive-texmf-dvipdfm = %{version}
+%if %with %obsolete_tetex
 Obsoletes:      tetex-dvipdfm
-Provides:       tetex-dvipdfm = 1:3.0
+%endif
+Provides:       tetex-dvipdfm
 
 %description dvipdfm
 dvidpfm is a DVI to PDF translator for use with TeX.
@@ -180,9 +193,11 @@ dvidpfm is a DVI to PDF translator for use with TeX.
 %package dvips
 Summary:        A DVI to PostScript converter for the TeX text formatting system
 Group:          Publishing
-Requires:       texlive-fonts = %{version}
+Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
 Requires:       psutils
+%if %with %obsolete_tetex
 Obsoletes:      tetex-dvips
+%endif
 Provides:       tetex-dvips
 Requires:       texlive-texmf-dvips = %{version}
 BuildRequires:  texlive-texmf-dvips = %{version}
@@ -206,8 +221,10 @@ which contains documentation for the TeX system.
 %package dvilj
 Summary:        A DVI to HP PCL (Printer Control Language) converter
 Group:          Publishing
-Requires:       texlive-fonts = %{version}
+Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
+%if %with %obsolete_tetex
 Obsoletes:      tetex-dvilj
+%endif
 Provides:       tetex-dvilj
 
 %description dvilj
@@ -232,7 +249,7 @@ which contains documentation for TeX.
 Summary:        A collection of utilities for working with dvi files
 Group:          Publishing
 # not positive about this requires, pretty sure though
-Requires:       texlive-fonts = %{version}
+Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
 
 %description dviutils
 The texlive-dviutils package includes a set of tools for working with dvi
@@ -241,10 +258,12 @@ files. You only need this package if you plan to manipulate existing dvi files.
 %package fonts
 Summary:        The font files for the TeX text formatting system
 Group:          Publishing
+%if %with %obsolete_tetex
 Obsoletes:      tetex-fonts
+%endif
 Provides:       tetex-fonts
 Provides:       kpathsea
-Requires:       texlive-texmf-fonts >= %{version}
+Requires:       texlive-texmf-fonts = %{version}
 BuildRequires:  texlive-texmf-fonts = %{version}
 
 %description fonts
@@ -260,15 +279,17 @@ text formatting system).
 %package latex
 Summary:        The LaTeX front end for the TeX text formatting system
 Group:          Publishing
-Requires:       texlive = %{version}
-Requires:       texlive-dvips = %{version}
+Requires:       texlive = %{epoch}:%{version}-%{release}
+Requires:       texlive-dvips = %{epoch}:%{version}-%{release}
 Requires:       netpbm
 # make sure main and fonts package installed before running post
 Requires(post): %{_bindir}/fmtutil
 Requires(post): %{_bindir}/fmtutil-sys
 BuildRequires:  ghostscript
 BuildRequires:  netpbm
+%if %with %obsolete_tetex
 Obsoletes:      tetex-latex
+%endif
 Provides:       tetex-latex
 Requires:       texlive-texmf-latex = %{version}
 BuildRequires:  texlive-texmf-latex = %{version}
@@ -289,7 +310,9 @@ the texlive-doc package, which contains documentation for TeX.
 %package mfwin
 Summary:        Metafont with output window
 Group:          Publishing
+%if %with %obsolete_tetex
 Obsoletes:      tetex-mfwin
+%endif
 Provides:       tetex-mfwin
 
 %description mfwin
@@ -300,9 +323,11 @@ the font building in a output window.
 %package xdvi
 Summary:        An X viewer for DVI files
 Group:          Publishing
-Requires:       texlive-dvips = %{version}
+Requires:       texlive-dvips = %{epoch}:%{version}-%{release}
 Requires(post): desktop-file-utils
+%if %with %obsolete_tetex
 Obsoletes:      tetex-xdvi
+%endif
 Provides:       tetex-xdvi
 
 %description xdvi
@@ -332,9 +357,9 @@ Main library for kpathsea.
 Summary:        Development files for kpathsea
 Group:          Development/C
 Requires:       %{libkpathsea} = %{epoch}:%{version}-%{release}
-Provides:       libkpathsea-devel = %{epoch}:%{version}-%{release}
-Provides:       %{_lib}kpathsea-devel = %{epoch}:%{version}-%{release}
+%if %with %obsolete_tetex
 Obsoletes:      tetex-devel
+%endif
 Provides:       tetex-devel
 Provides:       kpathsea-devel = %{epoch}:%{version}-%{release}
 
@@ -345,9 +370,6 @@ This package contains the development files for kpathsea.
 Summary:        Static development files for kpathsea
 Group:          Development/C
 Requires:       %{libkpathsea_d} = %{epoch}:%{version}-%{release}
-Provides:       %{libkpathsea}-static-devel = %{epoch}:%{version}-%{release}
-Provides:       libkpathsea-static-devel = %{epoch}:%{version}-%{release}
-Provides:       %{_lib}kpathsea-static-devel = %{epoch}:%{version}-%{release}
 Provides:       kpathsea-static-devel = %{epoch}:%{version}-%{release}
 
 %description -n %{libkpathsea_d_s}
