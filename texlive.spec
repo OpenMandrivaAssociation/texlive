@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 4
+Release:        %mkrel 5
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -103,7 +103,7 @@ BuildRequires:  lesstif-devel
 BuildRequires:  t1lib-devel
 BuildRequires:  libsm-devel
 BuildRequires:  libice-devel
-BuildRequires:  Xaw3d-devel
+BuildRequires:  xaw-devel
 BuildRequires:  teckit-devel
 # for non modular xorg - use xorg-devel instead for above
 BuildRequires:  lesstif
