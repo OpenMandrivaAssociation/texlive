@@ -1,4 +1,4 @@
-%bcond_without  obsolete_tetex
+%bcond_with     obsolete_tetex
 
 %define default_letter_paper 1
 %define disable_lcdf_typetools 1
