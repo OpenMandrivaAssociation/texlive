@@ -104,6 +104,7 @@ BuildRequires:  t1lib-devel
 BuildRequires:  libsm-devel
 BuildRequires:  libice-devel
 BuildRequires:  xaw-devel
+BuildRequires:  xaw3d-devel
 BuildRequires:  teckit-devel
 # for non modular xorg - use xorg-devel instead for above
 BuildRequires:  lesstif
