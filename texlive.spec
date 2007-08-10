@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 3
+Release:        %mkrel 4
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -72,7 +72,7 @@ Patch303:       texlive-source-x11r7.patch
 Patch304:       texlive-source-xdvi-numlock.patch
 Patch305:       texlive-source-xdvizilla.patch
 Patch306:       texlive-source-CVE-2007-0650.patch
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex < 1:3.0
 Provides:       tetex = 1:3.0
 %else
@@ -137,7 +137,7 @@ documentation for TeX.
 %package afm
 Summary:        A converter for PostScript(TM) font metric files, for use with TeX
 Group:          Publishing
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-afm
 %endif
 Provides:       tetex-afm
@@ -166,7 +166,7 @@ documentation for TeX.
 Summary:        Document engineering system based on TeX
 Group:          Publishing
 Requires:       texlive-texmf-context = %{version}
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-context
 %endif
 Provides:       tetex-context
@@ -182,7 +182,7 @@ Group:          Publishing
 Summary:        A DVI to PDF converter
 BuildRequires:  texlive-texmf-dvipdfm = %{version}
 Requires:       texlive-texmf-dvipdfm = %{version}
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-dvipdfm
 %endif
 Provides:       tetex-dvipdfm
@@ -195,7 +195,7 @@ Summary:        A DVI to PostScript converter for the TeX text formatting system
 Group:          Publishing
 Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
 Requires:       psutils
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-dvips
 %endif
 Provides:       tetex-dvips
@@ -222,7 +222,7 @@ which contains documentation for the TeX system.
 Summary:        A DVI to HP PCL (Printer Control Language) converter
 Group:          Publishing
 Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-dvilj
 %endif
 Provides:       tetex-dvilj
@@ -258,7 +258,7 @@ files. You only need this package if you plan to manipulate existing dvi files.
 %package fonts
 Summary:        The font files for the TeX text formatting system
 Group:          Publishing
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-fonts
 %endif
 Provides:       tetex-fonts
@@ -287,7 +287,7 @@ Requires(post): %{_bindir}/fmtutil
 Requires(post): %{_bindir}/fmtutil-sys
 BuildRequires:  ghostscript
 BuildRequires:  netpbm
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-latex
 %endif
 Provides:       tetex-latex
@@ -310,7 +310,7 @@ the texlive-doc package, which contains documentation for TeX.
 %package mfwin
 Summary:        Metafont with output window
 Group:          Publishing
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-mfwin
 %endif
 Provides:       tetex-mfwin
@@ -325,7 +325,7 @@ Summary:        An X viewer for DVI files
 Group:          Publishing
 Requires:       texlive-dvips = %{epoch}:%{version}-%{release}
 Requires(post): desktop-file-utils
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-xdvi
 %endif
 Provides:       tetex-xdvi
@@ -357,7 +357,7 @@ Main library for kpathsea.
 Summary:        Development files for kpathsea
 Group:          Development/C
 Requires:       %{libkpathsea} = %{epoch}:%{version}-%{release}
-%if %with %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-devel
 %endif
 Provides:       tetex-devel
