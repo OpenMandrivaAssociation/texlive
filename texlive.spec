@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 6
+Release:        %mkrel 7
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -76,7 +76,7 @@ Patch306:       texlive-source-CVE-2007-0650.patch
 Obsoletes:      tetex < 1:3.0
 Provides:       tetex = 1:3.0
 %else
-Provides:       tetex
+Provides:       tetex = 3.0
 %endif
 # XXX
 Provides:       perl(Htex::dimen)
