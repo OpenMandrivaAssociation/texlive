@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 5
+Release:        %mkrel 6
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -577,42 +577,42 @@ done
 rm -rf %{buildroot}
 
 %post
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 %_install_info dvipng.info
 # fmtutil
-%{_bindir}/fmtutil-sys --all > /dev/null 2>&1 || :
+[ -x %{_bindir}/fmtutil-sys ] && LC_ALL=C %{_bindir}/fmtutil-sys --all > /dev/null 2>&1 || :
 
 %post afm
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %post context
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %post dvilj
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %post dvipdfm
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %post dvips
 %_install_info dvips.info
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %post fonts
 %_install_info web2c.info
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 %{__rm} -f %{_texmf_conf}/web2c/updmap.cfg
 %{__rm} -f %{_texmf_conf}/web2c/updmap.log
-%{_bindir}/updmap-sys --syncwithtrees > /dev/null 2>&1 || :
+[ -x %{_bindir}/updmap-sys ] && LC_ALL=C %{_bindir}/updmap-sys --syncwithtrees > /dev/null 2>&1 || :
 
 %post latex
 %_install_info latex.info
-%{_bindir}/texconfig-sys init >/dev/null 2>&1 || :
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
-%{_bindir}/fmtutil-sys --all > /dev/null 2>&1 || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys init >/dev/null 2>&1 || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/fmtutil-sys ] && LC_ALL=C %{_bindir}/fmtutil-sys --all > /dev/null 2>&1 || :
 
 %post xdvi
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 %{_bindir}/update-desktop-database %{_datadir}/applications || :
 
 %post -n %{libkpathsea} -p /sbin/ldconfig
@@ -638,32 +638,32 @@ rm -rf %{buildroot}
 %_remove_install_info kpathsea.info
 
 %postun
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun afm
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun context
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun dvilj
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun dvipdfm
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun dvips
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun fonts
 /sbin/ldconfig
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun latex
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun xdvi
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %files
 %defattr(0755,root,root,0755)
