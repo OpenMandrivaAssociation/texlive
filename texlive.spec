@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 7
+Release:        %mkrel 8
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -87,10 +87,9 @@ Requires:       bison
 Requires:       ed
 Requires:       flex
 Requires:       texlive-texmf = %{version}
-Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
 # make sure fonts package installed before running post - since
 # fmtutil-sys is symlink to fmtutil
-Requires(post): %{_bindir}/fmtutil
+Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
 BuildRequires:  bison
 BuildRequires:  ed
 BuildRequires:  flex
@@ -284,8 +283,8 @@ Requires:       texlive = %{epoch}:%{version}-%{release}
 Requires:       texlive-dvips = %{epoch}:%{version}-%{release}
 Requires:       netpbm
 # make sure main and fonts package installed before running post
-Requires(post): %{_bindir}/fmtutil
-Requires(post): %{_bindir}/fmtutil-sys
+Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
+Requires(post): texlive = %{epoch}:%{version}-%{release}
 BuildRequires:  ghostscript
 BuildRequires:  netpbm
 %if %with obsolete_tetex
