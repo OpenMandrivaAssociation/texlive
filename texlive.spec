@@ -117,9 +117,8 @@ BuildRequires:  tiff-devel
 BuildRequires:  texinfo
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
+# This description based on Fedora tetex package, modified for texlive.
 %description
-This description based on Fedora tetex package, modified for texlive.
-
 texlive is an implementation of TeX for Linux or UNIX systems. TeX takes
 a text file and a set of formatting commands as input and creates a
 typesetter-independent .dvi (DeVice Independent) file as output.
@@ -144,9 +143,8 @@ Provides:       tetex-afm
 Requires:       texlive-texmf-afm = %{version}
 BuildRequires:  texlive-texmf-afm = %{version}
 
+# This description based on Fedora tetex package, modified for texlive.
 %description afm
-This description based on Fedora tetex package, modified for texlive.
-
 texlive-afm provides afm2tfm, a converter for PostScript font metric
 files. PostScript fonts are accompanied by .afm font metric files
 which describe the characteristics of each font. To use PostScript
@@ -202,9 +200,8 @@ Provides:       tetex-dvips
 Requires:       texlive-texmf-dvips = %{version}
 BuildRequires:  texlive-texmf-dvips = %{version}
 
+# This description based on Fedora tetex package, modified for texlive.
 %description dvips
-This description based on Fedora tetex package, modified for texlive.
-
 Dvips converts .dvi files produced by the TeX text formatting system
 (or by another processor like GFtoDVI) to PostScript(TM) format.
 Normally the PostScript file is sent directly to your printer.
@@ -266,9 +263,8 @@ Provides:       kpathsea
 Requires:       texlive-texmf-fonts = %{version}
 BuildRequires:  texlive-texmf-fonts = %{version}
 
+# This description based on Fedora tetex package, modified for texlive.
 %description fonts
-This description based on Fedora tetex package, modified for texlive.
-
 The texlive-fonts package contains fonts used by both the Xdvi previewer and
 the TeX text formatting system.
 
@@ -294,9 +290,8 @@ Provides:       tetex-latex
 Requires:       texlive-texmf-latex = %{version}
 BuildRequires:  texlive-texmf-latex = %{version}
 
+# This description based on Fedora tetex package, modified for texlive.
 %description latex
-This description based on Fedora tetex package, modified for texlive.
-
 LaTeX is a front end for the TeX text formatting system. Easier to
 use than TeX. LaTeX is essentially a set of TeX macros which provide
 convenient, predefined document formats for users. It also allows to
@@ -330,9 +325,8 @@ Obsoletes:      tetex-xdvi
 %endif
 Provides:       tetex-xdvi
 
+# This description based on Fedora tetex package, modified for texlive.
 %description xdvi
-This description based on Fedora tetex package, modified for texlive
-
 Xdvi allows you to preview the TeX text formatting system's output
 .dvi files on an X Window System.
 
