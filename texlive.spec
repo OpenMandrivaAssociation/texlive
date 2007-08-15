@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 8
+Release:        %mkrel 9
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -700,7 +700,8 @@ rm -rf %{buildroot}
 %{_bindir}/mkofm
 %{_bindir}/mpost
 %{_bindir}/mpto
-%{_bindir}/mptopdf
+# in context
+#%{_bindir}/mptopdf
 %{_bindir}/newer
 %{_bindir}/odvicopy
 %{_bindir}/odvitype
@@ -878,7 +879,8 @@ rm -rf %{buildroot}
 %{_mandir}/man1/bbox.1*
 %{_mandir}/man1/ctxtools.1*
 %{_mandir}/man1/dvipos.1*
-%{_mandir}/man1/mptopdf.1*
+# in context
+#%{_mandir}/man1/mptopdf.1*
 %{_mandir}/man1/pdftools.1*
 %{_mandir}/man1/pdftosrc.1*
 %{_mandir}/man1/ps2eps.1*
@@ -940,6 +942,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,root,0755)
 %{_bindir}/mptopdf
 %defattr(-,root,root,0755)
+%{_mandir}/man1/mptopdf.1*
 #
 %if 0
 %ghost %{_texmf_var}/web2c/metapost/metafun.log
