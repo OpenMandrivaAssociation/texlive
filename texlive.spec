@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 9
+Release:        %mkrel 10
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
