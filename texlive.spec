@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 10
+Release:        %mkrel 11
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -339,6 +339,34 @@ are not a TeX expert, you will probably also want to install the texlive-doc
 package, which contains documentation for the TeX text formatting
 system.
 
+%package jadetex
+Summary:        TeX macros used by Jade TeX output
+Group:          Publishing
+Requires(post): texlive-texmf-jadetex = %{version}
+%if %with obsolete_tetex
+Obsoletes:      jadetex
+%endif
+Provides:       jadetex
+
+%description jadetex
+JadeTeX contains the additional LaTeX macros necessary for taking Jade
+TeX output files and processing them as TeX files, to obtain DVI, Postscript
+or PDF files for example.
+
+%package xmltex
+Summary:        Namespace-aware XML parser written in TeX
+Group:          Publishing
+Requires(post): texlive-texmf-xmltex = %{version}
+%if %with obsolete_tetex
+Obsoletes:      xmltex
+%endif
+Provides:       xmltex
+
+%description xmltex
+Namespace-aware XML parser written in TeX. This package
+also includes passivetex macros, which can be used to process an XML
+document which results from an XSL trasformation to formatting objects.
+
 %package -n %{libkpathsea}
 Summary:        Main library for kpathsea
 Group:          System/Libraries
@@ -520,12 +548,14 @@ export LD_LIBRARY_PATH=`pwd`/texk/kpathsea/.libs
 
 rm -f %{buildroot}%{_infodir}/dir*
 
+%if 0
 # jadetex
 rm -f %{buildroot}%{_bindir}/jadetex
 rm -f %{buildroot}%{_bindir}/pdfjadetex
 # xmltex
 rm -f %{buildroot}%{_bindir}/xmltex
 rm -f %{buildroot}%{_bindir}/pdfxmltex
+%endif
 
 # install cron file
 install -D -m755 %{SOURCE10} %{buildroot}%{_sysconfdir}/cron.daily/tetex.cron
@@ -608,6 +638,12 @@ rm -rf %{buildroot}
 [ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 %{_bindir}/update-desktop-database %{_datadir}/applications || :
 
+%post jadetex
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
+
+%post xmltex
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
+
 %post -n %{libkpathsea} -p /sbin/ldconfig
 
 %postun -n %{libkpathsea} -p /sbin/ldconfig
@@ -656,6 +692,12 @@ rm -rf %{buildroot}
 [ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun xdvi
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
+
+%postun jadetex
+[ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
+
+%postun xmltex
 [ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %files
@@ -1167,6 +1209,16 @@ rm -rf %{buildroot}
 %{_mandir}/man1/xdvizilla.1*
 %{_datadir}/pixmaps/xdvi48x48.png
 %{_datadir}/applications/*xdvi.desktop
+
+%files jadetex
+%defattr(0755,root,root,0755)
+%{_bindir}/jadetex
+%{_bindir}/pdfjadetex
+
+%files xmltex
+%defattr(0755,root,root,0755)
+%{_bindir}/xmltex
+%{_bindir}/pdfxmltex
 
 %files -n %{libkpathsea}
 %defattr(0644,root,root,0755)
