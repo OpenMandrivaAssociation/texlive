@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 11
+Release:        %mkrel 12
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -347,6 +347,9 @@ Requires(post): texlive-texmf-jadetex = %{version}
 Obsoletes:      jadetex
 %endif
 Provides:       jadetex
+Requires:       sgml-common
+Requires:       openjade
+Requires:       texlive-latex = %{epoch}:%{version}-%{release}
 
 %description jadetex
 JadeTeX contains the additional LaTeX macros necessary for taking Jade
@@ -361,6 +364,7 @@ Requires(post): texlive-texmf-xmltex = %{version}
 Obsoletes:      xmltex
 %endif
 Provides:       xmltex
+Requires:       texlive-latex = %{epoch}:%{version}-%{release}
 
 %description xmltex
 Namespace-aware XML parser written in TeX. This package
