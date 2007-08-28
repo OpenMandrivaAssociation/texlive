@@ -577,7 +577,6 @@ rm -rf %{buildroot}%{_texmf_main}/doc/tetex
 # desktop entry things
 cat > xdvi.desktop << EOF
 [Desktop Entry]
-Encoding=UTF-8
 Name=DVI Viewer
 Type=Application
 Comment=DVI viewer for TeX DVI files
