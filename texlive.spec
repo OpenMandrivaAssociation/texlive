@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 12
+Release:        %mkrel 13
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -580,7 +580,7 @@ cat > xdvi.desktop << EOF
 Name=DVI Viewer
 Type=Application
 Comment=DVI viewer for TeX DVI files
-Icon=xdvi48x48.png
+Icon=xdvi48x48
 #MiniIcon=mini-doc1.xpm
 Exec=%{_bindir}/xdvi
 MimeType=application/x-dvi;
