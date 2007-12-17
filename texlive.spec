@@ -115,7 +115,6 @@ BuildRequires: libpoppler-devel
 BuildRequires:  tiff-devel
 #BuildRequires: w3c-libwww-devel
 BuildRequires:  texinfo
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 # This description based on Fedora tetex package, modified for texlive.
 %description
