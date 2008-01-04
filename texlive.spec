@@ -1,4 +1,4 @@
-%bcond_with     obsolete_tetex
+%define obsolete_tetex 1
 
 %define default_letter_paper 1
 %define disable_lcdf_typetools 1
@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 13
+Release:        %mkrel 14
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
