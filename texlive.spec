@@ -596,6 +596,9 @@ desktop-file-install --vendor "" --delete-original \
   --add-category X-Mandriva-Office-Publishing      \
   xdvi.desktop
 
+# (tv) fix xdvi not working (#35288):
+ln -s xdvi-xaw3d.bin %{buildroot}/%{_bindir}xdvi.bin
+
 for file in afm2pl afm2tfm aleph bibtex bibtex8 ctangle ctie cweave detex dmp disdvi dvi2tty dvibook dviconcat dvicopy dvilj dvilj2p dvilj4 dvilj4l dvipdfm dvipos dvips dviselect dvitodvi dvitomp dvitype ebb gftodvi gftopk gftype gsftopk hbf2gf kpsewhich mag makeindex makempx mf mf-nowin mft mpost odvicopy odvitype omega omfonts otangle otp2ocp outocp patgen pdftex pfb2pfa pk2bm pktogf pktype pltotf pooltype ps2pk tangle tex tftopl tie ttf2afm ttf2pk ttf2tfm vftovp vptovf weave xdvi-xaw3d.bin xetex xdvipdfmx; do
   %{_bindir}/test -x %{buildroot}/%{_bindir}/${file} && %{_bindir}/chrpath -d %{buildroot}/%{_bindir}/${file}
 done
@@ -1204,6 +1207,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,root,0755)
 %{_bindir}/oxdvi
 %{_bindir}/xdvi
+%{_bindir}/xdvi.bin
 %{_bindir}/xdvizilla
 %defattr(-,root,root,0755)
 %{_texmf_main}/xdvi/
