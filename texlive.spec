@@ -324,6 +324,7 @@ Requires(post): desktop-file-utils
 Obsoletes:      tetex-xdvi
 %endif
 Provides:       tetex-xdvi
+Conflicts: xdvi
 
 # This description based on Fedora tetex package, modified for texlive.
 %description xdvi
