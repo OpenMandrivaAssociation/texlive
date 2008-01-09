@@ -130,7 +130,7 @@ when using pdflatex or similar tools.
 Install texlive if you want to use the TeX text formatting system. Consider
 to install texlive-latex (a higher level formatting package which provides
 an easier-to-use interface for TeX). Unless you are an expert at using TeX,
-you should also install the texlive-doc package, which includes the
+you should also install the texlive-texmf-doc package, which includes the
 documentation for TeX.
 
 %package afm
@@ -157,7 +157,7 @@ also need to install texlive-dvips (for converting .dvi files to PostScript
 format for printing on PostScript printers), texlive-latex (a higher level
 formatting package which provides an easier-to-use interface for TeX), and
 texlive-xdvi (for previewing .dvi files in X). Unless you are an expert at
-using TeX, you should also install the texlive-doc package, which includes
+using TeX, you should also install the texlive-texmf-doc package, which includes
 documentation for TeX.
 
 %package context
@@ -212,7 +212,7 @@ texlive-dvips. In addition, you will need to install texlive-afm (for
 converting PostScript font description files), texlive-latex (a higher level
 1formatting package which provides an easier-to-use interface for TeX), and
 texlive-xdvi (for previewing .dvi files in X). If you are installing TeX and
-you are not an expert at it, you should also install the texlive-doc package,
+you are not an expert at it, you should also install the texlive-texmf-doc package,
 which contains documentation for the TeX system.
 
 %package dvilj
@@ -239,7 +239,7 @@ files), texlive-dvips (for converting .dvi files to PostScript format for
 printing on PostScript printers), texlive-latex (a higher level formatting
 package which provides an easier-to-use interface for TeX) and texlive-xdvi
 (for previewing .dvi files in X). If you're installing TeX and you're
-not a TeX expert, you'll also want to install the texlive-doc package,
+not a TeX expert, you'll also want to install the texlive-texmf-doc package,
 which contains documentation for TeX.
 
 %package dviutils
@@ -300,7 +300,7 @@ compile LaTeX files directly to PDF format.
 If you are installing texlive, so that you can use the TeX text
 formatting system, consider to install texlive-latex.
 If you are not an expert at TeX, you should also install
-the texlive-doc package, which contains documentation for TeX.
+the texlive-texmf-doc package, which contains documentation for TeX.
 
 %package mfwin
 Summary:        Metafont with output window
@@ -324,7 +324,7 @@ Requires(post): desktop-file-utils
 Obsoletes:      tetex-xdvi
 %endif
 Provides:       tetex-xdvi
-Conflicts: xdvi
+Conflicts: xdvv
 
 # This description based on Fedora tetex package, modified for texlive.
 %description xdvi
@@ -336,7 +336,7 @@ you will also need to install texlive-xdvi which allows you to view DVI files.
 Consider installing texlive-dvips (for converting .dvi files to PostScript
 format for printing on PostScript printers), and texlive-latex (a higher level
 formatting package which provides an easier-to-use interface for TeX). If you
-are not a TeX expert, you will probably also want to install the texlive-doc
+are not a TeX expert, you will probably also want to install the texlive-texmf-doc
 package, which contains documentation for the TeX text formatting
 system.
 
