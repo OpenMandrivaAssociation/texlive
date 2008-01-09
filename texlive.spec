@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 15
+Release:        %mkrel 16
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -116,6 +116,7 @@ BuildRequires:  tiff-devel
 #BuildRequires: w3c-libwww-devel
 BuildRequires:  texinfo
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
+Conflicts: tetex-doc < 2007
 
 # This description based on Fedora tetex package, modified for texlive.
 %description
