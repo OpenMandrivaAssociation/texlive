@@ -263,6 +263,7 @@ Provides:       tetex-fonts
 Provides:       kpathsea
 Requires(post): texlive-texmf-fonts = %{version}
 BuildRequires:  texlive-texmf-fonts = %{version}
+Conflicts:      tetex < 1:3.0
 
 # This description based on Fedora tetex package, modified for texlive.
 %description fonts
