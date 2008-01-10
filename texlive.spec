@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 16
+Release:        %mkrel 17
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -86,7 +86,7 @@ Requires(post): rpm-helper
 Requires:       bison
 Requires:       ed
 Requires:       flex
-Requires:       texlive-texmf = %{version}
+Requires(post): texlive-texmf = %{version}
 # make sure fonts package installed before running post - since
 # fmtutil-sys is symlink to fmtutil
 Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
@@ -111,12 +111,12 @@ BuildRequires:  texlive-texmf = %{version}
 BuildRequires:  chrpath
 BuildRequires:  freetype-devel
 BuildRequires:  freetype2-devel
-BuildRequires: libpoppler-devel
+BuildRequires:  libpoppler-devel
 BuildRequires:  tiff-devel
 #BuildRequires: w3c-libwww-devel
 BuildRequires:  texinfo
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
-Conflicts: tetex-doc < 2007
+Conflicts:      tetex-doc < 2007
 
 # This description based on Fedora tetex package, modified for texlive.
 %description
@@ -141,7 +141,7 @@ Group:          Publishing
 Obsoletes:      tetex-afm
 %endif
 Provides:       tetex-afm
-Requires:       texlive-texmf-afm = %{version}
+Requires(post): texlive-texmf-afm = %{version}
 BuildRequires:  texlive-texmf-afm = %{version}
 
 # This description based on Fedora tetex package, modified for texlive.
@@ -164,7 +164,7 @@ documentation for TeX.
 %package context
 Summary:        Document engineering system based on TeX
 Group:          Publishing
-Requires:       texlive-texmf-context = %{version}
+Requires(post): texlive-texmf-context = %{version}
 %if %obsolete_tetex
 Obsoletes:      tetex-context
 %endif
@@ -180,7 +180,7 @@ electronic documents.
 Group:          Publishing
 Summary:        A DVI to PDF converter
 BuildRequires:  texlive-texmf-dvipdfm = %{version}
-Requires:       texlive-texmf-dvipdfm = %{version}
+Requires(post): texlive-texmf-dvipdfm = %{version}
 %if %obsolete_tetex
 Obsoletes:      tetex-dvipdfm
 %endif
@@ -192,13 +192,13 @@ dvidpfm is a DVI to PDF translator for use with TeX.
 %package dvips
 Summary:        A DVI to PostScript converter for the TeX text formatting system
 Group:          Publishing
-Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
-Requires:       psutils
+Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
+Requires(post): psutils
 %if %obsolete_tetex
 Obsoletes:      tetex-dvips
 %endif
 Provides:       tetex-dvips
-Requires:       texlive-texmf-dvips = %{version}
+Requires(post): texlive-texmf-dvips = %{version}
 BuildRequires:  texlive-texmf-dvips = %{version}
 
 # This description based on Fedora tetex package, modified for texlive.
@@ -219,7 +219,7 @@ which contains documentation for the TeX system.
 %package dvilj
 Summary:        A DVI to HP PCL (Printer Control Language) converter
 Group:          Publishing
-Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
+Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
 %if %obsolete_tetex
 Obsoletes:      tetex-dvilj
 %endif
@@ -247,7 +247,7 @@ which contains documentation for TeX.
 Summary:        A collection of utilities for working with dvi files
 Group:          Publishing
 # not positive about this requires, pretty sure though
-Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
+Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
 
 %description dviutils
 The texlive-dviutils package includes a set of tools for working with dvi
@@ -261,7 +261,7 @@ Obsoletes:      tetex-fonts
 %endif
 Provides:       tetex-fonts
 Provides:       kpathsea
-Requires:       texlive-texmf-fonts = %{version}
+Requires(post): texlive-texmf-fonts = %{version}
 BuildRequires:  texlive-texmf-fonts = %{version}
 
 # This description based on Fedora tetex package, modified for texlive.
@@ -276,9 +276,9 @@ text formatting system).
 %package latex
 Summary:        The LaTeX front end for the TeX text formatting system
 Group:          Publishing
-Requires:       texlive = %{epoch}:%{version}-%{release}
-Requires:       texlive-dvips = %{epoch}:%{version}-%{release}
-Requires:       netpbm
+Requires(post): texlive = %{epoch}:%{version}-%{release}
+Requires(post): texlive-dvips = %{epoch}:%{version}-%{release}
+Requires(post): netpbm
 # make sure main and fonts package installed before running post
 Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
 Requires(post): texlive = %{epoch}:%{version}-%{release}
@@ -288,7 +288,7 @@ BuildRequires:  netpbm
 Obsoletes:      tetex-latex
 %endif
 Provides:       tetex-latex
-Requires:       texlive-texmf-latex = %{version}
+Requires(post): texlive-texmf-latex = %{version}
 BuildRequires:  texlive-texmf-latex = %{version}
 
 # This description based on Fedora tetex package, modified for texlive.
@@ -319,13 +319,13 @@ the font building in a output window.
 %package xdvi
 Summary:        An X viewer for DVI files
 Group:          Publishing
-Requires:       texlive-dvips = %{epoch}:%{version}-%{release}
+Requires(post): texlive-dvips = %{epoch}:%{version}-%{release}
 Requires(post): desktop-file-utils
 %if %obsolete_tetex
 Obsoletes:      tetex-xdvi
 %endif
 Provides:       tetex-xdvi
-Conflicts: xdvv
+Conflicts:      xdvv
 
 # This description based on Fedora tetex package, modified for texlive.
 %description xdvi
@@ -349,9 +349,9 @@ Requires(post): texlive-texmf-jadetex = %{version}
 Obsoletes:      jadetex
 %endif
 Provides:       jadetex
-Requires:       sgml-common
-Requires:       openjade
-Requires:       texlive-latex = %{epoch}:%{version}-%{release}
+Requires(post): sgml-common
+Requires(post): openjade
+Requires(post): texlive-latex = %{epoch}:%{version}-%{release}
 
 %description jadetex
 JadeTeX contains the additional LaTeX macros necessary for taking Jade
@@ -361,12 +361,12 @@ or PDF files for example.
 %package xmltex
 Summary:        Namespace-aware XML parser written in TeX
 Group:          Publishing
+Requires(post): texlive-latex = %{epoch}:%{version}-%{release}
 Requires(post): texlive-texmf-xmltex = %{version}
 %if %obsolete_tetex
 Obsoletes:      xmltex
 %endif
 Provides:       xmltex
-Requires:       texlive-latex = %{epoch}:%{version}-%{release}
 
 %description xmltex
 Namespace-aware XML parser written in TeX. This package
