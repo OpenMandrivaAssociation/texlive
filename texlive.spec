@@ -138,9 +138,9 @@ documentation for TeX.
 Summary:        A converter for PostScript(TM) font metric files, for use with TeX
 Group:          Publishing
 %if %obsolete_tetex
-Obsoletes:      tetex-afm
+Obsoletes:      tetex-afm < 1:3.0
 %endif
-Provides:       tetex-afm
+Provides:       tetex-afm = 1:3.0
 Requires(post): texlive-texmf-afm = %{version}
 BuildRequires:  texlive-texmf-afm = %{version}
 
@@ -166,9 +166,9 @@ Summary:        Document engineering system based on TeX
 Group:          Publishing
 Requires(post): texlive-texmf-context = %{version}
 %if %obsolete_tetex
-Obsoletes:      tetex-context
+Obsoletes:      tetex-context < 1:3.0
 %endif
-Provides:       tetex-context
+Provides:       tetex-context = 1:3.0
 
 %description context
 CONTeXT is a document engineering system based on TeX. TeX is a
@@ -182,9 +182,9 @@ Summary:        A DVI to PDF converter
 BuildRequires:  texlive-texmf-dvipdfm = %{version}
 Requires(post): texlive-texmf-dvipdfm = %{version}
 %if %obsolete_tetex
-Obsoletes:      tetex-dvipdfm
+Obsoletes:      tetex-dvipdfm < 1:3.0
 %endif
-Provides:       tetex-dvipdfm
+Provides:       tetex-dvipdfm = 1:3.0
 
 %description dvipdfm
 dvidpfm is a DVI to PDF translator for use with TeX.
@@ -195,9 +195,9 @@ Group:          Publishing
 Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
 Requires(post): psutils
 %if %obsolete_tetex
-Obsoletes:      tetex-dvips
+Obsoletes:      tetex-dvips < 1:3.0
 %endif
-Provides:       tetex-dvips
+Provides:       tetex-dvips = 1:3.0
 Requires(post): texlive-texmf-dvips = %{version}
 BuildRequires:  texlive-texmf-dvips = %{version}
 
@@ -221,9 +221,9 @@ Summary:        A DVI to HP PCL (Printer Control Language) converter
 Group:          Publishing
 Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
 %if %obsolete_tetex
-Obsoletes:      tetex-dvilj
+Obsoletes:      tetex-dvilj < 1:3.0
 %endif
-Provides:       tetex-dvilj
+Provides:       tetex-dvilj = 1:3.0
 
 %description dvilj
 Dvilj and dvilj's siblings (included in this package) will convert TeX
@@ -257,9 +257,9 @@ files. You only need this package if you plan to manipulate existing dvi files.
 Summary:        The font files for the TeX text formatting system
 Group:          Publishing
 %if %obsolete_tetex
-Obsoletes:      tetex-fonts
+Obsoletes:      tetex-fonts < 1:3.0
 %endif
-Provides:       tetex-fonts
+Provides:       tetex-fonts = 1:3.0
 Provides:       kpathsea
 Requires(post): texlive-texmf-fonts = %{version}
 BuildRequires:  texlive-texmf-fonts = %{version}
@@ -286,9 +286,9 @@ Requires(post): texlive = %{epoch}:%{version}-%{release}
 BuildRequires:  ghostscript
 BuildRequires:  netpbm
 %if %obsolete_tetex
-Obsoletes:      tetex-latex
+Obsoletes:      tetex-latex < 1:3.0
 %endif
-Provides:       tetex-latex
+Provides:       tetex-latex = 1:3.0
 Requires(post): texlive-texmf-latex = %{version}
 BuildRequires:  texlive-texmf-latex = %{version}
 
@@ -308,9 +308,9 @@ the texlive-texmf-doc package, which contains documentation for TeX.
 Summary:        Metafont with output window
 Group:          Publishing
 %if %obsolete_tetex
-Obsoletes:      tetex-mfwin
+Obsoletes:      tetex-mfwin < 1:3.0
 %endif
-Provides:       tetex-mfwin
+Provides:       tetex-mfwin = 1:3.0
 
 %description mfwin
 This package contains METAFONT with window support. Install this
@@ -323,9 +323,9 @@ Group:          Publishing
 Requires(post): texlive-dvips = %{epoch}:%{version}-%{release}
 Requires(post): desktop-file-utils
 %if %obsolete_tetex
-Obsoletes:      tetex-xdvi
+Obsoletes:      tetex-xdvi < 1:3.0
 %endif
-Provides:       tetex-xdvi
+Provides:       tetex-xdvi = 1:3.0
 Conflicts:      xdvv
 
 # This description based on Fedora tetex package, modified for texlive.
@@ -347,9 +347,9 @@ Summary:        TeX macros used by Jade TeX output
 Group:          Publishing
 Requires(post): texlive-texmf-jadetex = %{version}
 %if %obsolete_tetex
-Obsoletes:      jadetex
+Obsoletes:      jadetex < 1:3.0
 %endif
-Provides:       jadetex
+Provides:       jadetex = 1:3.0
 Requires(post): sgml-common
 Requires(post): openjade
 Requires(post): texlive-latex = %{epoch}:%{version}-%{release}
@@ -365,9 +365,9 @@ Group:          Publishing
 Requires(post): texlive-latex = %{epoch}:%{version}-%{release}
 Requires(post): texlive-texmf-xmltex = %{version}
 %if %obsolete_tetex
-Obsoletes:      xmltex
+Obsoletes:      xmltex < 1:3.0
 %endif
-Provides:       xmltex
+Provides:       xmltex = 1:3.0
 
 %description xmltex
 Namespace-aware XML parser written in TeX. This package
@@ -387,9 +387,9 @@ Summary:        Development files for kpathsea
 Group:          Development/C
 Requires:       %{libkpathsea} = %{epoch}:%{version}-%{release}
 %if %obsolete_tetex
-Obsoletes:      tetex-devel
+Obsoletes:      tetex-devel < 1:3.0
 %endif
-Provides:       tetex-devel
+Provides:       tetex-devel = 1:3.0
 Provides:       kpathsea-devel = %{epoch}:%{version}-%{release}
 
 %description -n %{libkpathsea_d}
