@@ -17,7 +17,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 19
+Release:        %mkrel 20
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -311,6 +311,7 @@ Group:          Publishing
 Obsoletes:      tetex-mfwin < 1:3.0
 %endif
 Provides:       tetex-mfwin = 1:3.0
+Conflicts:      tetex < 1:3.0
 
 %description mfwin
 This package contains METAFONT with window support. Install this
