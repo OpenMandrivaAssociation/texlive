@@ -15,17 +15,19 @@
 %define libkpathsea_d %mklibname kpathsea -d
 %define libkpathsea_d_s %mklibname kpathsea -d -s
 
+%define svn_rev r6225
+
 Name:           texlive
 Version:        2007
-Release:        %mkrel 19
+Release:        %mkrel 19.%{svn_rev}
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
 License:        Distributable
 URL:            http://tug.org/texlive/
-# svn export svn://tug.org/texlive/trunk/Build/source
-# (cd source && tar cvjf ../source.tar.bz2 *)
-Source0:        http://tug.org/svn/texlive/branches/branch2007/Master/source/source.tar.bz2
+# svn export -%{svn_rev} svn://tug.org/texlive/trunk/Build/source
+# (cd source && tar cvYf ../source-%{svn_rev}.tar.lzma *)
+Source0:        http://tug.org/svn/texlive/branches/branch2007/Master/source/source-%{svn_rev}.tar.lzma
 Source10:       texlive.cron
 # Source30 is http://xdvi.sourceforge.net/xdvi48x48.gif converted to png
 Source30:       xdvi48x48.png
@@ -64,6 +66,7 @@ Patch201:       texlive-ttf2pk-freetype.patch
 Patch202:       texlive-pdftex.patch
 Patch203:       texlive-xetex.patch
 Patch204:       texlive-build.patch
+Patch205:       texlive-no-lzma.patch
 # Suse
 Patch300:       texlive-source-icu.patch
 Patch301:       texlive-source-t1lib.patch
@@ -71,7 +74,6 @@ Patch302:       texlive-source-warns.patch
 Patch303:       texlive-source-x11r7.patch
 Patch304:       texlive-source-xdvi-numlock.patch
 Patch305:       texlive-source-xdvizilla.patch
-Patch306:       texlive-source-CVE-2007-0650.patch
 %if %obsolete_tetex
 Obsoletes:      tetex < 1:3.0
 Provides:       tetex = 1:3.0
@@ -453,7 +455,7 @@ chmod -x texk/dvipdfm/encodings.c
 %patch41 -p1 -b .notutf8
 %patch42 -p1 -b .notutf8-2
 
-%patch100 -p3
+%patch100 -p1
 %patch101 -p3
 %patch102 -p3
 %patch103 -p3
@@ -477,6 +479,7 @@ chmod -x texk/dvipdfm/encodings.c
 %patch202 -p1
 %patch203 -p1
 %patch204 -p1
+%patch205 -p1
 
 %patch300 -p0
 %patch301 -p0
@@ -484,7 +487,6 @@ chmod -x texk/dvipdfm/encodings.c
 %patch303 -p0
 %patch304 -p0
 %patch305 -p0
-%patch306 -p0
 
 pushd texk/kpathsea
 %{__sed} -i 's?^TEXMF =.*?TEXMF = {\$TEXMFCONFIG,\$TEXMFVAR,\$TEXMFHOME,\$TEXMFSYSCONFIG,\!\!\$TEXMFSYSVAR,\!\!\$TEXMFLOCAL,\!\!\$TEXMFMAIN,\!\!\$TEXMFDIST}?' texmf.in
@@ -1207,14 +1209,18 @@ rm -rf %{buildroot}
 %{_bindir}/gbklatex
 %{_bindir}/gbkpdflatex
 %{_bindir}/lacheck
+%{_bindir}/mkjobtexmf
 %{_bindir}/mllatex
 %{_bindir}/pdfcslatex
 %{_bindir}/pdfplatex
 %{_bindir}/sjislatex
 %{_bindir}/sjispdflatex
+%{_bindir}/texcount
+%{_bindir}/tpic2pdftex
 %defattr(0644,root,root,0755)
 %{_mandir}/man1/lacheck.1*
 %{_mandir}/man1/latex.1*
+%{_mandir}/man1/mkjobtexmf.1*
 %{_mandir}/man1/pdflatex.1*
 %{_mandir}/man1/pslatex.1*
 %{_infodir}/latex.info*
