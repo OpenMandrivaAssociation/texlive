@@ -973,7 +973,7 @@ rm -rf %{buildroot}
 %{_texmf_main}/web2c/omega.pool
 %{_texmf_main}/web2c/pdftex.pool
 %{_texmf_main}/web2c/tex.pool
-%{_texmf_main}/web2c/xetex.pool
+#%{_texmf_main}/web2c/xetex.pool
 %{_infodir}/dvipng.info*
 %doc %{_texmf_main}/doc/bibtex8/
 %dir /var/lib/texmf
@@ -1191,7 +1191,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,root,0755)
 %{_bindir}/latex
 %{_bindir}/pdflatex
-%{_bindir}/platex
+#%{_bindir}/platex
 %{_bindir}/pslatex
 #%{_bindir}/platex209
 # not in fedora tetex
@@ -1212,7 +1212,7 @@ rm -rf %{buildroot}
 %{_bindir}/mkjobtexmf
 %{_bindir}/mllatex
 %{_bindir}/pdfcslatex
-%{_bindir}/pdfplatex
+#%{_bindir}/pdfplatex
 %{_bindir}/sjislatex
 %{_bindir}/sjispdflatex
 %{_bindir}/texcount
