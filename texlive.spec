@@ -223,8 +223,8 @@ texlive-dvips. In addition, you will need to install texlive-afm (for
 converting PostScript font description files), texlive-latex (a higher level
 1formatting package which provides an easier-to-use interface for TeX), and
 texlive-xdvi (for previewing .dvi files in X). If you are installing TeX and
-you are not an expert at it, you should also install the texlive-texmf-doc package,
-which contains documentation for the TeX system.
+you are not an expert at it, you should also install the texlive-texmf-doc
+package which contains documentation for the TeX system.
 
 %package dvilj
 Summary:        A DVI to HP PCL (Printer Control Language) converter
@@ -357,9 +357,9 @@ you will also need to install texlive-xdvi which allows you to view DVI files.
 Consider installing texlive-dvips (for converting .dvi files to PostScript
 format for printing on PostScript printers), and texlive-latex (a higher level
 formatting package which provides an easier-to-use interface for TeX). If you
-are not a TeX expert, you will probably also want to install the texlive-texmf-doc
-package, which contains documentation for the TeX text formatting
-system.
+are not a TeX expert, you will probably also want to install the
+texlive-texmf-doc package which contains documentation for the TeX text
+formatting system.
 
 %package jadetex
 Summary:        TeX macros used by Jade TeX output
