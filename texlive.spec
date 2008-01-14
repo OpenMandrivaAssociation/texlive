@@ -614,14 +614,14 @@ Icon=xdvi48x48
 Exec=%{_bindir}/xdvi
 MimeType=application/x-dvi;
 NoDisplay=true
+Categories=Office;Publishing;
 EOF
 
 # install the xdvi desktop file
 install -d -m755 %{buildroot}%{_datadir}/{applications,pixmaps}
 install -m644 %{SOURCE30} %{buildroot}%{_datadir}/pixmaps/
-desktop-file-install --vendor "" --delete-original \
-  --dir %{buildroot}%{_datadir}/applications       \
-  --add-category X-Mandriva-Office-Publishing      \
+%{_bindir}/desktop-file-install --vendor "" --delete-original \
+  --dir %{buildroot}%{_datadir}/applications \
   xdvi.desktop
 
 # (tv) fix xdvi not working (#35288):
