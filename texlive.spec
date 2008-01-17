@@ -1,4 +1,4 @@
-%define obsolete_tetex 1
+%bcond_with     obsolete_tetex
 
 %define default_letter_paper 1
 %define disable_lcdf_typetools 1
@@ -19,7 +19,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 19.%{svn_rev}
+Release:        %mkrel 20.%{svn_rev}
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -74,8 +74,8 @@ Patch302:       texlive-source-warns.patch
 Patch303:       texlive-source-x11r7.patch
 Patch304:       texlive-source-xdvi-numlock.patch
 Patch305:       texlive-source-xdvizilla.patch
+%if %with obsolete_tetex
 Provides:       tetex = 1:3.0
-%if %obsolete_tetex
 Obsoletes:      tetex < 1:3.0
 %else
 Conflicts:      tetex < 1:3.0
@@ -141,12 +141,12 @@ documentation for TeX.
 %package afm
 Summary:        A converter for PostScript(TM) font metric files, for use with TeX
 Group:          Publishing
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-afm < 1:3.0
+Provides:       tetex-afm = 1:3.0
 %else
 Conflicts:      tetex-afm < 1:3.0
 %endif
-Provides:       tetex-afm = 1:3.0
 Requires(post): texlive-texmf-afm = %{version}
 Requires:       texlive-texmf-afm = %{version}
 BuildRequires:  texlive-texmf-afm = %{version}
@@ -173,12 +173,12 @@ Summary:        Document engineering system based on TeX
 Group:          Publishing
 Requires:       texlive-texmf-context = %{version}
 Requires(post): texlive-texmf-context = %{version}
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-context < 1:3.0
+Provides:       tetex-context = 1:3.0
 %else
 Conflicts:      tetex-context < 1:3.0
 %endif
-Provides:       tetex-context = 1:3.0
 
 %description context
 CONTeXT is a document engineering system based on TeX. TeX is a
@@ -192,12 +192,12 @@ Summary:        A DVI to PDF converter
 BuildRequires:  texlive-texmf-dvipdfm = %{version}
 Requires:       texlive-texmf-dvipdfm = %{version}
 Requires(post): texlive-texmf-dvipdfm = %{version}
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-dvipdfm < 1:3.0
+Provides:       tetex-dvipdfm = 1:3.0
 %else
 Conflicts:      tetex-dvipdfm < 1:3.0
 %endif
-Provides:       tetex-dvipdfm = 1:3.0
 
 %description dvipdfm
 dvidpfm is a DVI to PDF translator for use with TeX.
@@ -209,12 +209,12 @@ Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
 Requires:       psutils
 Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
 Requires(post): psutils
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-dvips < 1:3.0
+Provides:       tetex-dvips = 1:3.0
 %else
 Conflicts:      tetex-dvips < 1:3.0
 %endif
-Provides:       tetex-dvips = 1:3.0
 Requires:       texlive-texmf-dvips = %{version}
 Requires(post): texlive-texmf-dvips = %{version}
 BuildRequires:  texlive-texmf-dvips = %{version}
@@ -239,12 +239,12 @@ Summary:        A DVI to HP PCL (Printer Control Language) converter
 Group:          Publishing
 Requires:       texlive-fonts = %{epoch}:%{version}-%{release}
 Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-dvilj < 1:3.0
+Provides:       tetex-dvilj = 1:3.0
 %else
 Conflicts:      tetex-dvilj < 1:3.0
 %endif
-Provides:       tetex-dvilj = 1:3.0
 
 %description dvilj
 Dvilj and dvilj's siblings (included in this package) will convert TeX
@@ -278,12 +278,12 @@ files. You only need this package if you plan to manipulate existing dvi files.
 %package fonts
 Summary:        The font files for the TeX text formatting system
 Group:          Publishing
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-fonts < 1:3.0
+Provides:       tetex-fonts = 1:3.0
 %else
 Conflicts:      tetex-fonts < 1:3.0
 %endif
-Provides:       tetex-fonts = 1:3.0
 Provides:       kpathsea
 Requires:       texlive-texmf-fonts = %{version}
 Requires(post): texlive-texmf-fonts = %{version}
@@ -313,12 +313,12 @@ Requires(post): texlive-fonts = %{epoch}:%{version}-%{release}
 Requires(post): texlive = %{epoch}:%{version}-%{release}
 BuildRequires:  ghostscript
 BuildRequires:  netpbm
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-latex < 1:3.0
+Provides:       tetex-latex = 1:3.0
 %else
 Conflicts:      tetex-latex < 1:3.0
 %endif
-Provides:       tetex-latex = 1:3.0
 Requires:       texlive-texmf-latex = %{version}
 Requires(post): texlive-texmf-latex = %{version}
 BuildRequires:  texlive-texmf-latex = %{version}
@@ -338,12 +338,12 @@ the texlive-texmf-doc package, which contains documentation for TeX.
 %package mfwin
 Summary:        Metafont with output window
 Group:          Publishing
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-mfwin < 1:3.0
+Provides:       tetex-mfwin = 1:3.0
 %else
 Conflicts:      tetex-mfwin < 1:3.0
 %endif
-Provides:       tetex-mfwin = 1:3.0
 Conflicts:      tetex < 1:3.0
 
 %description mfwin
@@ -357,12 +357,12 @@ Group:          Publishing
 Requires:       texlive-dvips = %{epoch}:%{version}-%{release}
 Requires(post): texlive-dvips = %{epoch}:%{version}-%{release}
 Requires(post): desktop-file-utils
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-xdvi < 1:3.0
+Provides:       tetex-xdvi = 1:3.0
 %else
 Conflicts:      tetex-xdvi < 1:3.0
 %endif
-Provides:       tetex-xdvi = 1:3.0
 Conflicts:      xdvv
 
 # This description based on Fedora tetex package, modified for texlive.
@@ -384,7 +384,7 @@ Summary:        TeX macros used by Jade TeX output
 Group:          Publishing
 Requires:       texlive-texmf-jadetex = %{version}
 Requires(post): texlive-texmf-jadetex = %{version}
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      jadetex < 1:3.0
 %else
 Conflicts:      jadetex < 1:3.0
@@ -410,7 +410,7 @@ Requires:       texlive-latex = %{epoch}:%{version}-%{release}
 Requires:       texlive-texmf-xmltex = %{version}
 Requires(post): texlive-latex = %{epoch}:%{version}-%{release}
 Requires(post): texlive-texmf-xmltex = %{version}
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      xmltex < 1:3.0
 %else
 Conflicts:      xmltex < 1:3.0
@@ -434,12 +434,12 @@ Main library for kpathsea.
 Summary:        Development files for kpathsea
 Group:          Development/C
 Requires:       %{libkpathsea} = %{epoch}:%{version}-%{release}
-%if %obsolete_tetex
+%if %with obsolete_tetex
 Obsoletes:      tetex-devel < 1:3.0
+Provides:       tetex-devel = 1:3.0
 %else
 Conflicts:      tetex-devel < 1:3.0
 %endif
-Provides:       tetex-devel = 1:3.0
 Provides:       kpathsea-devel = %{epoch}:%{version}-%{release}
 
 %description -n %{libkpathsea_d}
