@@ -15,7 +15,7 @@
 %define libkpathsea_d %mklibname kpathsea -d
 %define libkpathsea_d_s %mklibname kpathsea -d -s
 
-%define svn_rev r6225
+%define svn_rev r6295
 
 Name:           texlive
 Version:        2007
@@ -26,7 +26,7 @@ Group:          Publishing
 License:        Distributable
 URL:            http://tug.org/texlive/
 # svn export -%{svn_rev} svn://tug.org/texlive/trunk/Build/source
-# (cd source && tar cvYf ../source-%{svn_rev}.tar.lzma *)
+# tar cvYf source-%{svn_rev}.tar.lzma source
 Source0:        http://tug.org/svn/texlive/branches/branch2007/Master/source/source-%{svn_rev}.tar.lzma
 Source10:       texlive.cron
 # Source30 is http://xdvi.sourceforge.net/xdvi48x48.gif converted to png
@@ -455,7 +455,7 @@ Provides:       kpathsea-static-devel = %{epoch}:%{version}-%{release}
 This package contains the static development files for kpathsea.
 
 %prep
-%setup -q -T -c -a0
+%setup -q -n source
 %{_bindir}/find . -name autom4te.cache | %{_bindir}/xargs -t %{__rm} -r || :
 
 # fix for debuginfo rpmlint happiness
