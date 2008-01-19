@@ -19,7 +19,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 20.%{svn_rev}
+Release:        %mkrel 20.%{svn_rev}.1
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -386,10 +386,10 @@ Requires:       texlive-texmf-jadetex = %{version}
 Requires(post): texlive-texmf-jadetex = %{version}
 %if %with obsolete_tetex
 Obsoletes:      jadetex < 1:3.0
+Provides:       jadetex = 1:3.0
 %else
 Conflicts:      jadetex < 1:3.0
 %endif
-Provides:       jadetex = 1:3.0
 Requires:       sgml-common
 Requires:       openjade
 Requires:       texlive-latex = %{epoch}:%{version}-%{release}
@@ -412,10 +412,10 @@ Requires(post): texlive-latex = %{epoch}:%{version}-%{release}
 Requires(post): texlive-texmf-xmltex = %{version}
 %if %with obsolete_tetex
 Obsoletes:      xmltex < 1:3.0
+Provides:       xmltex = 1:3.0
 %else
 Conflicts:      xmltex < 1:3.0
 %endif
-Provides:       xmltex = 1:3.0
 
 %description xmltex
 Namespace-aware XML parser written in TeX. This package
