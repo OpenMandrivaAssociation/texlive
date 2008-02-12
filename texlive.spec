@@ -165,8 +165,8 @@ also need to install texlive-dvips (for converting .dvi files to PostScript
 format for printing on PostScript printers), texlive-latex (a higher level
 formatting package which provides an easier-to-use interface for TeX), and
 texlive-xdvi (for previewing .dvi files in X). Unless you are an expert at
-using TeX, you should also install the texlive-texmf-doc package, which includes
-documentation for TeX.
+using TeX, you should also install the texlive-texmf-doc package, which
+includes documentation for TeX.
 
 %package context
 Summary:        Document engineering system based on TeX
