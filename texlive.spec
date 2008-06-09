@@ -703,9 +703,13 @@ rm -rf %{buildroot}
 %post xmltex
 [ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
+%if %mdkversion < 200900
 %post -n %{libkpathsea} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{libkpathsea} -p /sbin/ldconfig
+%endif
 
 %post -n %{libkpathsea_d}
 %_install_info kpathsea.info
@@ -744,7 +748,9 @@ rm -rf %{buildroot}
 [ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun fonts
+%if %mdkversion < 200900
 /sbin/ldconfig
+%endif
 [ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun latex
