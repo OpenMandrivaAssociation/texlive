@@ -19,7 +19,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 4.%{svn_rev}.3
+Release:        %mkrel 4.%{svn_rev}.4
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
