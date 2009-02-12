@@ -19,7 +19,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 20.%{svn_rev}.4
+Release:        %mkrel 20.%{svn_rev}.3
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -67,6 +67,9 @@ Patch202:       texlive-pdftex.patch
 Patch203:       texlive-xetex.patch
 Patch204:       texlive-build.patch
 Patch205:       texlive-no-lzma.patch
+Patch206:       texlive-2007-buildfix2009.1.patch
+Patch207:       texlive-2007-buildfix2009.1-2.patch
+Patch208:	texlive-2007-buildfix2009.1-3.patch
 # Suse
 Patch300:       texlive-source-icu.patch
 Patch301:       texlive-source-t1lib.patch
@@ -117,6 +120,7 @@ BuildRequires:  freetype-devel
 BuildRequires:  freetype2-devel
 BuildRequires:  libpoppler-devel
 BuildRequires:  tiff-devel
+BuildRequires:  png-static-devel 
 #BuildRequires: w3c-libwww-devel
 BuildRequires:  texinfo
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -229,7 +233,7 @@ If you are installing texlive, so that you can use the TeX text
 formatting system without direct PDF compilation, consider to install
 texlive-dvips. In addition, you will need to install texlive-afm (for
 converting PostScript font description files), texlive-latex (a higher level
-1formatting package which provides an easier-to-use interface for TeX), and
+formatting package which provides an easier-to-use interface for TeX), and
 texlive-xdvi (for previewing .dvi files in X). If you are installing TeX and
 you are not an expert at it, you should also install the texlive-texmf-doc
 package which contains documentation for the TeX system.
@@ -471,7 +475,7 @@ chmod -x texk/dvipdfm/encodings.c
 # Don't use tmpnam() in dvipdfm.
 %patch10 -p1 -b .dvipdfm-security
 # Fix parallel builds.
-%patch11 -p1 -b .makej
+# %patch11 -p1 -b .makej
 # Fix xdvi - navigation with a spacebar does not keep position (RH bug #168124)
 %patch15 -p1 -b .xdvi-keepflag
 
@@ -482,7 +486,7 @@ chmod -x texk/dvipdfm/encodings.c
 %patch100 -p1
 %patch101 -p3
 %patch102 -p3
-%patch103 -p3
+# %patch103 -p3
 %patch104 -p3
 %patch105 -p3
 %patch106 -p3
@@ -491,26 +495,36 @@ chmod -x texk/dvipdfm/encodings.c
 %patch109 -p3
 %patch111 -p3
 %patch112 -p3
-%patch113 -p3
 %patch115 -p3
 %patch117 -p3
-%patch118 -p3
+# %patch118 -p3
 %patch119 -p3
 %patch120 -p3
 
 %patch200 -p1
 %patch201 -p1
-%patch202 -p1
+# %patch202 -p1
 %patch203 -p1
 %patch204 -p1
 %patch205 -p1
+%patch206 -p0
+%patch207 -p0
+%patch208 -p0
 
 %patch300 -p0
-%patch301 -p0
+# %patch301 -p0
 %patch302 -p0
 %patch303 -p0
 %patch304 -p0
 %patch305 -p0
+
+%patch113 -p0 
+
+%ifarch x86_64 
+    sed -i 's@^pdftexlibs =\(.*\)$@pdftexlibs = \1 \/usr\/lib64\/libpng\.a@' %{_builddir}/source/texk/web2c/pdftexdir/pdftexlib.mk
+%else
+    sed -i 's@^pdftexlibs =\(.*\)$@pdftexlibs = \1 \/usr\/lib\/libpng\.a@' %{_builddir}/source/texk/web2c/pdftexdir/pdftexlib.mk
+%endif
 
 pushd texk/kpathsea
 %{__sed} -i 's?^TEXMF =.*?TEXMF = {\$TEXMFCONFIG,\$TEXMFVAR,\$TEXMFHOME,\$TEXMFSYSCONFIG,\!\!\$TEXMFSYSVAR,\!\!\$TEXMFLOCAL,\!\!\$TEXMFMAIN,\!\!\$TEXMFDIST}?' texmf.in
@@ -548,7 +562,7 @@ unset HOME || :
 # --with-system-wwwlib
 
 %{configure2_5x} \
-        --cache-file=/dev/null \
+	--cache-file=/dev/null \
         --enable-shared=default \
 %if %{default_letter_paper}
         --disable-a4 \
@@ -703,13 +717,9 @@ rm -rf %{buildroot}
 %post xmltex
 [ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
-%if %mdkversion < 200900
 %post -n %{libkpathsea} -p /sbin/ldconfig
-%endif
 
-%if %mdkversion < 200900
 %postun -n %{libkpathsea} -p /sbin/ldconfig
-%endif
 
 %post -n %{libkpathsea_d}
 %_install_info kpathsea.info
@@ -748,9 +758,7 @@ rm -rf %{buildroot}
 [ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun fonts
-%if %mdkversion < 200900
 /sbin/ldconfig
-%endif
 [ -x %{_bindir}/texconfig-sys ] && LC_ALL=C %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
 %postun latex
@@ -1307,3 +1315,4 @@ rm -rf %{buildroot}
 %files -n %{libkpathsea_d_s}
 %defattr(0644,root,root,0755)
 %{_libdir}/libkpathsea.a
+
