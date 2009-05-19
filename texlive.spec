@@ -19,7 +19,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 20.%{svn_rev}.4
+Release:        %mkrel 20.%{svn_rev}.5
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -70,6 +70,8 @@ Patch205:       texlive-no-lzma.patch
 Patch206:       texlive-2007-buildfix2009.1.patch
 Patch207:       texlive-2007-buildfix2009.1-2.patch
 Patch208:	texlive-2007-buildfix2009.1-3.patch
+#gw fix build with poppler 0.11
+Patch209:	texlive-fix-poppler-usage.patch
 # Suse
 Patch300:       texlive-source-icu.patch
 Patch301:       texlive-source-t1lib.patch
@@ -512,6 +514,7 @@ chmod -x texk/dvipdfm/encodings.c
 %patch206 -p0
 %patch207 -p0
 %patch208 -p0
+%patch209 -p1
 
 %patch300 -p0
 # %patch301 -p0
