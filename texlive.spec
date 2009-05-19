@@ -72,6 +72,7 @@ Patch207:       texlive-2007-buildfix2009.1-2.patch
 Patch208:	texlive-2007-buildfix2009.1-3.patch
 #gw fix build with poppler 0.11
 Patch209:	texlive-fix-poppler-usage.patch
+Patch210:	texlive-gcc4.4.patch
 # Suse
 Patch300:       texlive-source-icu.patch
 Patch301:       texlive-source-t1lib.patch
@@ -515,6 +516,7 @@ chmod -x texk/dvipdfm/encodings.c
 %patch207 -p0
 %patch208 -p0
 %patch209 -p1
+%patch210 -p1
 
 %patch300 -p0
 # %patch301 -p0
