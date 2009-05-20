@@ -19,7 +19,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 20.%{svn_rev}.6
+Release:        %mkrel 20.%{svn_rev}.7
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -372,7 +372,7 @@ Conflicts:      tetex-xdvi < 1:3.0
 Provides:       tetex-xdvi = 1:3.0
 Provides:	xdvi
 Requires:	texlive-mfwin
-Requires:	texlive-textmf-fonts
+Requires:	texlive-texmf-fonts
 
 # This description based on Fedora tetex package, modified for texlive.
 %description xdvi
