@@ -19,7 +19,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 20.%{svn_rev}.7
+Release:        %mkrel 21.%{svn_rev}.7
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -37,6 +37,7 @@ Patch8:         texlive-2007-xprint.patch
 Patch10:        texlive-2007-dvipdfm-security.patch
 Patch11:        texlive-2007-makej.patch
 Patch15:        texlive-2007-xdvi-keepflag.patch
+Patch16:        texlive-2007-getline.patch
 # mpeters contributed patches
 # fixes man pages to utf-8
 Patch41:        texlive-2007-kuesterei-man.patch
@@ -483,6 +484,8 @@ chmod -x texk/dvipdfm/encodings.c
 # %patch11 -p1 -b .makej
 # Fix xdvi - navigation with a spacebar does not keep position (RH bug #168124)
 %patch15 -p1 -b .xdvi-keepflag
+# fix clash with glibc getline()
+%patch16 -p1 -b .getline
 
 # fix non utf man pages
 %patch41 -p1 -b .notutf8
