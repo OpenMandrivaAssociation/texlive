@@ -19,7 +19,7 @@
 
 Name:           texlive
 Version:        2007
-Release:        %mkrel 21.%{svn_rev}.7
+Release:        %mkrel 21.%{svn_rev}.8
 Epoch:          0
 Summary:        Binaries for the TeX formatting system
 Group:          Publishing
@@ -295,6 +295,7 @@ Provides:       tetex-fonts = 1:3.0
 Provides:       kpathsea
 Requires:       texlive-texmf-fonts = %{version}
 Requires(post): texlive-texmf-fonts = %{version}
+Requires:	tmpwatch
 BuildRequires:  texlive-texmf-fonts = %{version}
 Conflicts:      tetex < 1:3.0
 
