@@ -81,6 +81,10 @@ Patch302:       texlive-source-warns.patch
 Patch303:       texlive-source-x11r7.patch
 Patch304:       texlive-source-xdvi-numlock.patch
 Patch305:       texlive-source-xdvizilla.patch
+# security fixes
+Patch1000:	texlive-CVE-2007-4033.patch
+Patch1001:	texlive-CVE-2010-0739,1440-integer-overflows.patch
+Patch1002:	texlive-CVE-2010-0829-dvipng-multiple-array-indexing-errors.patch
 %if %with obsolete_tetex
 Obsoletes:      tetex < 1:3.0
 %else
@@ -530,6 +534,10 @@ chmod -x texk/dvipdfm/encodings.c
 %patch305 -p0
 
 %patch113 -p0 
+
+%patch1000 -p0
+%patch1001 -p1
+%patch1002 -p1
 
 %ifarch x86_64 
     sed -i 's@^pdftexlibs =\(.*\)$@pdftexlibs = \1 \/usr\/lib64\/libpng\.a@' %{_builddir}/source/texk/web2c/pdftexdir/pdftexlib.mk
