@@ -20,7 +20,8 @@
 
 Name:		texlive
 Version:	%{texlive_ver}
-Release:	%mkrel 22
+Release:	%mkrel 23
+
 Summary:	Binaries for the TeX formatting system
 
 Group:		Publishing
@@ -144,9 +145,6 @@ BuildRequires:	libpoppler-devel
 BuildRequires:	teckit-devel
 Requires:	texlive-texmf = %{version}
 Requires:	texlive-texmf-fonts = %{version}
-# make sure fonts package installed before running post - since
-# fmtutil-sys is symlink to fmtutil
-Requires(post):	%{_bindir}/fmtutil
 Provides:	tex(tex)
 %if %{obsolete_tetex}
 Obsoletes:	tetex < 3.0-52
@@ -282,9 +280,6 @@ Summary: The LaTeX front end for the TeX text formatting system
 Group: Publishing
 Requires: texlive = %{version}-%{release}, texlive-dvips = %{version}-%{release}
 Requires: netpbm
-# make sure main and fonts package installed before running post
-Requires(post): %{_bindir}/fmtutil %{_bindir}/fmtutil-sys
-Requires(post): %{_bindir}/texconfig-sys /sbin/install-info
 BuildRequires: ghostscript netpbm
 %if %{obsolete_tetex}
 Obsoletes: tetex < 3.0-52
