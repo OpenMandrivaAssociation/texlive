@@ -331,7 +331,7 @@ ConTeXt is a document preparation system based on TeX.
 
 %package -n kpathsea
 Summary: Path searching library for TeX-related files
-Group:   Development/Libraries
+Group:   System/Libraries
 %if %{obsolete_tetex}
 Obsoletes: tetex-fonts < 3.0-52
 %endif
@@ -344,7 +344,7 @@ distribution.
 
 %package -n kpathsea-devel
 Summary: Files needed to build software against kpathsea
-Group:   Development/Libraries
+Group:   Development/C
 Requires: kpathsea = %{version}
 
 %description -n kpathsea-devel
@@ -356,7 +356,7 @@ wants to link against the kpathsea library.
 
 %package -n kpathsea-devel-static
 Summary: Files needed to build software against kpathsea
-Group:   Development/Libraries
+Group:   Development/C
 Requires: kpathsea-devel = %{version}
 
 %description -n kpathsea-devel-static
