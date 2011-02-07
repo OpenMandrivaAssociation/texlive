@@ -29,48 +29,52 @@ Source1:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Obsoletes:	tetex <= 3.0-55
-%if %mdkversion < 201100
-Provides:	tetex
+%if %mdkversion <= 201100
+Provides:	tetex = %{version}
 %endif
 
-Provides:	texlive-afm
+Provides:	texlive-afm = %{version}
 Obsoletes:	texlive-afm <= 2007
-Provides:	texlive-context
+Provides:	texlive-context = %{version}
 Obsoletes:	texlive-context <= 2007
-Provides:	texlive-dvilj
+Provides:	texlive-dvilj = %{version}
 Obsoletes:	texlive-dvilj <= 2007
 
 Provides:	tex4ht
 Obsoletes:	tex4ht <= 1.0.2008_02_28_2058
 
-Provides:	texlive-dvipdfm
+Provides:	texlive-dvipdfm = %{version}
 Provides:	texlive-dvipdfm <= 2007
 
 Obsoletes:	tetex-dvipdfm <= 3.0-55
-%if %mdkversion < 201100
-Provides:	tetex-dvipdfm
+%if %mdkversion <= 201100
+Provides:	tetex-dvipdfm = %{version}
 %endif
 
-Provides:	texlive-dvips
+Provides:	texlive-dvips = %{version}
 Obsoletes:	texlive-dvips <= 2007
-Provides:	texlive-dviutils
+Provides:	texlive-dviutils = %{version}
 Obsoletes:	texlive-dviutils <= 2007
-Provides:	texlive-fonts
+Provides:	texlive-fonts = %{version}
 Obsoletes:	texlive-fonts <= 2007
-Provides:	texlive-latex
+
+Obsoletes:	tetex-jadetex <= 3.0-55
+
+Provides:	texlive-latex = %{version}
 Obsoletes:	texlive-latex <= 2007
 
 Obsoletes:	tetex-latex <= 3.0-55
-%if %mdkversion < 201100
-Provides:	tetex-latex
+%if %mdkversion <= 201100
+Provides:	tetex-latex = %{version}
 %endif
 
-Provides:	texlive-latex
+Provides:	texlive-latex = %{version}
 Obsoletes:	texlive-latex <= 2007
-## texlive-jadetex ??
-Provides:	texlive-mfwin
+
+Provides:	texlive-mfwin = %{version}
 Obsoletes:	texlive-mfwin <= 2007
-## texlive-xmltex ??
+
+Obsoletes:	tetex-xmltex <= 3.0-55
 #-----------------------------------------------------------------------
 
 BuildRequires:	bison
