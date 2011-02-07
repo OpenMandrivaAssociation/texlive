@@ -58,9 +58,9 @@ Obsoletes:	texlive-dviutils <= 2007
 Provides:	texlive-fonts = %{version}
 Obsoletes:	texlive-fonts <= 2007
 
-Obsoletes:	tetex-jadetex <= 3.0-55
+Obsoletes:	jadetex <= 3.0-55
 %if %mdkversion <= 201100
-Provides:	tetex-jadetex = %{version}
+Provides:	jadetex = %{version}
 %endif
 
 Provides:	texlive-latex = %{version}
@@ -77,9 +77,9 @@ Obsoletes:	texlive-latex <= 2007
 Provides:	texlive-mfwin = %{version}
 Obsoletes:	texlive-mfwin <= 2007
 
-Obsoletes:	tetex-xmltex <= 3.0-55
+Obsoletes:	xmltex <= 3.0-55
 %if %mdkversion <= 201100
-Provides:	tetex-xmltex = %{version}
+Provides:	xmltex = %{version}
 %endif
 #-----------------------------------------------------------------------
 
