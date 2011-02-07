@@ -58,7 +58,7 @@ Obsoletes:	texlive-dviutils <= 2007
 Provides:	texlive-fonts = %{version}
 Obsoletes:	texlive-fonts <= 2007
 
-Obsoletes:	jadetex <= 3.0-55
+Obsoletes:	jadetex <= 3.12-153
 %if %mdkversion <= 201100
 Provides:	jadetex = %{version}
 %endif
