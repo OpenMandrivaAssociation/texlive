@@ -384,4 +384,7 @@ mv -f %{buildroot}%{_bindir}/otfinfo{,-texlive}
 
 #-----------------------------------------------------------------------
 %clean
+# FIXME temporary hack for test builds
+%if 0
 rm -rf %{buildroot}
+%endif
