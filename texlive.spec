@@ -382,6 +382,16 @@ mv -f %{buildroot}%{_datadir}/texmf/xdvi/XDvi %{buildroot}%{_datadir}/X11/app-de
 # fixme openmpi has a program with the same name
 mv -f %{buildroot}%{_bindir}/otfinfo{,-texlive}
 
+# Correct symlinks
+pushd %{_buildroot}%{_bindir}
+    for file in *; do
+	link=`readlink $file`
+	if [ "x$link" != "x" ]; then
+	    ln -sf `echo $link | sed -e 's%../%../share/%'` $file
+	fi
+    done
+popd
+
 #-----------------------------------------------------------------------
 %clean
 # FIXME temporary hack for test builds
