@@ -1,9 +1,3 @@
-# FIXME - avoid strict checks for first build(s) that also are not
-# easy to do incrementally
-%define Werror_cflags			%nil
-%define _disable_ld_no_undefined	1
-
-#-----------------------------------------------------------------------
 # need to bootstrap first
 %define enable_asymptote	0
 
@@ -124,6 +118,11 @@ Requires:	cdialog
 Requires:	psutils
 %endif
 
+#-----------------------------------------------------------------------
+Patch0:		texlive-20100722-underlink.patch
+Patch1:		texlive-20100722-format.patch
+
+#-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
 production system. It provides a comprehensive TeX system with
@@ -302,16 +301,19 @@ This package includes the static ptexenc library.
 %prep
 %setup -q -n %{name}-%{version}-source
 
-perl -pi -e 's%^(TEXMFMAIN = ).*%$1%{_datadir}/texmf%;'				  \
-	 -e 's%^(TEXMFDIST = ).*%$1%{_datadir}/texmf-dist%;'			  \
-	 -e 's%^(TEXMFLOCAL = ).*%$1{%{_datadir}/texmf-local,%{_datadir}/texmf}%;'\
-	 -e 's%^(TEXMFSYSVAR = ).*%$1%{_localstatedir}/lib/texmf-var%;'		  \
-	 -e 's%^(TEXMFSYSCONFIG = ).*%$1%{_datadir}/texmf-config%;'		  \
-	 -e 's%^(TEXMFHOME = ).*%$1\{\$HOME/texmf,%{_datadir}/texmf\}%;'	  \
-	 -e 's%^(TEXMFVAR = ).*%$1\$HOME/.texlive2010/texmf-var%;'		  \
-	 -e 's%^(TEXMFCONFIG = ).*%$1\$HOME/.texlive2010/texmf-config%;'	  \
-	 -e 's%^(OSFONTDIR = ).*%$1%{_datadir}/fonts%;'				  \
+perl -pi -e 's%^(TEXMFMAIN = ).*%$1%{_datadir}/texmf%;'					\
+	 -e 's%^(TEXMFDIST = ).*%$1%{_datadir}/texmf-dist%;'				\
+	 -e 's%^(TEXMFLOCAL = ).*%$1\{%{_datadir}/texmf-local,%{_datadir}/texmf\}%;'	\
+	 -e 's%^(TEXMFSYSVAR = ).*%$1%{_localstatedir}/lib/texmf-var%;'			\
+	 -e 's%^(TEXMFSYSCONFIG = ).*%$1%{_datadir}/texmf-config%;'			\
+	 -e 's%^(TEXMFHOME = ).*%$1\{\$HOME/texmf,%{_datadir}/texmf\}%;'		\
+	 -e 's%^(TEXMFVAR = ).*%$1\$HOME/.texlive2010/texmf-var%;'			\
+	 -e 's%^(TEXMFCONFIG = ).*%$1\$HOME/.texlive2010/texmf-config%;'		\
+	 -e 's%^(OSFONTDIR = ).*%$1%{_datadir}/fonts%;'					\
 	texk/kpathsea/texmf.cnf
+
+%patch0	-p1
+%patch1	-p1
 
 #-----------------------------------------------------------------------
 %build
