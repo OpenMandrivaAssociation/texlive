@@ -385,9 +385,9 @@ mv -f %{buildroot}%{_datadir}/texmf/xdvi/XDvi %{buildroot}%{_datadir}/X11/app-de
 mv -f %{buildroot}%{_bindir}/otfinfo{,-texlive}
 
 # Correct symlinks
-pushd %{_buildroot}%{_bindir}
+pushd %{buildroot}%{_bindir}
     for file in *; do
-	link=`readlink $file`
+	link=`readlink $file` || :
 	if [ "x$link" != "x" ]; then
 	    ln -sf `echo $link | sed -e 's%../%../share/%'` $file
 	fi
@@ -396,7 +396,4 @@ popd
 
 #-----------------------------------------------------------------------
 %clean
-# FIXME temporary hack for test builds
-%if 0
 rm -rf %{buildroot}
-%endif
