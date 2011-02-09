@@ -146,6 +146,7 @@ many languages around the world.
 %{_datadir}/texmf
 %exclude %{_datadir}/texmf/doc
 %exclude %{_datadir}/texmf/xdvi
+%{_localstatedir}/lib/texmf
 
 #-----------------------------------------------------------------------
 %package	doc
@@ -304,7 +305,7 @@ This package includes the static ptexenc library.
 perl -pi -e 's%^(TEXMFMAIN = ).*%$1%{_datadir}/texmf%;'					\
 	 -e 's%^(TEXMFDIST = ).*%$1%{_datadir}/texmf-dist%;'				\
 	 -e 's%^(TEXMFLOCAL = ).*%$1\{%{_datadir}/texmf-local,%{_datadir}/texmf\}%;'	\
-	 -e 's%^(TEXMFSYSVAR = ).*%$1%{_localstatedir}/lib/texmf-var%;'			\
+	 -e 's%^(TEXMFSYSVAR = ).*%$1%{_localstatedir}/lib/texmf%;'			\
 	 -e 's%^(TEXMFSYSCONFIG = ).*%$1%{_datadir}/texmf-config%;'			\
 	 -e 's%^(TEXMFHOME = ).*%$1\{\$HOME/texmf,%{_datadir}/texmf\}%;'		\
 	 -e 's%^(TEXMFVAR = ).*%$1\$HOME/.texlive2010/texmf-var%;'			\
@@ -381,6 +382,8 @@ mv -f %{buildroot}%{_prefix}/texmf-dist %{buildroot}%{_datadir}
 mkdir -p %{buildroot}%{_datadir}/X11/app-defaults
 mv -f %{buildroot}%{_datadir}/texmf/xdvi/XDvi %{buildroot}%{_datadir}/X11/app-defaults
 
+mkdir -p %{buildroot}%{_localstatedir}/lib/texmf
+
 # fixme openmpi has a program with the same name
 mv -f %{buildroot}%{_bindir}/otfinfo{,-texlive}
 
@@ -392,6 +395,11 @@ pushd %{buildroot}%{_bindir}
 	    ln -sf `echo $link | sed -e 's%../%../share/%'` $file
 	fi
     done
+popd
+
+pushd %{buildroot}%{_datadir}/texmf
+    rm -f scripts/texlive/tlmgr.pl
+    rm -f scripts/tetex/texdoctk.pl
 popd
 
 #-----------------------------------------------------------------------
