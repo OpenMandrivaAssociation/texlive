@@ -1,10 +1,11 @@
+%define	__spec_install_pre	export RPM_SOURCE_DIR="%{_sourcedir}";export RPM_BUILD_DIR="%{_builddir}";export RPM_OPT_FLAGS="%{optflags}";export RPM_ARCH="%{_arch}";export RPM_OS="%{_os}";export RPM_DOC_DIR="%%{_docdir}";export RPM_PACKAGE_NAME="%%{name}";export RPM_PACKAGE_VERSION="%%{version}";export RPM_PACKAGE_RELEASE="%%{release}";export RPM_BUILD_ROOT="%{buildroot}";export LC_ALL=C;export LANG=C;cd %_builddir
+
 # need to bootstrap first
 %define enable_asymptote	0
 
 # need to bootstrap first
 %define enable_xindy		0
 
-# does not build with poppler-0.16
 %define with_system_poppler	0
 %define with_system_dialog	1
 %define with_system_psutils	1
@@ -20,7 +21,7 @@ License:	GPLv2 and BSD and Public Domain and LGPLv2+ and GPLv2+ and LPPL
 URL:		http://tug.org/texlive/
 Source0:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar.xz.sha256
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Obsoletes:	tetex <= 3.0-55
 %if %mdkversion <= 201100
@@ -125,178 +126,26 @@ Patch1:		texlive-20100722-format.patch
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
-production system. It provides a comprehensive TeX system with
-binaries for most flavors of Unix, including GNU/Linux, and also
-Windows. It includes all the major TeX-related programs, macro
-packages, and fonts that are free software, including support for
-many languages around the world.
+production system. It provides a comprehensive TeX system. It includes
+all the major TeX-related programs, macro packages, and fonts that are
+free software, including support for many languages around the world.
 
 %files
 %defattr(-,root,root,-)
 %{_bindir}/*
-%exclude %{_bindir}/k*
-%exclude %{_bindir}/xdvi*
-%{_mandir}/man1/*
-%exclude %{_mandir}/man1/k*
-%exclude %{_mandir}/man1/xdvi.1*
-%{_mandir}/man5/*
-%{_infodir}/*
-%exclude %{_infodir}/kpathsea.info*
 %{_datadir}/texmf-dist
-%{_datadir}/texmf
-%exclude %{_datadir}/texmf/doc
-%exclude %{_datadir}/texmf/xdvi
-%{_localstatedir}/lib/texmf
-
-#-----------------------------------------------------------------------
-%package	doc
-Summary:	TeX Live documentation
-Group:		Publishing
-Requires:	texlive = %{version}-%{release}
-Requires:	texlive-texmf-doc = %{version}
-
-%description	doc
-TeX Live is an easy way to get up and running with the TeX document
-production system. It provides a comprehensive TeX system with
-binaries for most flavors of Unix, including GNU/Linux, and also
-Windows. It includes all the major TeX-related programs, macro
-packages, and fonts that are free software, including support for
-many languages around the world.
-
-%files		doc
-%defattr(-,root,root,-)
-%{_datadir}/texmf/doc
-
-#-----------------------------------------------------------------------
-%package	xdvi
-Summary:	X viewer for DVI files
-Group:		Publishing
-Requires:	xdg-utils
-
-%description	xdvi
-Xdvi allows you to preview the TeX text formatting system's output
-.dvi files on an X Window System.
-
-%files		xdvi
-%defattr(-,root,root,-)
-%{_bindir}/xdvi*
-%{_mandir}/man1/xdvi.1*
+%dir %{_datadir}/texmf
+%{_datadir}/texmf/chktex
+%doc %{_datadir}/texmf/doc
+%{_datadir}/texmf/dvipdfmx
+%{_datadir}/texmf/dvips
+%{_datadir}/texmf/fonts
+%{_datadir}/texmf/scripts
+%{_datadir}/texmf/texconfig
+%{_datadir}/texmf/web2c
 %{_datadir}/texmf/xdvi
 %{_datadir}/X11/app-defaults/XDvi
-
-#-----------------------------------------------------------------------
-%define	kpathsea		%{mklibname kpathsea 6}
-
-%package	-n %{kpathsea}
-Summary:	Path searching library for TeX-related files
-Group:		System/Libraries
-Provides:	kpathsea = %{version}-%{release}
-
-%description	-n %{kpathsea}
-Kpathsea implements generic path searching, configuration,
-and TeX-specific file searching.
-
-%files		-n %{kpathsea}
-%defattr(-,root,root,-)
-%{_bindir}/k*
-%{_libdir}/libkpathsea.so.*
-%{_infodir}/kpathsea.info*
-%{_mandir}/man1/k*
-
-#-----------------------------------------------------------------------
-%define	kpathsea_devel		%{mklibname -d kpathsea}
-
-%package	-n %{kpathsea_devel}
-Summary:	Kpathsea development files
-Group:		Development/C
-Requires:	kpathsea = %{version}-%{release}
-Provides:	kpathsea-devel = %{version}-%{release}
-
-%description	-n %{kpathsea_devel}
-Kpathsea implements generic path searching, configuration,
-and TeX-specific file searching.
-This package includes the kpathsea development files.
-
-%files		-n %{kpathsea_devel}
-%defattr(-,root,root,-)
-%{_includedir}/kpathsea
-%{_libdir}/libkpathsea.la
-%{_libdir}/libkpathsea.so
-
-#-----------------------------------------------------------------------
-%define	kpathsea_static_devel	%{mklibname -d -s kpathsea}
-
-%package	-n %{kpathsea_static_devel}
-Summary:	Kpathsea development files
-Group:		Development/C
-Requires:	kpathsea-devel = %{version}-%{release}
-Provides:	kpathsea-devel-static = %{version}-%{release}
-
-%description	-n %{kpathsea_static_devel}
-Kpathsea implements generic path searching, configuration,
-and TeX-specific file searching.
-This package includes the static kpathsea library.
-
-%files		-n %{kpathsea_static_devel}
-%defattr(-,root,root,-)
-%{_libdir}/libkpathsea.a
-
-#-----------------------------------------------------------------------
-%define	ptexenc			%{mklibname ptexenc 1}
-
-%package	-n %{ptexenc}
-Summary:	Library for Japanese pTeX
-Group:		System/Libraries
-Provides:	ptexenc = %{version}-%{release}
-
-%description	-n %{ptexenc}
-ptexenc is a useful library for Japanese pTeX
-(which stands for publishing TeX, and is an extension of
-TeX by ASCII Co.) and its surrounding tools.
-
-%files		-n %{ptexenc}
-%defattr(-,root,root,-)
-%{_libdir}/libptexenc.so.*
-
-#-----------------------------------------------------------------------
-%define	ptexenc_devel		%{mklibname -d ptexenc}
-
-%package	-n %{ptexenc_devel}
-Summary:	Library for Japanese pTeX
-Group:		Development/C
-Requires:	ptexenc = %{version}-%{release}
-Provides:	ptexenc-devel = %{version}-%{release}
-
-%description	-n %{ptexenc_devel}
-ptexenc is a useful library for Japanese pTeX
-(which stands for publishing TeX, and is an extension of
-TeX by ASCII Co.) and its surrounding tools.
-This package includes the ptexenc development files.
-
-%files		-n %{ptexenc_devel}
-%defattr(-,root,root,-)
-%{_includedir}/ptexenc
-%{_libdir}/libptexenc.la
-%{_libdir}/libptexenc.so
-
-#-----------------------------------------------------------------------
-%define	ptexenc_static_devel	%{mklibname -d -s ptexenc}
-
-%package	-n %{ptexenc_static_devel}
-Summary:	Library for Japanese pTeX
-Group:		Development/C
-Requires:	ptexenc-devel = %{version}-%{release}
-Provides:	ptexenc-devel-static = %{version}-%{release}
-
-%description	-n %{ptexenc_static_devel}
-ptexenc is a useful library for Japanese pTeX
-(which stands for publishing TeX, and is an extension of
-TeX by ASCII Co.) and its surrounding tools.
-This package includes the static ptexenc library.
-
-%files		-n %{ptexenc_static_devel}
-%defattr(-,root,root,-)
-%{_libdir}/libptexenc.a
+%{_localstatedir}/lib/texmf
 
 #-----------------------------------------------------------------------
 %prep
@@ -322,7 +171,6 @@ perl -pi -e 's%^(TEXMFMAIN = ).*%$1%{_datadir}/texmf%;'					\
 	--with-banner-add="/Mandriva"				\
 	--disable-native-texlive-build				\
 	--enable-missing					\
-	--enable-shared						\
 %if %{enable_xindy}
 	--enable-xindy						\
 %else
@@ -376,31 +224,86 @@ popd
 %endif
 
 mkdir -p %{buildroot}%{_datadir}
-mv -f %{buildroot}%{_prefix}/texmf %{buildroot}%{_datadir}
-mv -f %{buildroot}%{_prefix}/texmf-dist %{buildroot}%{_datadir}
+for dir in texmf texmf-dist; do
+    if [ -d %{buildroot}%{_prefix}/$dir ]; then
+	rm -fr %{buildroot}%{_datadir}/$dir
+	mv %{buildroot}%{_prefix}/$dir %{buildroot}%{_datadir}
+    fi
+done
 
-mkdir -p %{buildroot}%{_datadir}/X11/app-defaults
-mv -f %{buildroot}%{_datadir}/texmf/xdvi/XDvi %{buildroot}%{_datadir}/X11/app-defaults
+if [ -f %{buildroot}%{_datadir}/texmf/xdvi/XDvi ]; then
+    mkdir -p %{buildroot}%{_datadir}/X11/app-defaults
+    mv -f %{buildroot}%{_datadir}/texmf/xdvi/XDvi		\
+	%{buildroot}%{_datadir}/X11/app-defaults
+fi
 
 mkdir -p %{buildroot}%{_localstatedir}/lib/texmf
 
 # fixme openmpi has a program with the same name
-mv -f %{buildroot}%{_bindir}/otfinfo{,-texlive}
+[ -f %{buildroot}%{_bindir}/otfinfo ] &&
+    mv -f %{buildroot}%{_bindir}/otfinfo{,-texlive}
 
-# Correct symlinks
 pushd %{buildroot}%{_bindir}
+    # missing symbolic links
+    ln -sf aleph lamed
+    ln -sf luatex dvilualatex
+    ln -sf luatex lualatex
+    ln -sf luatex dviluatex
+    ln -sf pdftex amstex
+    ln -sf pdftex cslatex
+    ln -sf pdftex csplain
+    ln -sf pdftex eplain
+    ln -sf pdftex etex
+    ln -sf pdftex jadetex
+    ln -sf pdftex latex
+    ln -sf pdftex mex
+    ln -sf pdftex mltex
+    ln -sf pdftex mllatex
+    ln -sf pdftex pdfcslatex
+    ln -sf pdftex pdfcsplain
+    ln -sf pdftex pdfetex
+    ln -sf pdftex pdfjadetex
+    ln -sf pdftex pdflatex
+    ln -sf pdftex pdfmex
+    ln -sf pdftex pdfxmltex
+    ln -sf pdftex physe
+    ln -sf pdftex phyzzx
+    ln -sf pdftex utf8mex
+    ln -sf pdftex texsis
+    ln -sf pdftex xmltex
+    ln -sf ptex platex
+    ln -sf mpost metafun
+    ln -sf mpost mfplain
+    ln -sf xetex xelatex
+    # correct symlinks
     for file in *; do
 	link=`readlink $file` || :
 	if [ "x$link" != "x" ]; then
 	    ln -sf `echo $link | sed -e 's%../%../share/%'` $file
 	fi
     done
+%if %{with_system_dialog}
+    ln -sf dialog tcdialog
+%endif
+
+    rm -f tlmgr
+    rm -f texdoctk
 popd
 
 pushd %{buildroot}%{_datadir}/texmf
     rm -f scripts/texlive/tlmgr.pl
     rm -f scripts/tetex/texdoctk.pl
 popd
+
+# install manual pages and info files from texlive-texmf tarball
+rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
+
+# do not generate dynamic libraries and do not install static ones
+rm -fr %{buildroot}%{_libdir}
+rm -fr %{buildroot}%{_includedir}
+
+# stray directory left
+rm -fr %{buildroot}%{_datadir}/lcdf-typetools-for-tex-live
 
 #-----------------------------------------------------------------------
 %clean
