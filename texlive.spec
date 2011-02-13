@@ -17,7 +17,7 @@ Version:	20100722
 Release:	%mkrel 1
 Summary:	The TeX formatting system
 Group:		Publishing
-License:	GPLv2 and BSD and Public Domain and LGPLv2+ and GPLv2+ and LPPL
+License:	Apache2 and Artistic and BSD and FDL and Freeware and GFL and GFSL and GPL and GPLv2 and GPLv3 and LGPL and LGPLv2.1 and LPPL and LPPLv1 and LPPLv1.2 and LPPLv1.3 and OFL and Public Domain
 URL:		http://tug.org/texlive/
 Source0:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar.xz.sha256
