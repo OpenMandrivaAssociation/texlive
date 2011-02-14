@@ -111,7 +111,7 @@ BuildRequires:	png-devel
 BuildRequires:	t1lib-devel
 %endif
 %if %{enable_xindy}
-BuildRequires:	texlive-latex
+BuildRequires:	texlive
 %endif
 BuildRequires:	zziplib-devel
 
@@ -140,10 +140,11 @@ free software, including support for many languages around the world.
 %files
 %defattr(-,root,root,-)
 %{_bindir}/*
-%{_datadir}/texmf-dist
 %dir %{_datadir}/texmf
+%verify(not md5 size mtime) %{_datadir}/texmf/ls-R
 %dir %{_datadir}/texmf-dist
-%{_localstatedir}/lib/texmf
+%verify(not md5 size mtime) %{_datadir}/texmf-dist/ls-R
+%dir %{_localstatedir}/lib/texmf
 
 #-----------------------------------------------------------------------
 %prep
