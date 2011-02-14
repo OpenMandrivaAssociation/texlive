@@ -134,9 +134,7 @@ free software, including support for many languages around the world.
 %defattr(-,root,root,-)
 %{_bindir}/*
 %dir %{_datadir}/texmf
-%verify(not md5 size mtime) %{_datadir}/texmf/ls-R
 %dir %{_datadir}/texmf-dist
-%verify(not md5 size mtime) %{_datadir}/texmf-dist/ls-R
 %dir %{_localstatedir}/lib/texmf
 
 #-----------------------------------------------------------------------
@@ -303,6 +301,6 @@ rm -rf %{buildroot}
 
 #-----------------------------------------------------------------------
 %post
-for dir in texmf texmf-dist; do
-    cd %{_datadir}/$dir; ls -R `echo * | grep -v doc` > ls-R
-done
+cd %{_datadir} &&
+    rm -f texmf/ls-R texmf-dist/ls-R &&
+    mktexlsr %{_datadir}/{texmf,-dist}
