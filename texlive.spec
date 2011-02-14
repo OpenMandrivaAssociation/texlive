@@ -17,7 +17,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 1
+Release:	%mkrel 2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	Apache2 and Artistic and BSD and FDL and Freeware and GFL and GFSL and GPL and GPLv2 and GPLv3 and LGPL and LGPLv2.1 and LPPL and LPPLv1 and LPPLv1.2 and LPPLv1.3 and OFL and Public Domain
@@ -119,6 +119,9 @@ Requires:	psutils
 Requires:	texlive-texmf
 Requires:	texlive-fonts
 
+Requires(post):	texlive-texmf
+Requires(post):	texlive-fonts
+
 #-----------------------------------------------------------------------
 Patch0:		texlive-20100722-underlink.patch
 Patch1:		texlive-20100722-format.patch
@@ -136,6 +139,7 @@ free software, including support for many languages around the world.
 %dir %{_datadir}/texmf
 %dir %{_datadir}/texmf-dist
 %dir %{_localstatedir}/lib/texmf
+%dir %{_sysconfdir}/texmf
 
 #-----------------------------------------------------------------------
 %prep
@@ -220,6 +224,7 @@ for dir in texmf texmf-dist; do
 done
 
 mkdir -p %{buildroot}%{_localstatedir}/lib/texmf
+mkdir -p %{buildroot}%{_sysconfdir}/texmf
 
 %if %{with_system_lcdf}
 # stray directory left
@@ -284,9 +289,7 @@ popd
 
 # use texmf data
 rm -fr %{buildroot}%{_datadir}/texmf/*
-touch %{buildroot}%{_datadir}/texmf/ls-R
 rm -fr %{buildroot}%{_datadir}/texmf-dist/*
-touch %{buildroot}%{_datadir}/texmf-dist/ls-R
 
 # install manual pages and info files from texlive-texmf tarball
 rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
@@ -301,6 +304,10 @@ rm -rf %{buildroot}
 
 #-----------------------------------------------------------------------
 %post
-cd %{_datadir} &&
-    rm -f texmf/ls-R texmf-dist/ls-R &&
+pushd %{_datadir}
+    rm -f texmf/ls-R texmf-dist/ls-R
     mktexlsr %{_datadir}/{texmf,-dist}
+popd
+pushd %{_localstatedir}/lib/texmf
+    texconfig-sys init
+popd
