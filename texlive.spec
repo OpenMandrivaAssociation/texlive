@@ -1,4 +1,4 @@
-%define	__spec_install_pre	export RPM_SOURCE_DIR="%{_sourcedir}";export RPM_BUILD_DIR="%{_builddir}";export RPM_OPT_FLAGS="%{optflags}";export RPM_ARCH="%{_arch}";export RPM_OS="%{_os}";export RPM_DOC_DIR="%%{_docdir}";export RPM_PACKAGE_NAME="%%{name}";export RPM_PACKAGE_VERSION="%%{version}";export RPM_PACKAGE_RELEASE="%%{release}";export RPM_BUILD_ROOT="%{buildroot}";export LC_ALL=C;export LANG=C;cd %_builddir
+#%#define __spec_install_pre	export RPM_SOURCE_DIR="%{_sourcedir}";export RPM_BUILD_DIR="%{_builddir}";export RPM_OPT_FLAGS="%{optflags}";export RPM_ARCH="%{_arch}";export RPM_OS="%{_os}";export RPM_DOC_DIR="%%{_docdir}";export RPM_PACKAGE_NAME="%%{name}";export RPM_PACKAGE_VERSION="%%{version}";export RPM_PACKAGE_RELEASE="%%{release}";export RPM_BUILD_ROOT="%{buildroot}";export LC_ALL=C;export LANG=C;cd %_builddir
 
 # need to bootstrap first
 %define enable_asymptote	0
@@ -12,6 +12,7 @@
 %define with_system_psutils	1
 %define with_system_t1lib	1
 %define with_system_tex4ht	0
+%define with_system_teckit	0
 
 #-----------------------------------------------------------------------
 Name:		texlive
@@ -25,17 +26,42 @@ Source0:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar
 Source1:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar.xz.sha256
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-Obsoletes:	tetex <= 3.0-55
 %if %mdkversion <= 201100
+Provides:	jadetex = %{version}
 Provides:	tetex = %{version}
+Provides:	tetex-dvipdfm = %{version}
+Provides:	tetex-latex = %{version}
+Provides:	texlive-afm = %{version}
+Provides:	texlive-context = %{version}
+Provides:	texlive-dvilj = %{version}
+Provides:	texlive-dvipdfm = %{version}
+Provides:	texlive-dvips = %{version}
+Provides:	texlive-dviutils = %{version}
+Provides:	texlive-latex = %{version}
+Provides:	texlive-mfwin = %{version}
+Provides:	xmltex = %{version}
 %endif
 
-Provides:	texlive-afm = %{version}
+Obsoletes:	jadetex <= 3.12-153
+Obsoletes:	tetex <= 3.0-55
+Obsoletes:	tetex-dvipdfm <= 3.0-55
+Obsoletes:	tetex-latex <= 3.0-55
 Obsoletes:	texlive-afm <= 2007
-Provides:	texlive-context = %{version}
 Obsoletes:	texlive-context <= 2007
-Provides:	texlive-dvilj = %{version}
 Obsoletes:	texlive-dvilj <= 2007
+Obsoletes:	texlive-dvipdfm <= 2007
+Obsoletes:	texlive-dvips <= 2007
+Obsoletes:	texlive-dviutils <= 2007
+Obsoletes:	texlive-latex <= 2007
+Obsoletes:	texlive-mfwin <= 2007
+Obsoletes:	xmltex <= 3.0-55
+
+%if %{with_system_teckit}
+Requires:	teckit
+%else
+Provides:	teckit
+Obsoletes:	teckit <= 2.5.1
+%endif
 
 %if %{with_system_tex4ht}
 Requires:	tex4ht
@@ -44,42 +70,6 @@ Provides:	tex4ht
 Obsoletes:	tex4ht <= 1.0.2008_02_28_2058
 %endif
 
-Provides:	texlive-dvipdfm = %{version}
-Provides:	texlive-dvipdfm <= 2007
-
-Obsoletes:	tetex-dvipdfm <= 3.0-55
-%if %mdkversion <= 201100
-Provides:	tetex-dvipdfm = %{version}
-%endif
-
-Provides:	texlive-dvips = %{version}
-Obsoletes:	texlive-dvips <= 2007
-Provides:	texlive-dviutils = %{version}
-Obsoletes:	texlive-dviutils <= 2007
-
-Obsoletes:	jadetex <= 3.12-153
-%if %mdkversion <= 201100
-Provides:	jadetex = %{version}
-%endif
-
-Provides:	texlive-latex = %{version}
-Obsoletes:	texlive-latex <= 2007
-
-Obsoletes:	tetex-latex <= 3.0-55
-%if %mdkversion <= 201100
-Provides:	tetex-latex = %{version}
-%endif
-
-Provides:	texlive-latex = %{version}
-Obsoletes:	texlive-latex <= 2007
-
-Provides:	texlive-mfwin = %{version}
-Obsoletes:	texlive-mfwin <= 2007
-
-Obsoletes:	xmltex <= 3.0-55
-%if %mdkversion <= 201100
-Provides:	xmltex = %{version}
-%endif
 #-----------------------------------------------------------------------
 
 BuildRequires:	bison
@@ -110,6 +100,9 @@ BuildRequires:	png-devel
 %if %{with_system_t1lib}
 BuildRequires:	t1lib-devel
 %endif
+%if %{with_system_teckit}
+BuildRequires:	teckit-devel
+%endif
 %if %{enable_xindy}
 BuildRequires:	texlive
 %endif
@@ -119,10 +112,10 @@ BuildRequires:	zziplib-devel
 %if %{with_system_dialog}
 Requires:	cdialog
 %endif
+Requires:	ghostscript
 %if %{with_system_psutils}
 Requires:	psutils
 %endif
-
 Requires:	texlive-texmf
 Requires:	texlive-fonts
 
@@ -186,6 +179,10 @@ free software, including support for many languages around the world.
 	--with-system-t1lib					\
 	--disable-t1utils					\
 %endif
+%if %{with_system_teckit}
+	--disable-teckit					\
+	--with-teckit-includes=%{_includedir}/teckit		\
+%endif
 %if %{with_system_tex4ht}
 	--disable-tex4htk					\
 %endif
@@ -227,9 +224,10 @@ done
 mkdir -p %{buildroot}%{_localstatedir}/lib/texmf
 
 %if %{with_system_lcdf}
-# openmpi has a program with the same name
-rm -fr %{buildroot}%{_datadir}/lcdf-typetools-for-tex-live
 # stray directory left
+rm -fr %{buildroot}%{_datadir}/lcdf-typetools-for-tex-live
+%else
+# openmpi has a program with the same name
 if [ -f %{buildroot}%{_bindir}/otfinfo ]; then
     mv -f %{buildroot}%{_bindir}/otfinfo{,-texlive}
 fi
