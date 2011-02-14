@@ -8,8 +8,10 @@
 
 %define with_system_poppler	0
 %define with_system_dialog	1
+%define with_system_lcdf	0
 %define with_system_psutils	1
 %define with_system_t1lib	1
+%define with_system_tex4ht	0
 
 #-----------------------------------------------------------------------
 Name:		texlive
@@ -35,8 +37,12 @@ Obsoletes:	texlive-context <= 2007
 Provides:	texlive-dvilj = %{version}
 Obsoletes:	texlive-dvilj <= 2007
 
+%if %{with_system_tex4ht}
+Requires:	tex4ht
+%else
 Provides:	tex4ht
 Obsoletes:	tex4ht <= 1.0.2008_02_28_2058
+%endif
 
 Provides:	texlive-dvipdfm = %{version}
 Provides:	texlive-dvipdfm <= 2007
@@ -50,8 +56,6 @@ Provides:	texlive-dvips = %{version}
 Obsoletes:	texlive-dvips <= 2007
 Provides:	texlive-dviutils = %{version}
 Obsoletes:	texlive-dviutils <= 2007
-Provides:	texlive-fonts = %{version}
-Obsoletes:	texlive-fonts <= 2007
 
 Obsoletes:	jadetex <= 3.12-153
 %if %mdkversion <= 201100
@@ -119,6 +123,9 @@ Requires:	cdialog
 Requires:	psutils
 %endif
 
+Requires:	texlive-texmf
+Requires:	texlive-fonts
+
 #-----------------------------------------------------------------------
 Patch0:		texlive-20100722-underlink.patch
 Patch1:		texlive-20100722-format.patch
@@ -135,33 +142,12 @@ free software, including support for many languages around the world.
 %{_bindir}/*
 %{_datadir}/texmf-dist
 %dir %{_datadir}/texmf
-%{_datadir}/texmf/chktex
-%doc %{_datadir}/texmf/doc
-%{_datadir}/texmf/dvipdfmx
-%{_datadir}/texmf/dvips
-%{_datadir}/texmf/fonts
-%{_datadir}/texmf/scripts
-%{_datadir}/texmf/texconfig
-%{_datadir}/texmf/web2c
-%{_datadir}/texmf/xdvi
-%{_datadir}/X11/app-defaults/XDvi
+%dir %{_datadir}/texmf-dist
 %{_localstatedir}/lib/texmf
 
 #-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}-%{version}-source
-
-perl -pi -e 's%^(TEXMFMAIN = ).*%$1%{_datadir}/texmf%;'					\
-	 -e 's%^(TEXMFDIST = ).*%$1%{_datadir}/texmf-dist%;'				\
-	 -e 's%^(TEXMFLOCAL = ).*%$1\{%{_datadir}/texmf-local,%{_datadir}/texmf\}%;'	\
-	 -e 's%^(TEXMFSYSVAR = ).*%$1%{_localstatedir}/lib/texmf%;'			\
-	 -e 's%^(TEXMFSYSCONFIG = ).*%$1%{_datadir}/texmf-config%;'			\
-	 -e 's%^(TEXMFHOME = ).*%$1\{\$HOME/texmf,%{_datadir}/texmf\}%;'		\
-	 -e 's%^(TEXMFVAR = ).*%$1\$HOME/.texlive2010/texmf-var%;'			\
-	 -e 's%^(TEXMFCONFIG = ).*%$1\$HOME/.texlive2010/texmf-config%;'		\
-	 -e 's%^(OSFONTDIR = ).*%$1%{_datadir}/fonts%;'					\
-	texk/kpathsea/texmf.cnf
-
 %patch0	-p1
 %patch1	-p1
 
@@ -191,10 +177,16 @@ perl -pi -e 's%^(TEXMFMAIN = ).*%$1%{_datadir}/texmf%;'					\
 	--enable-psutils					\
 %endif
 	--with-system-gd					\
+%if %{with_system_lcdf}
+	--disable-lcdf-typetools				\
+%endif
 	--with-system-png					\
 %if %{with_system_t1lib}
 	--with-system-t1lib					\
 	--disable-t1utils					\
+%endif
+%if %{with_system_tex4ht}
+	--disable-tex4htk					\
 %endif
 %if %{with_system_poppler}
 	--with-system-xpdf					\
@@ -231,17 +223,16 @@ for dir in texmf texmf-dist; do
     fi
 done
 
-if [ -f %{buildroot}%{_datadir}/texmf/xdvi/XDvi ]; then
-    mkdir -p %{buildroot}%{_datadir}/X11/app-defaults
-    mv -f %{buildroot}%{_datadir}/texmf/xdvi/XDvi		\
-	%{buildroot}%{_datadir}/X11/app-defaults
-fi
-
 mkdir -p %{buildroot}%{_localstatedir}/lib/texmf
 
-# fixme openmpi has a program with the same name
-[ -f %{buildroot}%{_bindir}/otfinfo ] &&
+%if %{with_system_lcdf}
+# openmpi has a program with the same name
+rm -fr %{buildroot}%{_datadir}/lcdf-typetools-for-tex-live
+# stray directory left
+if [ -f %{buildroot}%{_bindir}/otfinfo ]; then
     mv -f %{buildroot}%{_bindir}/otfinfo{,-texlive}
+fi
+%endif
 
 pushd %{buildroot}%{_bindir}
     # missing symbolic links
@@ -285,15 +276,20 @@ pushd %{buildroot}%{_bindir}
 %if %{with_system_dialog}
     ln -sf dialog tcdialog
 %endif
-
+    rm -f a2ping
+    rm -f e2pall
+    rm -f rungs
+    rm -f simpdftex
     rm -f tlmgr
+    rm -f texdoc
     rm -f texdoctk
 popd
 
-pushd %{buildroot}%{_datadir}/texmf
-    rm -f scripts/texlive/tlmgr.pl
-    rm -f scripts/tetex/texdoctk.pl
-popd
+# use texmf data
+rm -fr %{buildroot}%{_datadir}/texmf/*
+touch %{buildroot}%{_datadir}/texmf/ls-R
+rm -fr %{buildroot}%{_datadir}/texmf-dist/*
+touch %{buildroot}%{_datadir}/texmf-dist/ls-R
 
 # install manual pages and info files from texlive-texmf tarball
 rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
@@ -302,9 +298,12 @@ rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
 rm -fr %{buildroot}%{_libdir}
 rm -fr %{buildroot}%{_includedir}
 
-# stray directory left
-rm -fr %{buildroot}%{_datadir}/lcdf-typetools-for-tex-live
-
 #-----------------------------------------------------------------------
 %clean
 rm -rf %{buildroot}
+
+#-----------------------------------------------------------------------
+%post
+for dir in texmf texmf-dist; do
+    cd %{_datadir}/$dir; ls -R `echo * | grep -v doc` > ls-R
+done
