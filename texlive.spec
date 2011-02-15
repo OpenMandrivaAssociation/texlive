@@ -2,8 +2,6 @@
 
 # need to bootstrap first
 %define enable_asymptote	0
-
-# need to bootstrap first
 %define enable_xindy		0
 
 %define with_system_poppler	0
@@ -17,7 +15,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 2
+Release:	%mkrel 3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	Apache2 and Artistic and BSD and FDL and Freeware and GFL and GFSL and GPL and GPLv2 and GPLv3 and LGPL and LGPLv2.1 and LPPL and LPPLv1 and LPPLv1.2 and LPPLv1.3 and OFL and Public Domain
@@ -30,6 +28,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Provides:	jadetex = %{version}
 Provides:	tetex = %{version}
 Provides:	tetex-dvipdfm = %{version}
+Provides:	tetex-dvips = %{version}
 Provides:	tetex-latex = %{version}
 Provides:	texlive-afm = %{version}
 Provides:	texlive-context = %{version}
@@ -45,6 +44,7 @@ Provides:	xmltex = %{version}
 Obsoletes:	jadetex <= 3.12-153
 Obsoletes:	tetex <= 3.0-55
 Obsoletes:	tetex-dvipdfm <= 3.0-55
+Obsoletes:	tetex-dvips <= 3.0-55
 Obsoletes:	tetex-latex <= 3.0-55
 Obsoletes:	texlive-afm <= 2007
 Obsoletes:	texlive-context <= 2007
@@ -84,7 +84,9 @@ BuildRequires:	flex
 BuildRequires:	freetype-devel
 BuildRequires:	fontconfig-devel
 %if %{enable_asymptote}
-BuildRequires:	gc-devel
+BuildRequires:	libgc-devel
+BuildRequires:	libsigsegv-devel
+BuildRequires:	ghostscript-dvipdf
 BuildRequires:	gsl-devel
 BuildRequires:	GL-devel
 %endif
@@ -106,6 +108,9 @@ BuildRequires:	teckit-devel
 %if %{enable_xindy}
 BuildRequires:	texlive
 %endif
+%if %{enable_asymptote}
+BuildRequires:	texinfo
+%endif
 BuildRequires:	zziplib-devel
 
 #-----------------------------------------------------------------------
@@ -125,6 +130,7 @@ Requires(post):	texlive-fonts
 #-----------------------------------------------------------------------
 Patch0:		texlive-20100722-underlink.patch
 Patch1:		texlive-20100722-format.patch
+Patch2:		texlive-20100722-asymptote.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -146,6 +152,9 @@ free software, including support for many languages around the world.
 %setup -q -n %{name}-%{version}-source
 %patch0	-p1
 %patch1	-p1
+%if %{enable_asymptote}
+%patch2 -p1
+%endif
 
 #-----------------------------------------------------------------------
 %build
@@ -200,7 +209,8 @@ free software, including support for many languages around the world.
 pushd utils/asymptote
 %configure2_5x							\
 	--enable-gc=system					\
-	--enable-texlive-build
+	--enable-texlive-build					\
+	--datadir=%{_datadir}/texmf
 %make
 popd
 %endif
@@ -306,7 +316,7 @@ rm -rf %{buildroot}
 %post
 pushd %{_datadir}
     rm -f texmf/ls-R texmf-dist/ls-R
-    mktexlsr %{_datadir}/{texmf,-dist}
+    mktexlsr %{_datadir}/texmf{,-dist}
 popd
 pushd %{_localstatedir}/lib/texmf
     texconfig-sys init
