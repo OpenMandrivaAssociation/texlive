@@ -1,5 +1,3 @@
-#%#define __spec_install_pre	export RPM_SOURCE_DIR="%{_sourcedir}";export RPM_BUILD_DIR="%{_builddir}";export RPM_OPT_FLAGS="%{optflags}";export RPM_ARCH="%{_arch}";export RPM_OS="%{_os}";export RPM_DOC_DIR="%%{_docdir}";export RPM_PACKAGE_NAME="%%{name}";export RPM_PACKAGE_VERSION="%%{version}";export RPM_PACKAGE_RELEASE="%%{release}";export RPM_BUILD_ROOT="%{buildroot}";export LC_ALL=C;export LANG=C;cd %_builddir
-
 # need to bootstrap first
 %define enable_asymptote	0
 %define enable_xindy		0
@@ -15,7 +13,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 4
+Release:	%mkrel 5
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	Apache2 and Artistic and BSD and FDL and Freeware and GFL and GFSL and GPL and GPLv2 and GPLv3 and LGPL and LGPLv2.1 and LPPL and LPPLv1 and LPPLv1.2 and LPPLv1.3 and OFL and Public Domain
@@ -40,7 +38,6 @@ Provides:	texlive-latex = %{version}
 Provides:	texlive-mfwin = %{version}
 Provides:	xmltex = %{version}
 %endif
-
 Obsoletes:	jadetex <= 3.12-153
 Obsoletes:	tetex <= 3.0-55
 Obsoletes:	tetex-dvipdfm <= 3.0-55
@@ -56,22 +53,29 @@ Obsoletes:	texlive-latex <= 2007
 Obsoletes:	texlive-mfwin <= 2007
 Obsoletes:	xmltex <= 3.0-55
 
+#-----------------------------------------------------------------------
+%if %{with_system_dialog}
+Requires:	cdialog
+%endif
+Requires:	ghostscript
+%if %{with_system_psutils}
+Requires:	psutils
+%endif
 %if %{with_system_teckit}
 Requires:	teckit
 %else
 Provides:	teckit
 Obsoletes:	teckit <= 2.5.1
 %endif
-
 %if %{with_system_tex4ht}
 Requires:	tex4ht
 %else
 Provides:	tex4ht
 Obsoletes:	tex4ht <= 1.0.2008_02_28_2058
 %endif
+Requires(post):	texlive-texmf
 
 #-----------------------------------------------------------------------
-
 BuildRequires:	bison
 %if %{enable_xindy}
 BuildRequires:	clisp
@@ -114,20 +118,6 @@ BuildRequires:	texinfo
 BuildRequires:	zziplib-devel
 
 #-----------------------------------------------------------------------
-%if %{with_system_dialog}
-Requires:	cdialog
-%endif
-Requires:	ghostscript
-%if %{with_system_psutils}
-Requires:	psutils
-%endif
-Requires:	texlive-texmf
-Requires:	texlive-fonts
-
-Requires(post):	texlive-texmf
-Requires(post):	texlive-fonts
-
-#-----------------------------------------------------------------------
 Patch0:		texlive-20100722-underlink.patch
 Patch1:		texlive-20100722-format.patch
 Patch2:		texlive-20100722-asymptote.patch
@@ -142,8 +132,6 @@ free software, including support for many languages around the world.
 %files
 %defattr(-,root,root,-)
 %{_bindir}/*
-%dir %{_datadir}/texmf
-%dir %{_datadir}/texmf-dist
 %dir %{_localstatedir}/lib/texmf
 %dir %{_sysconfdir}/texmf
 
@@ -298,8 +286,7 @@ pushd %{buildroot}%{_bindir}
 popd
 
 # use texmf data
-rm -fr %{buildroot}%{_datadir}/texmf/*
-rm -fr %{buildroot}%{_datadir}/texmf-dist/*
+rm -fr %{buildroot}%{_datadir}/texmf{,-dist}
 
 # install manual pages and info files from texlive-texmf tarball
 rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
