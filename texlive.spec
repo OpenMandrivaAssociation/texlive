@@ -63,14 +63,11 @@ Requires:	psutils
 %endif
 %if %{with_system_teckit}
 Requires:	teckit
-%else
-Provides:	teckit
-Obsoletes:	teckit <= 2.5.1
 %endif
 %if %{with_system_tex4ht}
 Requires:	tex4ht
 %else
-Provides:	tex4ht
+Provides:	tex4ht = %{version}
 Obsoletes:	tex4ht <= 1.0.2008_02_28_2058
 %endif
 Requires(post):	texlive-texmf
