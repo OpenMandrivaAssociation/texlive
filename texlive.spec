@@ -1,6 +1,6 @@
 # need to bootstrap first
-%define enable_asymptote	0
-%define enable_xindy		0
+%define enable_asymptote	1
+%define enable_xindy		1
 
 %define with_system_poppler	0
 %define with_system_dialog	1
@@ -13,7 +13,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 5
+Release:	%mkrel 6
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	Apache2 and Artistic and BSD and FDL and Freeware and GFL and GFSL and GPL and GPLv2 and GPLv3 and LGPL and LGPLv2.1 and LPPL and LPPLv1 and LPPLv1.2 and LPPLv1.3 and OFL and Public Domain
@@ -143,6 +143,18 @@ free software, including support for many languages around the world.
 %if %{enable_asymptote}
 %patch2 -p1
 %endif
+
+# setup default builtin values, added to paths.h from texmf.cnf
+perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{_datadir}/texmf%;'			\
+	 -e 's%^(TEXMFDIST\s+= ).*%$1%{_datadir}/texmf-dist%;'			\
+	 -e 's%^(TEXMFLOCAL\s+= ).*%$1%{_datadir}/texmf%;'			\
+	 -e 's%^(TEXMFSYSVAR\s+= ).*%$1%{_localstatedir}/lib/texmf%;'		\
+	 -e 's%^(TEXMFSYSCONFIG\s+= ).*%$1%{_sysconfdir}/texmf%;'		\
+	 -e 's%^(TEXMFHOME\s+= ).*%$1\{\$HOME/texmf,%{_datadir}/texmf\}%;'	\
+	 -e 's%^(TEXMFVAR\s+= ).*%$1\$HOME/.texlive2010/texmf-var%;'		\
+	 -e 's%^(TEXMFCONFIG\s+= ).*%$1\$HOME/.texlive2010/texmf-config%;'	\
+	 -e 's%^(OSFONTDIR\s+= ).*%$1%{_datadir}/fonts%;'			\
+	texk/kpathsea/texmf.cnf
 
 #-----------------------------------------------------------------------
 %build
@@ -300,7 +312,8 @@ rm -fr %{buildroot}%{_includedir}
 rm -rf %{buildroot}
 
 #-----------------------------------------------------------------------
-%post
+# need to run these scripts after removing tetex or texlive-2007
+%posttrans
 pushd %{_datadir}
     rm -f texmf/ls-R texmf-dist/ls-R
     mktexlsr %{_datadir}/texmf{,-dist}
