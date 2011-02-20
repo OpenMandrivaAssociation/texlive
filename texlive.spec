@@ -24,6 +24,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %if %mdkversion <= 201100
 Provides:	jadetex = %{version}
+Provides:	pdfjam = %{version}
 Provides:	tetex = %{version}
 Provides:	tetex-dvipdfm = %{version}
 Provides:	tetex-dvips = %{version}
@@ -39,6 +40,7 @@ Provides:	texlive-mfwin = %{version}
 Provides:	xmltex = %{version}
 %endif
 Obsoletes:	jadetex <= 3.12-153
+Obsoletes:	pdfjam <= 1.21-2
 Obsoletes:	tetex <= 3.0-55
 Obsoletes:	tetex-dvipdfm <= 3.0-55
 Obsoletes:	tetex-dvips <= 3.0-55
@@ -58,6 +60,12 @@ Obsoletes:	xmltex <= 3.0-55
 Requires:	cdialog
 %endif
 Requires:	ghostscript
+%if %{with_system_lcdf}
+Requires:	lcdf-typetoools
+%else
+Provides:	lcdf-typetools = %{version}
+Obsoletes:	lcdf-typetools <= 2.59-5
+%endif
 %if %{with_system_psutils}
 Requires:	psutils
 %endif
