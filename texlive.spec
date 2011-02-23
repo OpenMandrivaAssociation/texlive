@@ -10,6 +10,9 @@
 %define with_system_tex4ht	0
 %define with_system_teckit	0
 
+%define texmfdir		%{_datadir}/texmf
+%define texmfdistdir		%{_datadir}/texmf-dist
+
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
@@ -150,15 +153,15 @@ free software, including support for many languages around the world.
 %endif
 
 # setup default builtin values, added to paths.h from texmf.cnf
-perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{_datadir}/texmf%;'			\
-	 -e 's%^(TEXMFDIST\s+= ).*%$1%{_datadir}/texmf-dist%;'			\
-	 -e 's%^(TEXMFLOCAL\s+= ).*%$1%{_datadir}/texmf%;'			\
-	 -e 's%^(TEXMFSYSVAR\s+= ).*%$1%{_localstatedir}/lib/texmf%;'		\
-	 -e 's%^(TEXMFSYSCONFIG\s+= ).*%$1%{_sysconfdir}/texmf%;'		\
-	 -e 's%^(TEXMFHOME\s+= ).*%$1\{\$HOME/texmf,%{_datadir}/texmf\}%;'	\
-	 -e 's%^(TEXMFVAR\s+= ).*%$1\$HOME/.texlive2010/texmf-var%;'		\
-	 -e 's%^(TEXMFCONFIG\s+= ).*%$1\$HOME/.texlive2010/texmf-config%;'	\
-	 -e 's%^(OSFONTDIR\s+= ).*%$1%{_datadir}/fonts%;'			\
+perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{texmfdir}%;'			  \
+	 -e 's%^(TEXMFDIST\s+= ).*%$1%{texmfdistdir}%;'			  \
+	 -e 's%^(TEXMFLOCAL\s+= ).*%$1%{texmfdir}%;'			  \
+	 -e 's%^(TEXMFSYSVAR\s+= ).*%$1%{_localstatedir}/lib/texmf%;'	  \
+	 -e 's%^(TEXMFSYSCONFIG\s+= ).*%$1%{_sysconfdir}/texmf%;'	  \
+	 -e 's%^(TEXMFHOME\s+= ).*%$1\{\$HOME/texmf,%{texmfdir}\}%;'	  \
+	 -e 's%^(TEXMFVAR\s+= ).*%$1\$HOME/.texlive2010/texmf-var%;'	  \
+	 -e 's%^(TEXMFCONFIG\s+= ).*%$1\$HOME/.texlive2010/texmf-config%;'\
+	 -e 's%^(OSFONTDIR\s+= ).*%$1%{_datadir}/fonts%;'		  \
 	texk/kpathsea/texmf.cnf
 
 #-----------------------------------------------------------------------
@@ -215,7 +218,7 @@ pushd utils/asymptote
 %configure2_5x							\
 	--enable-gc=system					\
 	--enable-texlive-build					\
-	--datadir=%{_datadir}/texmf
+	--datadir=%{texmfdir}
 %make
 popd
 %endif
@@ -303,7 +306,7 @@ pushd %{buildroot}%{_bindir}
 popd
 
 # use texmf data
-rm -fr %{buildroot}%{_datadir}/texmf{,-dist}
+rm -fr %{buildroot}%{texmfdir} %{buildroot}%{texmfdistdir}
 
 # install manual pages and info files from texlive-texmf tarball
 rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
@@ -321,7 +324,7 @@ rm -rf %{buildroot}
 %posttrans
 pushd %{_datadir}
     rm -f texmf/ls-R texmf-dist/ls-R
-    mktexlsr %{_datadir}/texmf{,-dist}
+    mktexlsr %{texmfdir} %{texmfdistdir}
 popd
 pushd %{_localstatedir}/lib/texmf
     texconfig-sys init
