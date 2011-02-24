@@ -1,6 +1,6 @@
 # need to bootstrap first
-%define enable_asymptote	0
-%define enable_xindy		0
+%define enable_asymptote	1
+%define enable_xindy		1
 
 %define with_system_poppler	0
 %define with_system_dialog	1
@@ -16,7 +16,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 7
+Release:	%mkrel 8
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	Apache2 and Artistic and BSD and FDL and Freeware and GFL and GFSL and GPL and GPLv2 and GPLv3 and LGPL and LGPLv2.1 and LPPL and LPPLv1 and LPPLv1.2 and LPPLv1.3 and OFL and Public Domain
@@ -320,7 +320,6 @@ rm -fr %{buildroot}%{_includedir}
 rm -rf %{buildroot}
 
 #-----------------------------------------------------------------------
-# need to run these scripts after removing tetex or texlive-2007
 %posttrans
 pushd %{_datadir}
     rm -f texmf/ls-R texmf-dist/ls-R
