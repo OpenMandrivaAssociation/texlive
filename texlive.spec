@@ -129,6 +129,7 @@ BuildRequires:	zziplib-devel
 Patch0:		texlive-20100722-underlink.patch
 Patch1:		texlive-20100722-format.patch
 Patch2:		texlive-20100722-asymptote.patch
+Patch3:		texlive-20100722-xdvi.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -151,6 +152,7 @@ free software, including support for many languages around the world.
 %if %{enable_asymptote}
 %patch2 -p1
 %endif
+%patch3 -p1
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{texmfdir}%;'			  \
