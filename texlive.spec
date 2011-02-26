@@ -16,7 +16,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 8
+Release:	%mkrel 9
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	Apache2 and Artistic and BSD and FDL and Freeware and GFL and GFSL and GPL and GPLv2 and GPLv3 and LGPL and LGPLv2.1 and LPPL and LPPLv1 and LPPLv1.2 and LPPLv1.3 and OFL and Public Domain
@@ -79,7 +79,7 @@ Requires:	teckit
 Requires:	tex4ht
 %else
 Provides:	tex4ht = %{version}
-Obsoletes:	tex4ht <= 1.0.2008_02_28_2058
+Obsoletes:	tex4ht <= 1:1.0.2008_02_28_2058
 %endif
 Requires(post):	texlive-texmf
 
@@ -295,6 +295,9 @@ pushd %{buildroot}%{_bindir}
     done
 %if %{with_system_dialog}
     ln -sf dialog tcdialog
+%endif
+%if %{enable_asymptote}
+    ln -sf ../share/texmf/asymptote/GUI/xasy.py xasy
 %endif
     rm -f a2ping
     rm -f e2pall
