@@ -1,3 +1,6 @@
+%define _binary_payload		w9.gzdio
+%define _source_payload		w9.gzdio
+
 # need to bootstrap first
 %define enable_asymptote	1
 %define enable_xindy		1
@@ -10,16 +13,31 @@
 %define with_system_tex4ht	0
 %define with_system_teckit	0
 
-%define texmfdir		%{_datadir}/texmf
-%define texmfdistdir		%{_datadir}/texmf-dist
+%if %mdkversion >= 201100
+  %define texmfbindir		%{_bindir}
+  %define texmfdir		%{_datadir}/texmf
+  %define texmfdistdir		%{_datadir}/texmf-dist
+  %define texmfextradir		%{_datadir}/texmf-extra
+  %define texmfprojectdir	%{_datadir}/texmf-project
+  %define texmfvardir		%{_localstatedir}/lib/texmf
+  %define texmfconfdir		%{_sysconfdir}/texmf
+%else
+  %define texmfbindir		/opt/texlive2010/bin
+  %define texmfdir		/opt/texlive2010/texmf
+  %define texmfdistdir		/opt/texlive2010/texmf-dist
+  %define texmfextradir		/opt/texlive2010/texmf-extra
+  %define texmfprojectdir	/opt/texlive2010/texmf-project
+  %define texmfvardir		/opt/texlive2010/lib/texmf
+  %define texmfconfdir		/opt/texlive2010/texmf
+%endif
 
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 9
+Release:	%mkrel 10
 Summary:	The TeX formatting system
 Group:		Publishing
-License:	Apache2 and Artistic and BSD and FDL and Freeware and GFL and GFSL and GPL and GPLv2 and GPLv3 and LGPL and LGPLv2.1 and LPPL and LPPLv1 and LPPLv1.2 and LPPLv1.3 and OFL and Public Domain
+License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
 Source0:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar.xz.sha256
@@ -42,6 +60,7 @@ Provides:	texlive-latex = %{version}
 Provides:	texlive-mfwin = %{version}
 Provides:	xmltex = %{version}
 %endif
+%if %mdkversion >= 201100
 Obsoletes:	jadetex <= 3.12-153
 Obsoletes:	pdfjam <= 1.21-2
 Obsoletes:	tetex <= 3.0-55
@@ -57,12 +76,16 @@ Obsoletes:	texlive-dviutils <= 2007
 Obsoletes:	texlive-latex <= 2007
 Obsoletes:	texlive-mfwin <= 2007
 Obsoletes:	xmltex <= 3.0-55
+%endif
 
 #-----------------------------------------------------------------------
 %if %{with_system_dialog}
 Requires:	cdialog
 %endif
 Requires:	ghostscript
+%if %{enable_asymptote}
+Requires:	gv
+%endif
 %if %{with_system_lcdf}
 Requires:	lcdf-typetoools
 %else
@@ -140,9 +163,9 @@ free software, including support for many languages around the world.
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}/*
-%dir %{_localstatedir}/lib/texmf
-%dir %{_sysconfdir}/texmf
+%{texmfbindir}/*
+%dir %{texmfvardir}
+%dir %{texmfconfdir}
 
 #-----------------------------------------------------------------------
 %prep
@@ -158,8 +181,8 @@ free software, including support for many languages around the world.
 perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{texmfdir}%;'			  \
 	 -e 's%^(TEXMFDIST\s+= ).*%$1%{texmfdistdir}%;'			  \
 	 -e 's%^(TEXMFLOCAL\s+= ).*%$1%{texmfdir}%;'			  \
-	 -e 's%^(TEXMFSYSVAR\s+= ).*%$1%{_localstatedir}/lib/texmf%;'	  \
-	 -e 's%^(TEXMFSYSCONFIG\s+= ).*%$1%{_sysconfdir}/texmf%;'	  \
+	 -e 's%^(TEXMFSYSVAR\s+= ).*%$1%{texmfvardir}%;'		  \
+	 -e 's%^(TEXMFSYSCONFIG\s+= ).*%$1%{texmfconfdir}%;'		  \
 	 -e 's%^(TEXMFHOME\s+= ).*%$1\{\$HOME/texmf,%{texmfdir}\}%;'	  \
 	 -e 's%^(TEXMFVAR\s+= ).*%$1\$HOME/.texlive2010/texmf-var%;'	  \
 	 -e 's%^(TEXMFCONFIG\s+= ).*%$1\$HOME/.texlive2010/texmf-config%;'\
@@ -243,20 +266,20 @@ for dir in texmf texmf-dist; do
     fi
 done
 
-mkdir -p %{buildroot}%{_localstatedir}/lib/texmf
-mkdir -p %{buildroot}%{_sysconfdir}/texmf
+mkdir -p %{buildroot}%{texmfvardir}
+mkdir -p %{buildroot}%{texmfconfdir}
 
 %if %{with_system_lcdf}
 # stray directory left
 rm -fr %{buildroot}%{_datadir}/lcdf-typetools-for-tex-live
 %else
 # openmpi has a program with the same name
-if [ -f %{buildroot}%{_bindir}/otfinfo ]; then
-    mv -f %{buildroot}%{_bindir}/otfinfo{,-texlive}
+if [ -f %{buildroot}%{texmfbindir}/otfinfo ]; then
+    mv -f %{buildroot}%{texmfbindir}/otfinfo{,-texlive}
 fi
 %endif
 
-pushd %{buildroot}%{_bindir}
+pushd %{buildroot}%{texmfbindir}
     # missing symbolic links
     ln -sf aleph lamed
     ln -sf luatex dvilualatex
@@ -292,14 +315,17 @@ pushd %{buildroot}%{_bindir}
     for file in *; do
 	link=`readlink $file` || :
 	if [ "x$link" != "x" ]; then
-	    ln -sf `echo $link | sed -e 's%../%../share/%'` $file
+	    ln -sf `echo %link |					\
+		sed	-e 's|\.\./.*texmf-dist/|%{texmfdistdir}/|'	\
+			-e 's|\.\./.*texmf/|%{texmfdir}|'`		\
+		$file
 	fi
     done
 %if %{with_system_dialog}
-    ln -sf dialog tcdialog
+    ln -sf %{_bindir}/dialog tcdialog
 %endif
 %if %{enable_asymptote}
-    ln -sf ../share/texmf/asymptote/GUI/xasy.py xasy
+    ln -sf %{texmfdir}/asymptote/GUI/xasy.py xasy
 %endif
     rm -f a2ping
     rm -f e2pall
@@ -326,10 +352,6 @@ rm -rf %{buildroot}
 
 #-----------------------------------------------------------------------
 %posttrans
-pushd %{_datadir}
-    rm -f texmf/ls-R texmf-dist/ls-R
-    mktexlsr %{texmfdir} %{texmfdistdir}
-popd
-pushd %{_localstatedir}/lib/texmf
-    texconfig-sys init
-popd
+rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R
+mktexlsr %{texmfdir} %{texmfdistdir}
+texconfig-sys init
