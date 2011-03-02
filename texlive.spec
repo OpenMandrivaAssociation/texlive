@@ -44,29 +44,31 @@ Source1:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %if %mdkversion <= 201100
-Provides:	jadetex = %{version}
-Provides:	pdfjam = %{version}
-Provides:	tetex = %{version}
-Provides:	tetex-dvipdfm = %{version}
-Provides:	tetex-dvips = %{version}
-Provides:	tetex-latex = %{version}
-Provides:	texlive-afm = %{version}
-Provides:	texlive-context = %{version}
-Provides:	texlive-dvilj = %{version}
-Provides:	texlive-dvipdfm = %{version}
-Provides:	texlive-dvips = %{version}
-Provides:	texlive-dviutils = %{version}
-Provides:	texlive-latex = %{version}
-Provides:	texlive-mfwin = %{version}
-Provides:	xmltex = %{version}
+Provides:	jadetex
+Provides:	kpathsea
+Provides:	pdfjam
+Provides:	tetex
+Provides:	tetex-dvipdfm
+Provides:	tetex-dvips
+Provides:	tetex-latex
+Provides:	texlive-afm
+Provides:	texlive-context
+Provides:	texlive-dvilj
+Provides:	texlive-dvipdfm
+Provides:	texlive-dvips
+Provides:	texlive-dviutils
+Provides:	texlive-latex
+Provides:	texlive-mfwin
+Provides:	xmltex
 %endif
 %if %mdkversion >= 201100
-Obsoletes:	jadetex <= 3.12-153
-Obsoletes:	pdfjam <= 1.21-2
-Obsoletes:	tetex <= 3.0-55
-Obsoletes:	tetex-dvipdfm <= 3.0-55
-Obsoletes:	tetex-dvips <= 3.0-55
-Obsoletes:	tetex-latex <= 3.0-55
+Obsoletes:	jadetex <= 3.12
+Obsoletes:	kpathsea <= 2007
+Obsoletes:	pdfjam <= 1.21
+Obsoletes:	tetex <= 3.0
+Obsoletes:	tetex-dvipdfm <= 3.0
+Obsoletes:	tetex-dvips <= 3.0
+Obsoletes:	tetex-latex <= 3.0
 Obsoletes:	texlive-afm <= 2007
 Obsoletes:	texlive-context <= 2007
 Obsoletes:	texlive-dvilj <= 2007
@@ -75,7 +77,7 @@ Obsoletes:	texlive-dvips <= 2007
 Obsoletes:	texlive-dviutils <= 2007
 Obsoletes:	texlive-latex <= 2007
 Obsoletes:	texlive-mfwin <= 2007
-Obsoletes:	xmltex <= 3.0-55
+Obsoletes:	xmltex <= 3.0
 %endif
 
 #-----------------------------------------------------------------------
