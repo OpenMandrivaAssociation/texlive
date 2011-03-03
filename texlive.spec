@@ -57,13 +57,20 @@ Provides:	texlive-dvilj = %{version}
 Provides:	texlive-dvipdfm = %{version}
 Provides:	texlive-dvips = %{version}
 Provides:	texlive-dviutils = %{version}
+Provides:	texlive-jadetex = %{version}
 Provides:	texlive-latex = %{version}
 Provides:	texlive-mfwin = %{version}
-Provides:	xmltex = %{version}
+Provides:	texlive-xdvi = %{version}
+Provides:	texlive-xmltex = %{version}
+Provides:	xmltex = 1:%{version}
 %endif
 %if %mdkversion >= 201100
 Obsoletes:	jadetex <= 3.12
-Obsoletes:	kpathsea <= 2007
+Obsoletes:	kpathsea <= 20100722
+Conflicts:	kpathsea-devel <= 20100722
+Obsoletes:	kpathsea-devel <= 20100722
+Conflicts:	kpathsea-static-devel <= 20100722
+Obsoletes:	kpathsea-static-devel <= 20100722
 Obsoletes:	pdfjam <= 1.21
 Obsoletes:	tetex <= 3.0
 Obsoletes:	tetex-dvipdfm <= 3.0
@@ -75,9 +82,12 @@ Obsoletes:	texlive-dvilj <= 2007
 Obsoletes:	texlive-dvipdfm <= 2007
 Obsoletes:	texlive-dvips <= 2007
 Obsoletes:	texlive-dviutils <= 2007
+Obsoletes:	texlive-jadetex <= 2007
 Obsoletes:	texlive-latex <= 2007
 Obsoletes:	texlive-mfwin <= 2007
-Obsoletes:	xmltex <= 3.0
+Obsoletes:	texlive-xdvi <= 2007
+Obsoletes:	texlive-xmltex <= 2007
+Obsoletes:	xmltex <= 1:3.0
 %endif
 
 #-----------------------------------------------------------------------
