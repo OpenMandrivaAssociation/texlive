@@ -44,22 +44,22 @@ Source1:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %if %mdkversion <= 201100
-Provides:	jadetex
-Provides:	kpathsea
-Provides:	pdfjam
-Provides:	tetex
-Provides:	tetex-dvipdfm
-Provides:	tetex-dvips
-Provides:	tetex-latex
-Provides:	texlive-afm
-Provides:	texlive-context
-Provides:	texlive-dvilj
-Provides:	texlive-dvipdfm
-Provides:	texlive-dvips
-Provides:	texlive-dviutils
-Provides:	texlive-latex
-Provides:	texlive-mfwin
-Provides:	xmltex
+Provides:	jadetex = %{version}
+Provides:	kpathsea = %{version}
+Provides:	pdfjam = %{version}
+Provides:	tetex = %{version}
+Provides:	tetex-dvipdfm = %{version}
+Provides:	tetex-dvips = %{version}
+Provides:	tetex-latex = %{version}
+Provides:	texlive-afm = %{version}
+Provides:	texlive-context = %{version}
+Provides:	texlive-dvilj = %{version}
+Provides:	texlive-dvipdfm = %{version}
+Provides:	texlive-dvips = %{version}
+Provides:	texlive-dviutils = %{version}
+Provides:	texlive-latex = %{version}
+Provides:	texlive-mfwin = %{version}
+Provides:	xmltex = %{version}
 %endif
 %if %mdkversion >= 201100
 Obsoletes:	jadetex <= 3.12
