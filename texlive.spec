@@ -139,6 +139,7 @@ BuildRequires:	flex
 %endif
 BuildRequires:	freetype-devel
 BuildRequires:	fontconfig-devel
+BuildRequires:	gd-devel
 %if %{enable_asymptote}
 BuildRequires:	libgc-devel
 BuildRequires:	libsigsegv-devel
