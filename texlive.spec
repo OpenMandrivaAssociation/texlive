@@ -348,13 +348,21 @@ pushd %{buildroot}%{texmfbindir}
 %if %{enable_asymptote}
     ln -sf %{texmfdir}/asymptote/GUI/xasy.py xasy
 %endif
-    rm -f a2ping
-    rm -f e2pall
-    rm -f rungs
-    rm -f simpdftex
-    rm -f tlmgr
-    rm -f texdoc
-    rm -f texdoctk
+    # install scripts from texlive-texmf
+    rm -f a2ping afm2afm arlatex authorindex autoinst bibexport		\
+	  bundledoc cachepic cmap2enc de-macro dviasm ebong e2pall	\
+	  epspdf epspdftk epstopdf fig4latex findhyph font2afm		\
+	  fragmaster ht htcontext htlatex htmex httex httexi htxelatex	\
+	  htxetex latex2man latexdiff latexdiff-vc latexmk latexrevise	\
+	  listings-ext.sh makeglossaries mathspic mk4ht mkgrkindex	\
+	  mkjobtexmf mkluatexfontdb mkt1font mptopdf ot2kpx pdf180	\
+	  pdf270 pdf90 pdfannotextractor pdfatfi pdfbook pdfcrop	\
+	  pdfflip pdfjam pdfjam-pocketmod pdfjam-slides3up		\
+	  pdfjam-slides6up pdfjoin pdfnup pdfpun pdfthumb perltex	\
+	  pfm2kpx pkfix  pkfix-helper ppower4 ps4pdf pst2pdf purifyeps	\
+	  repstopdf rpdfcrop rungs showglyphs simpdftex splitindex	\
+	  svn-multi texcount texdiff texdirflatten texdoc texdoctk	\
+	  texloganalyser thumbpdf tlmgr ulqda vpe vpl2ovp vpl2vpl
 popd
 
 # use texmf data
