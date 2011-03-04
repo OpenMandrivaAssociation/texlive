@@ -2,8 +2,8 @@
 %define _source_payload		w9.gzdio
 
 # need to bootstrap first
-%define enable_asymptote	1
-%define enable_xindy		1
+%define enable_asymptote	0
+%define enable_xindy		0
 
 %define with_system_poppler	0
 %define with_system_dialog	1
