@@ -34,7 +34,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 11
+Release:	%mkrel 12
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -106,6 +106,7 @@ Requires:	cdialog
 Requires:	ghostscript
 %if %{enable_asymptote}
 Requires:	gv
+Requires:	tkinter
 %endif
 %if %{with_system_lcdf}
 Requires:	lcdf-typetoools
@@ -338,7 +339,7 @@ pushd %{buildroot}%{texmfbindir}
 	if [ "x$link" != "x" ]; then
 	    ln -sf `echo $link |					\
 		sed	-e 's|\.\./.*texmf-dist/|%{texmfdistdir}/|'	\
-			-e 's|\.\./.*texmf/|%{texmfdir}|'`		\
+			-e 's|\.\./.*texmf/|%{texmfdir}/|'`		\
 		$file
 	fi
     done
