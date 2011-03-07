@@ -2,10 +2,10 @@
 %define _source_payload		w9.gzdio
 
 # need to bootstrap first
-%define enable_asymptote	0
-%define enable_xindy		0
+%define enable_asymptote	1
+%define enable_xindy		1
 
-%define with_system_poppler	0
+%define with_system_poppler	1
 %define with_system_dialog	1
 %define with_system_lcdf	0
 %define with_system_psutils	1
@@ -34,7 +34,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 10
+Release:	%mkrel 11
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -336,7 +336,7 @@ pushd %{buildroot}%{texmfbindir}
     for file in *; do
 	link=`readlink $file` || :
 	if [ "x$link" != "x" ]; then
-	    ln -sf `echo %link |					\
+	    ln -sf `echo $link |					\
 		sed	-e 's|\.\./.*texmf-dist/|%{texmfdistdir}/|'	\
 			-e 's|\.\./.*texmf/|%{texmfdir}|'`		\
 		$file
