@@ -34,7 +34,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 12
+Release:	%mkrel 13
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -47,6 +47,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Provides:	jadetex = %{version}
 Provides:	kpathsea = %{version}
 Provides:	pdfjam = %{version}
+Provides:	ps2eps = %{version}
 Provides:	tetex = %{version}
 Provides:	tetex-dvipdfm = %{version}
 Provides:	tetex-dvilj = %{version}
@@ -74,6 +75,7 @@ Obsoletes:	kpathsea-devel <= 20100722
 Conflicts:	kpathsea-static-devel <= 20100722
 Obsoletes:	kpathsea-static-devel <= 20100722
 Obsoletes:	pdfjam <= 1.21
+Obsoletes:	ps2eps <= 1.64
 Obsoletes:	tetex <= 3.0
 Obsoletes:	tetex-context <= 3.0
 Obsoletes:	tetex-devel <= 3.0
