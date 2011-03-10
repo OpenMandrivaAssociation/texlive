@@ -44,6 +44,7 @@ Source1:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %if %mdkversion <= 201100
+Provides:	dvi2tty = %{version}
 Provides:	jadetex = %{version}
 Provides:	kpathsea = %{version}
 Provides:	pdfjam = %{version}
@@ -68,6 +69,7 @@ Provides:	texlive-xmltex = %{version}
 Provides:	xmltex = 1:%{version}
 %endif
 %if %mdkversion >= 201100
+Obsoletes:	dvi2tty <= 5.3.1
 Obsoletes:	jadetex <= 3.12
 Obsoletes:	kpathsea <= 20100722
 Conflicts:	kpathsea-devel <= 20100722
