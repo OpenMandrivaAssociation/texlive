@@ -2,8 +2,8 @@
 %define _source_payload		w9.gzdio
 
 # need to bootstrap first
-%define enable_asymptote	1
-%define enable_xindy		1
+%define enable_asymptote	0
+%define enable_xindy		0
 
 %define with_system_poppler	1
 %define with_system_dialog	1
@@ -167,7 +167,7 @@ BuildRequires:	t1lib-devel
 BuildRequires:	teckit-devel
 %endif
 %if %{enable_xindy}
-#BuildRequires:	texlive
+BuildRequires:	texlive
 %endif
 %if %{enable_asymptote}
 BuildRequires:	texinfo
@@ -276,11 +276,11 @@ popd
 
 #-----------------------------------------------------------------------
 %install
-%makeinstall_std || :
+%makeinstall_std
 
 %if %{enable_asymptote}
 pushd utils/asymptote
-%makeinstall_std || :
+%makeinstall_std
 popd
 %endif
 
