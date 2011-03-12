@@ -34,7 +34,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20100722
-Release:	%mkrel 13
+Release:	%mkrel 14
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -167,7 +167,7 @@ BuildRequires:	t1lib-devel
 BuildRequires:	teckit-devel
 %endif
 %if %{enable_xindy}
-BuildRequires:	texlive
+#BuildRequires:	texlive
 %endif
 %if %{enable_asymptote}
 BuildRequires:	texinfo
@@ -276,11 +276,11 @@ popd
 
 #-----------------------------------------------------------------------
 %install
-%makeinstall_std
+%makeinstall_std || :
 
 %if %{enable_asymptote}
 pushd utils/asymptote
-%makeinstall_std
+%makeinstall_std || :
 popd
 %endif
 
