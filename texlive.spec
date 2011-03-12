@@ -33,14 +33,20 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20100722
-Release:	%mkrel 15
+Version:	20110312
+Release:	%mkrel 1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
-Source0:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar.xz
-Source1:	ftp://tug.org/historic/systems/texlive/2010/texlive-20100722-source.tar.xz.sha256
+# svn co svn://tug.org/texlive/trunk/Build/source texlive
+# cp -far texlive/texlive texlive-20110312-source
+# cd texlive texlive-20110312-source
+# find texlive texlive-20110312-source -name .svn -type d -exec rm -fr {} \; 2>/dev/null
+# tar Jcf texlive-20110312-source.tar.xz texlive-20110312-source
+Source0:	texlive-20110312-source.tar.xz
+# sha256sum texlive-20110312-source.tar.xz > texlive-20110312-source.tar.xz.sha256
+Source1:	texlive-20110312-source.tar.xz.sha256
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %if %mdkversion <= 201100
@@ -175,10 +181,10 @@ BuildRequires:	texinfo
 BuildRequires:	zziplib-devel
 
 #-----------------------------------------------------------------------
-Patch0:		texlive-20100722-underlink.patch
-Patch1:		texlive-20100722-format.patch
-Patch2:		texlive-20100722-asymptote.patch
-Patch3:		texlive-20100722-xdvi.patch
+Patch0:		texlive-20110312-underlink.patch
+Patch1:		texlive-20110312-format.patch
+Patch2:		texlive-20110312-asymptote.patch
+Patch3:		texlive-20110312-xdvi.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -196,8 +202,8 @@ free software, including support for many languages around the world.
 #-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}-%{version}-source
-%patch0	-p1
-%patch1	-p1
+%patch0 -p1
+%patch1 -p1
 %if %{enable_asymptote}
 %patch2 -p1
 %endif
