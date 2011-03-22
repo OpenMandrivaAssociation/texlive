@@ -94,7 +94,6 @@ Obsoletes:	tetex-dvips <= 3.0
 Obsoletes:	tetex-dvilj <= 3.0
 Obsoletes:	tetex-latex <= 3.0
 Obsoletes:	tetex-mfwin <= 3.0
-Obsoletes:	tetex-texi2html <= 3.0
 Obsoletes:	tetex-usrlocal <= 3.0
 Obsoletes:	tetex-xdvi <= 3.0
 Obsoletes:	texlive-afm <= 2007
