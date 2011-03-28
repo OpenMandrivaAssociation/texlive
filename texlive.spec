@@ -394,5 +394,5 @@ rm -rf %{buildroot}
 #-----------------------------------------------------------------------
 %posttrans
 rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R
-mktexlsr %{texmfdir} %{texmfdistdir}
-texconfig-sys init
+mktexlsr %{texmfdir} %{texmfdistdir} > /dev/null
+texconfig-sys init > /dev/null
