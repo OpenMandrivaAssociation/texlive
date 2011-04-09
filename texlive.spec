@@ -2,8 +2,11 @@
 %define _source_payload		w9.gzdio
 
 # need to bootstrap first
-%define enable_asymptote	1
-%define enable_xindy		1
+# - xindy need clisp in main
+# - let asymptote be packaged separately, asthe generated one is known
+#   to not be fully functional
+%define enable_asymptote	0
+%define enable_xindy		0
 
 %define with_system_poppler	1
 %define with_system_dialog	1
