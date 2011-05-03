@@ -37,7 +37,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110312
-Release:	%mkrel 2
+Release:	%mkrel 3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
