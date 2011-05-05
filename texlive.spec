@@ -16,6 +16,8 @@
 %define with_system_tex4ht	0
 %define with_system_teckit	0
 
+%define enable_shared		1
+
 %if %mdkversion >= 201100
   %define texmfbindir		%{_bindir}
   %define texmfdir		%{_datadir}/texmf
@@ -37,7 +39,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110312
-Release:	%mkrel 3
+Release:	%mkrel 4
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -55,7 +57,9 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 %if %mdkversion <= 201100
 Provides:	dvi2tty = %{version}
 Provides:	jadetex = %{version}
+%if !%{enable_shared}
 Provides:	kpathsea = %{version}
+%endif
 Provides:	pdfjam = %{version}
 Provides:	latexdiff = %{version}
 Provides:	ps2eps = %{version}
@@ -81,11 +85,13 @@ Provides:	xmltex = 1:%{version}
 %if %mdkversion >= 201100
 Obsoletes:	dvi2tty <= 5.3.1
 Obsoletes:	jadetex <= 3.12
+%if !%{enable_shared}
 Obsoletes:	kpathsea <= 20100722
 Conflicts:	kpathsea-devel <= 20100722
 Obsoletes:	kpathsea-devel <= 20100722
 Conflicts:	kpathsea-static-devel <= 20100722
 Obsoletes:	kpathsea-static-devel <= 20100722
+%endif
 Obsoletes:	latexdiff <= 0.5
 Obsoletes:	pdfjam <= 1.21
 Obsoletes:	ps2eps <= 1.64
@@ -204,6 +210,123 @@ free software, including support for many languages around the world.
 %dir %{texmfconfdir}
 
 #-----------------------------------------------------------------------
+%if %{enable_shared}
+########################################################################
+%define	kpathsea		%{mklibname kpathsea 6}
+
+%package	-n %{kpathsea}
+Summary:	Path searching library for TeX-related files
+Group:		System/Libraries
+Provides:	kpathsea = %{version}-%{release}
+
+%description	-n %{kpathsea}
+Kpathsea implements generic path searching, configuration,
+and TeX-specific file searching.
+
+%files		-n %{kpathsea}
+%defattr(-,root,root,-)
+%{_libdir}/libkpathsea.so.*
+
+#-----------------------------------------------------------------------
+%define	kpathsea_devel		%{mklibname -d kpathsea}
+
+%package	-n %{kpathsea_devel}
+Summary:	Kpathsea development files
+Group:		Development/C
+Requires:	kpathsea = %{version}-%{release}
+Provides:	kpathsea-devel = %{version}-%{release}
+
+%description	-n %{kpathsea_devel}
+Kpathsea implements generic path searching, configuration,
+and TeX-specific file searching.
+This package includes the kpathsea development files.
+
+%files		-n %{kpathsea_devel}
+%defattr(-,root,root,-)
+%{_includedir}/kpathsea
+%{_libdir}/libkpathsea.la
+%{_libdir}/libkpathsea.so
+
+#-----------------------------------------------------------------------
+%define	kpathsea_static_devel	%{mklibname -d -s kpathsea}
+
+%package	-n %{kpathsea_static_devel}
+Summary:	Kpathsea development files
+Group:		Development/C
+Requires:	kpathsea-devel = %{version}-%{release}
+Provides:	kpathsea-devel-static = %{version}-%{release}
+
+%description	-n %{kpathsea_static_devel}
+Kpathsea implements generic path searching, configuration,
+and TeX-specific file searching.
+This package includes the static kpathsea library.
+
+%files		-n %{kpathsea_static_devel}
+%defattr(-,root,root,-)
+%{_libdir}/libkpathsea.a
+
+#-----------------------------------------------------------------------
+%define	ptexenc			%{mklibname ptexenc 1}
+
+%package	-n %{ptexenc}
+Summary:	Library for Japanese pTeX
+Group:		System/Libraries
+Provides:	ptexenc = %{version}-%{release}
+
+%description	-n %{ptexenc}
+ptexenc is a useful library for Japanese pTeX
+(which stands for publishing TeX, and is an extension of
+TeX by ASCII Co.) and its surrounding tools.
+
+%files		-n %{ptexenc}
+%defattr(-,root,root,-)
+%{_libdir}/libptexenc.so.*
+
+#-----------------------------------------------------------------------
+%define	ptexenc_devel		%{mklibname -d ptexenc}
+
+%package	-n %{ptexenc_devel}
+Summary:	Library for Japanese pTeX
+Group:		Development/C
+Requires:	ptexenc = %{version}-%{release}
+Provides:	ptexenc-devel = %{version}-%{release}
+
+%description	-n %{ptexenc_devel}
+ptexenc is a useful library for Japanese pTeX
+(which stands for publishing TeX, and is an extension of
+TeX by ASCII Co.) and its surrounding tools.
+This package includes the ptexenc development files.
+
+%files		-n %{ptexenc_devel}
+%defattr(-,root,root,-)
+%{_includedir}/ptexenc
+%{_libdir}/libptexenc.la
+%{_libdir}/libptexenc.so
+
+#-----------------------------------------------------------------------
+%define	ptexenc_static_devel	%{mklibname -d -s ptexenc}
+
+%package	-n %{ptexenc_static_devel}
+Summary:	Library for Japanese pTeX
+Group:		Development/C
+Requires:	ptexenc-devel = %{version}-%{release}
+Provides:	ptexenc-devel-static = %{version}-%{release}
+
+%description	-n %{ptexenc_static_devel}
+ptexenc is a useful library for Japanese pTeX
+(which stands for publishing TeX, and is an extension of
+TeX by ASCII Co.) and its surrounding tools.
+This package includes the static ptexenc library.
+
+%files		-n %{ptexenc_static_devel}
+%defattr(-,root,root,-)
+%{_libdir}/libptexenc.a
+
+########################################################################
+# enable_shared
+%endif
+
+#-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}-%{version}-source
 %patch0 -p1
@@ -231,6 +354,11 @@ perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{texmfdir}%;'			  \
 	--with-banner-add="/Mandriva"				\
 	--disable-native-texlive-build				\
 	--enable-missing					\
+%if %{enable_shared}
+	--enable-shared						\
+%else
+	--disable-shared					\
+%endif
 %if %{enable_xindy}
 	--enable-xindy						\
 %else
@@ -386,9 +514,11 @@ rm -fr %{buildroot}%{texmfdir} %{buildroot}%{texmfdistdir}
 # install manual pages and info files from texlive-texmf tarball
 rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
 
+%if !%{enable_shared}
 # do not generate dynamic libraries and do not install static ones
 rm -fr %{buildroot}%{_libdir}
 rm -fr %{buildroot}%{_includedir}
+%endif
 
 #-----------------------------------------------------------------------
 %clean
