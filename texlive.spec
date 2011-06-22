@@ -39,7 +39,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110312
-Release:	%mkrel 4
+Release:	%mkrel 5
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -81,6 +81,7 @@ Provides:	texlive-mfwin = %{version}
 Provides:	texlive-xdvi = %{version}
 Provides:	texlive-xmltex = %{version}
 Provides:	xdvik = %{version}
+Provides:	vlna = %{version}
 Provides:	xmltex = 1:%{version}
 %endif
 %if %mdkversion >= 201100
@@ -118,6 +119,7 @@ Obsoletes:	texlive-mfwin <= 2007
 Obsoletes:	texlive-xdvi <= 2007
 Obsoletes:	texlive-xmltex <= 2007
 Obsoletes:	xdvik <= 22.84.16
+Obsoletes:	vlna <= 1.4
 Obsoletes:	xmltex <= 1:3.0
 %endif
 
