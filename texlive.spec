@@ -48,7 +48,7 @@ Source0:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar
 Source1:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz.sha256
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-%if %mdkversion <= 201100
+%if %mdkversion <= 201200
 Provides:	dvi2tty = %{version}
 Provides:	jadetex = %{version}
 %if !%{enable_shared}
