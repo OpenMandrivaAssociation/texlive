@@ -27,31 +27,25 @@
   %define texmfvardir		%{_localstatedir}/lib/texmf
   %define texmfconfdir		%{_sysconfdir}/texmf
 %else
-  %define texmfbindir		/opt/texlive2010/bin
-  %define texmfdir		/opt/texlive2010/texmf
-  %define texmfdistdir		/opt/texlive2010/texmf-dist
-  %define texmfextradir		/opt/texlive2010/texmf-extra
-  %define texmfprojectdir	/opt/texlive2010/texmf-project
-  %define texmfvardir		/opt/texlive2010/lib/texmf
-  %define texmfconfdir		/opt/texlive2010/texmf
+  %define texmfbindir		/opt/texlive2011/bin
+  %define texmfdir		/opt/texlive2011/texmf
+  %define texmfdistdir		/opt/texlive2011/texmf-dist
+  %define texmfextradir		/opt/texlive2011/texmf-extra
+  %define texmfprojectdir	/opt/texlive2011/texmf-project
+  %define texmfvardir		/opt/texlive2011/lib/texmf
+  %define texmfconfdir		/opt/texlive2011/texmf
 %endif
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20110312
-Release:	%mkrel 5
+Version:	20110705
+Release:	%mkrel 1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
-# svn co svn://tug.org/texlive/trunk/Build/source texlive
-# cp -far texlive/texlive texlive-20110312-source
-# cd texlive texlive-20110312-source
-# find texlive texlive-20110312-source -name .svn -type d -exec rm -fr {} \; 2>/dev/null
-# tar Jcf texlive-20110312-source.tar.xz texlive-20110312-source
-Source0:	texlive-20110312-source.tar.xz
-# sha256sum texlive-20110312-source.tar.xz > texlive-20110312-source.tar.xz.sha256
-Source1:	texlive-20110312-source.tar.xz.sha256
+Source0:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz
+Source1:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz.sha256
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %if %mdkversion <= 201100
