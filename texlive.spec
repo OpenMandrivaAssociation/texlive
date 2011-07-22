@@ -518,6 +518,8 @@ rm -fr %{buildroot}%{_libdir}
 rm -fr %{buildroot}%{_includedir}
 %endif
 
+perl -pi -e 's|TEXMFROOT|TEXMFMAIN|g;' %{buildroot}%{_bindir}/updmap
+
 #-----------------------------------------------------------------------
 %clean
 rm -rf %{buildroot}
