@@ -503,7 +503,8 @@ pushd %{buildroot}%{texmfbindir}
 	  pfm2kpx pkfix  pkfix-helper ppower4 ps4pdf pst2pdf purifyeps	\
 	  repstopdf rpdfcrop rungs showglyphs simpdftex splitindex	\
 	  svn-multi texcount texdiff texdirflatten texdoc texdoctk	\
-	  texloganalyser thumbpdf tlmgr ulqda vpe vpl2ovp vpl2vpl
+	  texloganalyser thumbpdf tlmgr ulqda updmap vpe vpl2ovp	\
+	  vpl2vpl
 popd
 
 # use texmf data
@@ -517,8 +518,6 @@ rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
 rm -fr %{buildroot}%{_libdir}
 rm -fr %{buildroot}%{_includedir}
 %endif
-
-perl -pi -e 's|TEXMFROOT|TEXMFMAIN|g;' %{buildroot}%{_bindir}/updmap
 
 #-----------------------------------------------------------------------
 %clean
