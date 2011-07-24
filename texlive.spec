@@ -39,7 +39,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110705
-Release:	%mkrel 1
+Release:	%mkrel 2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -144,7 +144,7 @@ Requires:	tex4ht
 Provides:	tex4ht = %{version}
 Obsoletes:	tex4ht <= 1:1.0.2008_02_28_2058
 %endif
-Requires(post):	texlive-texmf
+Requires(post):	texlive-texmf = 20110705
 
 #-----------------------------------------------------------------------
 BuildRequires:	bison
@@ -526,5 +526,6 @@ rm -rf %{buildroot}
 #-----------------------------------------------------------------------
 %posttrans
 rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R
-mktexlsr %{texmfdir} %{texmfdistdir} > /dev/null
-texconfig-sys init > /dev/null
+%{texmfbindir}/mktexlsr %{texmfdir} %{texmfdistdir} > /dev/null
+%{texmfbindir}/updmap-sys --syncwithtrees > /dev/null
+%{texmfbindir}/texconfig-sys init > /dev/null
