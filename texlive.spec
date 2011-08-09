@@ -39,7 +39,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110705
-Release:	%mkrel 3
+Release:	%mkrel 4
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -144,7 +144,7 @@ Requires:	tex4ht
 Provides:	tex4ht = %{version}
 Obsoletes:	tex4ht <= 1:1.0.2008_02_28_2058
 %endif
-Conflicts:	texlive-texmf <= %{version}
+Conflicts:	texlive-texmf < %{version}
 Requires(post):	texlive-texmf = %{version}
 
 #-----------------------------------------------------------------------
