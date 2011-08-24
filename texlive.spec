@@ -22,7 +22,9 @@
   %define texmfbindir		%{_bindir}
   %define texmfdir		%{_datadir}/texmf
   %define texmfdistdir		%{_datadir}/texmf-dist
+  %define texmflocaldir		%{_datadir}/texmf-local
   %define texmfextradir		%{_datadir}/texmf-extra
+  %define texmffontsdir		%{_datadir}/texmf-fonts
   %define texmfprojectdir	%{_datadir}/texmf-project
   %define texmfvardir		%{_localstatedir}/lib/texmf
   %define texmfconfdir		%{_sysconfdir}/texmf
@@ -30,6 +32,8 @@
   %define texmfbindir		/opt/texlive2011/bin
   %define texmfdir		/opt/texlive2011/texmf
   %define texmfdistdir		/opt/texlive2011/texmf-dist
+  %define texmflocaldir		/opt/texlive2011/texmf-local
+  %define texmffontsdir		/opt/texlive2011/texmf-fonts
   %define texmfextradir		/opt/texlive2011/texmf-extra
   %define texmfprojectdir	/opt/texlive2011/texmf-project
   %define texmfvardir		/opt/texlive2011/lib/texmf
@@ -194,6 +198,8 @@ Patch0:		texlive-20110312-underlink.patch
 Patch1:		texlive-20110312-format.patch
 Patch2:		texlive-20110312-asymptote.patch
 Patch3:		texlive-20110312-xdvi.patch
+# http://tug.org/svn/texlive?view=revision&revision=23644
+Patch4:		texlive-20110705-synctex-coordinates.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -334,14 +340,15 @@ This package includes the static ptexenc library.
 %patch2 -p1
 %endif
 %patch3 -p1
+%patch4 -p1
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{texmfdir}%;'			  \
 	 -e 's%^(TEXMFDIST\s+= ).*%$1%{texmfdistdir}%;'			  \
-	 -e 's%^(TEXMFLOCAL\s+= ).*%$1%{texmfdir}%;'			  \
+	 -e 's%^(TEXMFLOCAL\s+= ).*%$1%{texmflocaldir}%;'			  \
 	 -e 's%^(TEXMFSYSVAR\s+= ).*%$1%{texmfvardir}%;'		  \
 	 -e 's%^(TEXMFSYSCONFIG\s+= ).*%$1%{texmfconfdir}%;'		  \
-	 -e 's%^(TEXMFHOME\s+= ).*%$1\{\$HOME/texmf,%{texmfdir}\}%;'	  \
+	 -e 's%^(TEXMFHOME\s+= ).*%$1\$HOME/texmf%;'			  \
 	 -e 's%^(TEXMFVAR\s+= ).*%$1\$HOME/.texlive2011/texmf-var%;'	  \
 	 -e 's%^(TEXMFCONFIG\s+= ).*%$1\$HOME/.texlive2011/texmf-config%;'\
 	 -e 's%^(OSFONTDIR\s+= ).*%$1%{_datadir}/fonts%;'		  \
