@@ -39,7 +39,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110705
-Release:	%mkrel 4
+Release:	%mkrel 5
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -342,8 +342,8 @@ perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{texmfdir}%;'			  \
 	 -e 's%^(TEXMFSYSVAR\s+= ).*%$1%{texmfvardir}%;'		  \
 	 -e 's%^(TEXMFSYSCONFIG\s+= ).*%$1%{texmfconfdir}%;'		  \
 	 -e 's%^(TEXMFHOME\s+= ).*%$1\{\$HOME/texmf,%{texmfdir}\}%;'	  \
-	 -e 's%^(TEXMFVAR\s+= ).*%$1\$HOME/.texlive2010/texmf-var%;'	  \
-	 -e 's%^(TEXMFCONFIG\s+= ).*%$1\$HOME/.texlive2010/texmf-config%;'\
+	 -e 's%^(TEXMFVAR\s+= ).*%$1\$HOME/.texlive2011/texmf-var%;'	  \
+	 -e 's%^(TEXMFCONFIG\s+= ).*%$1\$HOME/.texlive2011/texmf-config%;'\
 	 -e 's%^(OSFONTDIR\s+= ).*%$1%{_datadir}/fonts%;'		  \
 	texk/kpathsea/texmf.cnf
 
@@ -530,3 +530,4 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R
 %{texmfbindir}/mktexlsr %{texmfdir} %{texmfdistdir} > /dev/null
 %{texmfbindir}/updmap-sys --syncwithtrees > /dev/null
 %{texmfbindir}/texconfig-sys init > /dev/null
+%{texmfbindir}/mtxrun --generate > /dev/null
