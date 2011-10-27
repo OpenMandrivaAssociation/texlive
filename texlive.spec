@@ -1,5 +1,5 @@
 
-# warning: automatically generated file by texlive-extra/SOURCES/texlive.pl
+# warning: automatically generated file by texlive-texmf/SOURCES/texlive.pl
 
 %define _binary_payload		w9.gzdio
 %define _source_payload		w9.gzdio
@@ -1995,7 +1995,7 @@ pushd %{buildroot}%{_bindir}
     ln -sf %{texmfdistdir}/scripts/texdiff/texdiff texdiff
     ln -sf %{texmfdistdir}/scripts/texdirflatten/texdirflatten texdirflatten
     ln -sf %{texmfdir}/scripts/texdoc/texdoc.tlu texdoc
-    ln -sf %{texmf}/scripts/tetex/texdoctk.pl texdoctk
+    ln -sf %{texmfdir}/scripts/tetex/texdoctk.pl texdoctk
     ln -sf %{texmfdistdir}/scripts/texloganalyser/texloganalyser texloganalyser
     ln -sf %{texmfdistdir}/scripts/thumbpdf/thumbpdf.pl thumbpdf
     ln -sf %{texmfdistdir}/scripts/ulqda/ulqda.pl ulqda
