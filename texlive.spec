@@ -32,13 +32,14 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110705
-Release:	6.1
+Release:	6.2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
 Source0:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz.sha256
+Source2:	mktexlsr.post
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Obsoletes:	tetex-usrlocal <= 3.0
@@ -74,7 +75,7 @@ Conflicts:	tetex-dvips <= 3.0, texlive-dvips <= 2007, texlive-texmf-dvips <= 200
 Conflicts:	tetex-dvilj <= 3.0, texlive-dvilj <= 2007
 Conflicts:	vlna <= 1.4
 Conflicts:	tetex-mfwin <= 3.0, texlive-mfwin <= 2007
-Conflicts:	texlive-fontsextra < %{version}-3.1
+Conflicts:	texlive-fontsextra < %{version}-3.2
 Conflicts:	texlive-dviutils <= 2007
 Conflicts:	pdfjam <= 1.21
 Conflicts:	latexdiff <= 0.5
@@ -82,6 +83,7 @@ Conflicts:	latexdiff <= 0.5
 Conflicts:	texlive <= 20110705-6
 Conflicts:	texlive-texmf < %{version}
 Requires(post):	texlive-texmf = %{version}
+Requires(post):	texlive-kpathsea.bin = %{version}-6.2
 
 #-----------------------------------------------------------------------
 BuildRequires:	bison
@@ -894,6 +896,7 @@ texlive kpathsea.bin package.
 %{_bindir}/mktexpk
 %{_bindir}/mktextfm
 %{_bindir}/texhash
+%{_sbindir}/mktexlsr.post
 
 #-----------------------------------------------------------------------
 %package	-n texlive-lacheck.bin
@@ -2017,10 +2020,11 @@ rm -fr %{buildroot}%{_libdir}
 rm -fr %{buildroot}%{_includedir}
 %endif
 
+install -D -m 755 %{SOURCE2} %{buildroot}%{_sbindir}/mktexlsr.post
+
 #-----------------------------------------------------------------------
 %posttrans
-rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R
-%{_bindir}/mktexlsr %{texmfdir} %{texmfdistdir} > /dev/null
+%{_sbindir}/mktexlsr.post
 %{_bindir}/updmap-sys --syncwithtrees > /dev/null
 %{_bindir}/texconfig-sys init > /dev/null
 %{_bindir}/mtxrun --generate > /dev/null
