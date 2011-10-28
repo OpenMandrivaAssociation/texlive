@@ -32,7 +32,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110705
-Release:	6.2
+Release:	6.3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -75,7 +75,7 @@ Conflicts:	tetex-dvips <= 3.0, texlive-dvips <= 2007, texlive-texmf-dvips <= 200
 Conflicts:	tetex-dvilj <= 3.0, texlive-dvilj <= 2007
 Conflicts:	vlna <= 1.4
 Conflicts:	tetex-mfwin <= 3.0, texlive-mfwin <= 2007
-Conflicts:	texlive-fontsextra < %{version}-3.2
+Conflicts:	texlive-fontsextra < %{version}-3.3
 Conflicts:	texlive-dviutils <= 2007
 Conflicts:	pdfjam <= 1.21
 Conflicts:	latexdiff <= 0.5
@@ -83,7 +83,7 @@ Conflicts:	latexdiff <= 0.5
 Conflicts:	texlive <= 20110705-6
 Conflicts:	texlive-texmf < %{version}
 Requires(post):	texlive-texmf = %{version}
-Requires(post):	texlive-kpathsea.bin = %{version}-6.2
+Requires(post):	texlive-kpathsea.bin = %{version}-6.3
 
 #-----------------------------------------------------------------------
 BuildRequires:	bison
