@@ -1,49 +1,12 @@
 %define _binary_payload		w9.gzdio
 %define _source_payload		w9.gzdio
 
-# need to bootstrap first
-# - xindy need clisp in main
-# - let asymptote be packaged separately, asthe generated one is known
-#   to not be fully functional
-%define enable_asymptote	0
-%define enable_xindy		0
-
-%define with_system_poppler	1
-%define with_system_dialog	1
-%define with_system_lcdf	0
-%define with_system_psutils	1
-%define with_system_t1lib	1
-%define with_system_tex4ht	0
-%define with_system_teckit	0
-
 %define enable_shared		1
-
-%if %mdkversion >= 201100
-  %define texmfbindir		%{_bindir}
-  %define texmfdir		%{_datadir}/texmf
-  %define texmfdistdir		%{_datadir}/texmf-dist
-  %define texmflocaldir		%{_datadir}/texmf-local
-  %define texmfextradir		%{_datadir}/texmf-extra
-  %define texmffontsdir		%{_datadir}/texmf-fonts
-  %define texmfprojectdir	%{_datadir}/texmf-project
-  %define texmfvardir		%{_localstatedir}/lib/texmf
-  %define texmfconfdir		%{_sysconfdir}/texmf
-%else
-  %define texmfbindir		/opt/texlive2011/bin
-  %define texmfdir		/opt/texlive2011/texmf
-  %define texmfdistdir		/opt/texlive2011/texmf-dist
-  %define texmflocaldir		/opt/texlive2011/texmf-local
-  %define texmffontsdir		/opt/texlive2011/texmf-fonts
-  %define texmfextradir		/opt/texlive2011/texmf-extra
-  %define texmfprojectdir	/opt/texlive2011/texmf-project
-  %define texmfvardir		/opt/texlive2011/lib/texmf
-  %define texmfconfdir		/opt/texlive2011/texmf
-%endif
 
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110705
-Release:	%mkrel 6
+Release:	7
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -52,118 +15,37 @@ Source0:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar
 Source1:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz.sha256
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-%if %mdkversion <= 201200
-Provides:	dvi2tty = %{version}
-Provides:	jadetex = %{version}
-%if !%{enable_shared}
-Provides:	kpathsea = %{version}
-%endif
-Provides:	pdfjam = %{version}
-Provides:	latexdiff = %{version}
-Provides:	ps2eps = %{version}
-Provides:	tetex = %{version}
-Provides:	tetex-dvipdfm = %{version}
-Provides:	tetex-dvilj = %{version}
-Provides:	tetex-dvips = %{version}
-Provides:	tetex-xdvi = %{version}
-Provides:	tetex-latex = %{version}
-Provides:	texlive-afm = %{version}
-Provides:	texlive-context = %{version}
-Provides:	texlive-dvilj = %{version}
-Provides:	texlive-dvipdfm = %{version}
-Provides:	texlive-dvips = %{version}
-Provides:	texlive-dviutils = %{version}
-Provides:	texlive-jadetex = %{version}
-Provides:	texlive-latex = %{version}
-Provides:	texlive-mfwin = %{version}
-Provides:	texlive-xdvi = %{version}
-Provides:	texlive-xmltex = %{version}
-Provides:	xdvik = %{version}
-Provides:	vlna = %{version}
-Provides:	xmltex = 1:%{version}
-%endif
-%if %mdkversion >= 201100
-Obsoletes:	dvi2tty <= 5.3.1
-Obsoletes:	jadetex <= 3.12
-%if !%{enable_shared}
-Obsoletes:	kpathsea <= 20100722
-Conflicts:	kpathsea-devel <= 20100722
-Obsoletes:	kpathsea-devel <= 20100722
-Conflicts:	kpathsea-static-devel <= 20100722
-Obsoletes:	kpathsea-static-devel <= 20100722
-%endif
-Obsoletes:	latexdiff <= 0.5
-Obsoletes:	pdfjam <= 1.21
-Obsoletes:	ps2eps <= 1.64
-Obsoletes:	tetex <= 3.0
-Obsoletes:	tetex-context <= 3.0
-Obsoletes:	tetex-devel <= 3.0
-Obsoletes:	tetex-dvipdfm <= 3.0
-Obsoletes:	tetex-dvips <= 3.0
-Obsoletes:	tetex-dvilj <= 3.0
-Obsoletes:	tetex-latex <= 3.0
-Obsoletes:	tetex-mfwin <= 3.0
 Obsoletes:	tetex-usrlocal <= 3.0
-Obsoletes:	tetex-xdvi <= 3.0
-Obsoletes:	texlive-afm <= 2007
-Obsoletes:	texlive-context <= 2007
-Obsoletes:	texlive-dvilj <= 2007
-Obsoletes:	texlive-dvipdfm <= 2007
-Obsoletes:	texlive-dvips <= 2007
-Obsoletes:	texlive-dviutils <= 2007
-Obsoletes:	texlive-jadetex <= 2007
-Obsoletes:	texlive-latex <= 2007
-Obsoletes:	texlive-mfwin <= 2007
-Obsoletes:	texlive-xdvi <= 2007
-Obsoletes:	texlive-xmltex <= 2007
-Obsoletes:	xdvik <= 22.84.16
-Obsoletes:	vlna <= 1.4
-Obsoletes:	xmltex <= 1:3.0
-%endif
 
 #-----------------------------------------------------------------------
-%if %{with_system_dialog}
-Requires:	cdialog
-%endif
 Requires:	ghostscript
-%if %{enable_asymptote}
+%if %{_texmf_enable_asymptote}
 Requires:	gv
 Requires:	tkinter
 %endif
-%if %{with_system_lcdf}
-Requires:	lcdf-typetoools
-%else
-Provides:	lcdf-typetools = %{version}
-Obsoletes:	lcdf-typetools <= 2.59-5
-%endif
-%if %{with_system_psutils}
-Requires:	psutils
-%endif
-%if %{with_system_teckit}
+%if %{_texmf_with_system_teckit}
 Requires:	teckit
 %endif
-%if %{with_system_tex4ht}
-Requires:	tex4ht
-%else
-Provides:	tex4ht = %{version}
-Obsoletes:	tex4ht <= 1:1.0.2008_02_28_2058
-%endif
-Conflicts:	texlive-texmf < %{version}
-Requires(post):	texlive-texmf = %{version}
+
+Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive-texmf < 20110705
+Requires:	texlive-scheme-medium
+Requires(pre):	texlive-tlpkg
+BuildRequires:	texlive-tlpkg
 
 #-----------------------------------------------------------------------
 BuildRequires:	bison
-%if %{enable_xindy}
+%if %{_texmf_enable_xindy}
 BuildRequires:	clisp
 BuildRequires:	ffcall-devel
 %endif
-%if %{enable_asymptote}
+%if %{_texmf_enable_asymptote}
 BuildRequires:	fftw-devel
 BuildRequires:	flex
 %endif
 BuildRequires:	freetype-devel
 BuildRequires:	fontconfig-devel
-%if %{enable_asymptote}
+%if %{_texmf_enable_asymptote}
 BuildRequires:	libgc-devel
 BuildRequires:	libsigsegv-devel
 BuildRequires:	ghostscript-dvipdf
@@ -171,24 +53,24 @@ BuildRequires:	gsl-devel
 BuildRequires:	GL-devel
 %endif
 BuildRequires:	libgd-devel
-%if %{with_system_poppler}
+%if %{_texmf_with_system_poppler}
 BuildRequires:	libpoppler-devel
 %endif
 BuildRequires:	libxaw-devel
-%if !%{with_system_dialog}
+%if !%{_texmf_with_system_dialog}
 BuildRequires:	ncurses-devel
 %endif
 BuildRequires:	png-devel
-%if %{with_system_t1lib}
+%if %{_texmf_with_system_t1lib}
 BuildRequires:	t1lib-devel
 %endif
-%if %{with_system_teckit}
+%if %{_texmf_with_system_teckit}
 BuildRequires:	teckit-devel
 %endif
-%if %{enable_xindy}
+%if %{_texmf_enable_xindy}
 BuildRequires:	texlive
 %endif
-%if %{enable_asymptote}
+%if %{_texmf_enable_asymptote}
 BuildRequires:	texinfo
 %endif
 BuildRequires:	zziplib-devel
@@ -201,6 +83,31 @@ Patch3:		texlive-20110312-xdvi.patch
 # http://tug.org/svn/texlive?view=revision&revision=23644
 Patch4:		texlive-20110705-synctex-coordinates.patch
 
+%posttrans
+    # attempt to correct interrupted/killed install
+    if [ -f /var/run/mktexlsr ]; then
+	%{_bindir}/mktexlsr %{_texmfdir} %{_texmfdistdir} > /dev/null
+	rm -f /var/run/mktexlsr
+    fi
+    rm -f /var/run/mktexlsr.lock
+    if [ -f /var/run/updmap ]; then
+	%{_bindir}/updmap-sys --syncwithtrees > /dev/null
+	rm -f /var/run/updmap
+    fi
+    rm -f /var/run/updmap.lock
+
+    if [ -f /var/run/fmtutil ]; then
+	%{_bindir}/fmtutil-sys --all > /dev/null
+	rm -f /var/run/fmtutil
+    fi
+    rm -f /var/run/fmtutil.lock
+    if [ -f /var/run/mtxrun ]; then
+	%{_bindir}/mtxrun --generate > /dev/null
+	rm -f /var/run/mtxrun
+    fi
+    rm -f /var/run/mtxrun.lock
+    rm -f /var/run/language.{dat,def,lua}{,.lock}
+
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -209,10 +116,6 @@ all the major TeX-related programs, macro packages, and fonts that are
 free software, including support for many languages around the world.
 
 %files
-%defattr(-,root,root,-)
-%{texmfbindir}/*
-%dir %{texmfvardir}
-%dir %{texmfconfdir}
 
 #-----------------------------------------------------------------------
 %if %{enable_shared}
@@ -332,22 +235,727 @@ This package includes the static ptexenc library.
 %endif
 
 #-----------------------------------------------------------------------
+%package	-n texlive-afm2pl.bin
+Summary:	binary files of afm2pl
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-afm2pl.bin
+texlive afm2pl.bin package.
+
+%files		-n texlive-afm2pl.bin
+%{_bindir}/afm2pl
+
+#-----------------------------------------------------------------------
+%package	-n texlive-aleph.bin
+Summary:	binary files of aleph
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-aleph.bin
+texlive aleph.bin package.
+
+%files		-n texlive-aleph.bin
+%{_bindir}/aleph
+%{_bindir}/lamed
+
+#-----------------------------------------------------------------------
+%package	-n texlive-biber.bin
+Summary:	binary files of biber
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-biber.bin
+texlive biber.bin package.
+
+%files		-n texlive-biber.bin
+%{_bindir}/biber
+
+#-----------------------------------------------------------------------
+%package	-n texlive-bibtex.bin
+Summary:	binary files of bibtex
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-bibtex.bin
+texlive bibtex.bin package.
+
+%files		-n texlive-bibtex.bin
+%{_bindir}/bibtex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-bibtex8.bin
+Summary:	binary files of bibtex8
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-bibtex8.bin
+texlive bibtex8.bin package.
+
+%files		-n texlive-bibtex8.bin
+%{_bindir}/bibtex8
+
+#-----------------------------------------------------------------------
+%package	-n texlive-bibtexu.bin
+Summary:	binary files of bibtexu
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-bibtexu.bin
+texlive bibtexu.bin package.
+
+%files		-n texlive-bibtexu.bin
+%{_bindir}/bibtexu
+
+#-----------------------------------------------------------------------
+%package	-n texlive-chktex.bin
+Summary:	binary files of chktex
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-chktex.bin
+texlive chktex.bin package.
+
+%files		-n texlive-chktex.bin
+%{_bindir}/chktex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-cjkutils.bin
+Summary:	binary files of cjkutils
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-cjkutils.bin
+texlive cjkutils.bin package.
+
+%files		-n texlive-cjkutils.bin
+%{_bindir}/bg5+latex
+%{_bindir}/bg5+pdflatex
+%{_bindir}/bg5conv
+%{_bindir}/bg5latex
+%{_bindir}/bg5pdflatex
+%{_bindir}/cef5conv
+%{_bindir}/cef5latex
+%{_bindir}/cef5pdflatex
+%{_bindir}/cefconv
+%{_bindir}/ceflatex
+%{_bindir}/cefpdflatex
+%{_bindir}/cefsconv
+%{_bindir}/cefslatex
+%{_bindir}/cefspdflatex
+%{_bindir}/extconv
+%{_bindir}/gbklatex
+%{_bindir}/gbkpdflatex
+%{_bindir}/hbf2gf
+%{_bindir}/sjisconv
+%{_bindir}/sjislatex
+%{_bindir}/sjispdflatex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-ctie.bin
+Summary:	binary files of ctie
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-ctie.bin
+texlive ctie.bin package.
+
+%files		-n texlive-ctie.bin
+%{_bindir}/ctie
+
+#-----------------------------------------------------------------------
+%package	-n texlive-cweb.bin
+Summary:	binary files of cweb
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-cweb.bin
+texlive cweb.bin package.
+
+%files		-n texlive-cweb.bin
+%{_bindir}/ctangle
+%{_bindir}/cweave
+
+#-----------------------------------------------------------------------
+%package	-n texlive-detex.bin
+Summary:	binary files of detex
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-detex.bin
+texlive detex.bin package.
+
+%files		-n texlive-detex.bin
+%{_bindir}/detex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-devnag.bin
+Summary:	binary files of devnag
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-devnag.bin
+texlive devnag.bin package.
+
+%files		-n texlive-devnag.bin
+%{_bindir}/devnag
+
+#-----------------------------------------------------------------------
+%package	-n texlive-dtl.bin
+Summary:	binary files of dtl
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-dtl.bin
+texlive dtl.bin package.
+
+%files		-n texlive-dtl.bin
+%{_bindir}/dt2dv
+%{_bindir}/dv2dt
+
+#-----------------------------------------------------------------------
+%package	-n texlive-dvi2tty.bin
+Summary:	binary files of dvi2tty
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-dvi2tty.bin
+texlive dvi2tty.bin package.
+
+%files		-n texlive-dvi2tty.bin
+%{_bindir}/disdvi
+%{_bindir}/dvi2tty
+
+#-----------------------------------------------------------------------
+%package	-n texlive-dvicopy.bin
+Summary:	binary files of dvicopy
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-dvicopy.bin
+texlive dvicopy.bin package.
+
+%files		-n texlive-dvicopy.bin
+%{_bindir}/dvicopy
+
+#-----------------------------------------------------------------------
+%package	-n texlive-dvidvi.bin
+Summary:	binary files of dvidvi
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-dvidvi.bin
+texlive dvidvi.bin package.
+
+%files		-n texlive-dvidvi.bin
+%{_bindir}/dvidvi
+
+#-----------------------------------------------------------------------
+%package	-n texlive-dviljk.bin
+Summary:	binary files of dviljk
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-dviljk.bin
+texlive dviljk.bin package.
+
+%files		-n texlive-dviljk.bin
+%{_bindir}/dvihp
+%{_bindir}/dvilj
+%{_bindir}/dvilj2p
+%{_bindir}/dvilj4
+%{_bindir}/dvilj4l
+%{_bindir}/dvilj6
+
+#-----------------------------------------------------------------------
+%package	-n texlive-dvipdfmx.bin
+Summary:	binary files of dvipdfmx
+Provides:	texlive-dvipdfm.bin = %{EVRD}
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-dvipdfmx.bin
+texlive dvipdfmx.bin package.
+
+%files		-n texlive-dvipdfmx.bin
+%{_bindir}/dvipdfm
+%{_bindir}/dvipdfmx
+%{_bindir}/ebb
+%{_bindir}/extractbb
+
+#-----------------------------------------------------------------------
+%package	-n texlive-dvipng.bin
+Summary:	binary files of dvipng
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-dvipng.bin
+texlive dvipng.bin package.
+
+%files		-n texlive-dvipng.bin
+%{_bindir}/dvigif
+%{_bindir}/dvipng
+
+#-----------------------------------------------------------------------
+%package	-n texlive-dvipos.bin
+Summary:	binary files of dvipos
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-dvipos.bin
+texlive dvipos.bin package.
+
+%files		-n texlive-dvipos.bin
+%{_bindir}/dvipos
+
+#-----------------------------------------------------------------------
+%package	-n texlive-dvips.bin
+Summary:	binary files of dvips
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-dvips.bin
+texlive dvips.bin package.
+
+%files		-n texlive-dvips.bin
+%{_bindir}/afm2tfm
+%{_bindir}/dvips
+
+#-----------------------------------------------------------------------
+%package	-n texlive-dvisvgm.bin
+Summary:	binary files of dvisvgm
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-dvisvgm.bin
+texlive dvisvgm.bin package.
+
+%files		-n texlive-dvisvgm.bin
+%{_bindir}/dvisvgm
+
+#-----------------------------------------------------------------------
+%package	-n texlive-fontware.bin
+Summary:	binary files of fontware
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-fontware.bin
+texlive fontware.bin package.
+
+%files		-n texlive-fontware.bin
+%{_bindir}/pltotf
+%{_bindir}/tftopl
+%{_bindir}/vftovp
+%{_bindir}/vptovf
+
+#-----------------------------------------------------------------------
+%package	-n texlive-gsftopk.bin
+Summary:	binary files of gsftopk
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-gsftopk.bin
+texlive gsftopk.bin package.
+
+%files		-n texlive-gsftopk.bin
+%{_bindir}/gsftopk
+
+#-----------------------------------------------------------------------
+%package	-n texlive-kpathsea.bin
+Summary:	binary files of kpathsea
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-kpathsea.bin
+texlive kpathsea.bin package.
+
+%files		-n texlive-kpathsea.bin
+%{_bindir}/kpseaccess
+%{_bindir}/kpsepath
+%{_bindir}/kpsereadlink
+%{_bindir}/kpsestat
+%{_bindir}/kpsetool
+%{_bindir}/kpsewhich
+%{_bindir}/kpsexpand
+%{_bindir}/mkocp
+%{_bindir}/mkofm
+%{_bindir}/mktexfmt
+%{_bindir}/mktexlsr
+%{_bindir}/mktexmf
+%{_bindir}/mktexpk
+%{_bindir}/mktextfm
+%{_bindir}/texhash
+
+#-----------------------------------------------------------------------
+%package	-n texlive-lacheck.bin
+Summary:	binary files of lacheck
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-lacheck.bin
+texlive lacheck.bin package.
+
+%files		-n texlive-lacheck.bin
+%{_bindir}/lacheck
+
+#-----------------------------------------------------------------------
+%package	-n texlive-latex-bin.bin
+Summary:	binary files of latex-bin
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-latex-bin.bin
+texlive latex-bin.bin package.
+
+%files		-n texlive-latex-bin.bin
+%{_bindir}/dvilualatex
+%{_bindir}/latex
+%{_bindir}/lualatex
+%{_bindir}/pdflatex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-lcdftypetools.bin
+Summary:	binary files of lcdftypetools
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-lcdftypetools.bin
+texlive lcdftypetools.bin package.
+
+%files		-n texlive-lcdftypetools.bin
+%{_bindir}/cfftot1
+%{_bindir}/mmafm
+%{_bindir}/mmpfb
+%{_bindir}/otfinfo-texlive
+%{_bindir}/otftotfm
+%{_bindir}/t1dotlessj
+%{_bindir}/t1lint
+%{_bindir}/t1rawafm
+%{_bindir}/t1reencode
+%{_bindir}/t1testpage
+%{_bindir}/ttftotype42
+
+#-----------------------------------------------------------------------
+%package	-n texlive-luatex.bin
+Summary:	binary files of luatex
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-luatex.bin
+texlive luatex.bin package.
+
+%files		-n texlive-luatex.bin
+%{_bindir}/dviluatex
+%{_bindir}/luatex
+%{_bindir}/texlua
+%{_bindir}/texluac
+
+#-----------------------------------------------------------------------
+%package	-n texlive-makeindex.bin
+Summary:	binary files of makeindex
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-makeindex.bin
+texlive makeindex.bin package.
+
+%files		-n texlive-makeindex.bin
+%{_bindir}/makeindex
+%{_bindir}/mkindex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-metafont.bin
+Summary:	binary files of metafont
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-metafont.bin
+texlive metafont.bin package.
+
+%files		-n texlive-metafont.bin
+%{_bindir}/inimf
+%{_bindir}/mf
+%{_bindir}/mf-nowin
+
+#-----------------------------------------------------------------------
+%package	-n texlive-metapost.bin
+Summary:	binary files of metapost
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-metapost.bin
+texlive metapost.bin package.
+
+%files		-n texlive-metapost.bin
+%{_bindir}/dvitomp
+%{_bindir}/mfplain
+%{_bindir}/mpost
+
+#-----------------------------------------------------------------------
+%package	-n texlive-mfware.bin
+Summary:	binary files of mfware
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-mfware.bin
+texlive mfware.bin package.
+
+%files		-n texlive-mfware.bin
+%{_bindir}/gftodvi
+%{_bindir}/gftopk
+%{_bindir}/gftype
+%{_bindir}/mft
+%{_bindir}/pktogf
+%{_bindir}/pktype
+
+#-----------------------------------------------------------------------
+%package	-n texlive-omegaware.bin
+Summary:	binary files of omegaware
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-omegaware.bin
+texlive omegaware.bin package.
+
+%files		-n texlive-omegaware.bin
+%{_bindir}/odvicopy
+%{_bindir}/odvitype
+%{_bindir}/ofm2opl
+%{_bindir}/omfonts
+%{_bindir}/opl2ofm
+%{_bindir}/otangle
+%{_bindir}/otp2ocp
+%{_bindir}/outocp
+%{_bindir}/ovf2ovp
+%{_bindir}/ovp2ovf
+
+#-----------------------------------------------------------------------
+%package	-n texlive-patgen.bin
+Summary:	binary files of patgen
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-patgen.bin
+texlive patgen.bin package.
+
+%files		-n texlive-patgen.bin
+%{_bindir}/patgen
+
+#-----------------------------------------------------------------------
+%package	-n texlive-pdftex.bin
+Summary:	binary files of pdftex
+Provides:	texlive-amstex.bin = %{EVRD}
+Provides:	texlive-cslatex.bin = %{EVRD}
+Provides:	texlive-csplain.bin = %{EVRD}
+Provides:	texlive-eplain.bin = %{EVRD}
+Provides:	texlive-jadetex.bin = %{EVRD}
+Provides:	texlive-mex.bin = %{EVRD}
+Provides:	texlive-mltex.bin = %{EVRD}
+Provides:	texlive-texsis.bin = %{EVRD}
+Provides:	texlive-xmltex.bin = %{EVRD}
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-pdftex.bin
+texlive pdftex.bin package.
+
+%files		-n texlive-pdftex.bin
+%{_bindir}/amstex
+%{_bindir}/cslatex
+%{_bindir}/csplain
+%{_bindir}/pdfcsplain
+%{_bindir}/eplain
+%{_bindir}/etex
+%{_bindir}/jadetex
+%{_bindir}/mex
+%{_bindir}/mllatex
+%{_bindir}/mltex
+%{_bindir}/pdfcslatex
+%{_bindir}/pdfetex
+%{_bindir}/pdfjadetex
+%{_bindir}/pdfmex
+%{_bindir}/pdftex
+%{_bindir}/pdfxmltex
+%{_bindir}/texsis
+%{_bindir}/utf8mex
+%{_bindir}/xmltex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-pdftools.bin
+Summary:	binary files of pdftools
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-pdftools.bin
+texlive pdftools.bin package.
+
+%files		-n texlive-pdftools.bin
+%{_bindir}/pdfclose
+%{_bindir}/pdfopen
+%{_bindir}/pdftosrc
+
+#-----------------------------------------------------------------------
+%package	-n texlive-ps2pkm.bin
+Summary:	binary files of ps2pkm
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-ps2pkm.bin
+texlive ps2pkm.bin package.
+
+%files		-n texlive-ps2pkm.bin
+%{_bindir}/mag
+%{_bindir}/pfb2pfa
+%{_bindir}/pk2bm
+%{_bindir}/ps2pk
+
+#-----------------------------------------------------------------------
+%package	-n texlive-pstools.bin
+Summary:	binary files of pstools
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-pstools.bin
+texlive pstools.bin package.
+
+%files		-n texlive-pstools.bin
+%{_bindir}/bbox
+%{_bindir}/ps2eps
+%{_bindir}/ps2frag
+%{_bindir}/pslatex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-ptex.bin
+Summary:	binary files of ptex
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-ptex.bin
+texlive ptex.bin package.
+
+%files		-n texlive-ptex.bin
+%{_bindir}/eptex
+%{_bindir}/makejvf
+%{_bindir}/mendex
+%{_bindir}/pbibtex
+%{_bindir}/pdvitype
+%{_bindir}/platex
+%{_bindir}/ppltotf
+%{_bindir}/ptex
+%{_bindir}/ptftopl
+
+#-----------------------------------------------------------------------
+%package	-n texlive-seetexk.bin
+Summary:	binary files of seetexk
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-seetexk.bin
+texlive seetexk.bin package.
+
+%files		-n texlive-seetexk.bin
+%{_bindir}/dvibook
+%{_bindir}/dviconcat
+%{_bindir}/dviselect
+%{_bindir}/dvitodvi
+
+#-----------------------------------------------------------------------
+%package	-n texlive-synctex.bin
+Summary:	binary files of synctex
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-synctex.bin
+texlive synctex.bin package.
+
+%files		-n texlive-synctex.bin
+%{_bindir}/synctex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-tex.bin
+Summary:	binary files of tex
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-tex.bin
+texlive tex.bin package.
+
+%files		-n texlive-tex.bin
+%{_bindir}/initex
+%{_bindir}/tex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-tex4ht.bin
+Summary:	binary files of tex4ht
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-tex4ht.bin
+texlive tex4ht.bin package.
+
+%files		-n texlive-tex4ht.bin
+%{_bindir}/t4ht
+%{_bindir}/tex4ht
+
+#-----------------------------------------------------------------------
+%package	-n texlive-texware.bin
+Summary:	binary files of texware
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-texware.bin
+texlive texware.bin package.
+
+%files		-n texlive-texware.bin
+%{_bindir}/dvitype
+%{_bindir}/pooltype
+
+#-----------------------------------------------------------------------
+%package	-n texlive-tie.bin
+Summary:	binary files of tie
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-tie.bin
+texlive tie.bin package.
+
+%files		-n texlive-tie.bin
+%{_bindir}/tie
+
+#-----------------------------------------------------------------------
+%package	-n texlive-ttfutils.bin
+Summary:	binary files of ttfutils
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-ttfutils.bin
+texlive ttfutils.bin package.
+
+%files		-n texlive-ttfutils.bin
+%{_bindir}/ttf2afm
+%{_bindir}/ttf2pk
+%{_bindir}/ttf2tfm
+%{_bindir}/ttfdump
+
+#-----------------------------------------------------------------------
+%package	-n texlive-vlna.bin
+Summary:	binary files of vlna
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-vlna.bin
+texlive vlna.bin package.
+
+%files		-n texlive-vlna.bin
+%{_bindir}/vlna
+
+#-----------------------------------------------------------------------
+%package	-n texlive-web.bin
+Summary:	binary files of web
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-web.bin
+texlive web.bin package.
+
+%files		-n texlive-web.bin
+%{_bindir}/tangle
+%{_bindir}/weave
+
+#-----------------------------------------------------------------------
+%package	-n texlive-xdvi.bin
+Summary:	binary files of xdvi
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-xdvi.bin
+texlive xdvi.bin package.
+
+%files		-n texlive-xdvi.bin
+%{_bindir}/xdvi
+%{_bindir}/xdvi-xaw
+
+#-----------------------------------------------------------------------
+%package	-n texlive-xetex.bin
+Summary:	binary files of xetex
+Conflicts:	texlive <= 20110705-6
+
+%description	-n texlive-xetex.bin
+texlive xetex.bin package.
+
+%files		-n texlive-xetex.bin
+%{_bindir}/teckit_compile
+%{_bindir}/xdvipdfmx
+%{_bindir}/xelatex
+%{_bindir}/xetex
+
+#-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}-%{version}-source
 %patch0 -p1
 %patch1 -p1
-%if %{enable_asymptote}
+%if %{_texmf_enable_asymptote}
 %patch2 -p1
 %endif
 %patch3 -p1
 %patch4 -p1
 
 # setup default builtin values, added to paths.h from texmf.cnf
-perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{texmfdir}%;'			  \
-	 -e 's%^(TEXMFDIST\s+= ).*%$1%{texmfdistdir}%;'			  \
-	 -e 's%^(TEXMFLOCAL\s+= ).*%$1%{texmflocaldir}%;'			  \
-	 -e 's%^(TEXMFSYSVAR\s+= ).*%$1%{texmfvardir}%;'		  \
-	 -e 's%^(TEXMFSYSCONFIG\s+= ).*%$1%{texmfconfdir}%;'		  \
+perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{_texmfdir}%;'			  \
+	 -e 's%^(TEXMFDIST\s+= ).*%$1%{_texmfdistdir}%;'		  \
+	 -e 's%^(TEXMFLOCAL\s+= ).*%$1%{_texmflocaldir}%;'		  \
+	 -e 's%^(TEXMFSYSVAR\s+= ).*%$1%{_texmfvardir}%;'		  \
+	 -e 's%^(TEXMFSYSCONFIG\s+= ).*%$1%{_texmfconfdir}%;'		  \
 	 -e 's%^(TEXMFHOME\s+= ).*%$1\$HOME/texmf%;'			  \
 	 -e 's%^(TEXMFVAR\s+= ).*%$1\$HOME/.texlive2011/texmf-var%;'	  \
 	 -e 's%^(TEXMFCONFIG\s+= ).*%$1\$HOME/.texlive2011/texmf-config%;'\
@@ -365,7 +973,7 @@ perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{texmfdir}%;'			  \
 %else
 	--disable-shared					\
 %endif
-%if %{enable_xindy}
+%if %{_texmf_enable_xindy}
 	--enable-xindy						\
 %else
 	--disable-xindy						\
@@ -374,33 +982,33 @@ perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{texmfdir}%;'			  \
 	--with-freetype-includes=%{_includedir}/freetype	\
 	--with-system-freetype2					\
 	--with-freetype2-includes=%{_includedir}/freetype2	\
-%if %{with_system_dialog}
+%if %{_texmf_with_system_dialog}
 	--disable-dialog					\
 %else
 	--enable-dialog						\
 %endif
-%if %{with_system_psutils}
+%if %{_texmf_with_system_psutils}
 	--disable-psutils					\
 %else
 	--enable-psutils					\
 %endif
 	--with-system-gd					\
-%if %{with_system_lcdf}
+%if %{_texmf_with_system_lcdf}
 	--disable-lcdf-typetools				\
 %endif
 	--with-system-png					\
-%if %{with_system_t1lib}
+%if %{_texmf_with_system_t1lib}
 	--with-system-t1lib					\
 	--disable-t1utils					\
 %endif
-%if %{with_system_teckit}
+%if %{_texmf_with_system_teckit}
 	--disable-teckit					\
 	--with-teckit-includes=%{_includedir}/teckit		\
 %endif
-%if %{with_system_tex4ht}
+%if %{_texmf_with_system_tex4ht}
 	--disable-tex4htk					\
 %endif
-%if %{with_system_poppler}
+%if %{_texmf_with_system_poppler}
 	--with-system-xpdf					\
 %else
 	--without-system-xpdf					\
@@ -408,12 +1016,12 @@ perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{texmfdir}%;'			  \
 	--with-system-zziplib
 %make
 
-%if %{enable_asymptote}
+%if %{_texmf_enable_asymptote}
 pushd utils/asymptote
 %configure2_5x							\
 	--enable-gc=system					\
 	--enable-texlive-build					\
-	--datadir=%{texmfdir}
+	--datadir=%{_texmfdir}
 %make
 popd
 %endif
@@ -422,7 +1030,7 @@ popd
 %install
 %makeinstall_std
 
-%if %{enable_asymptote}
+%if %{_texmf_enable_asymptote}
 pushd utils/asymptote
 %makeinstall_std
 popd
@@ -436,20 +1044,20 @@ for dir in texmf texmf-dist; do
     fi
 done
 
-mkdir -p %{buildroot}%{texmfvardir}
-mkdir -p %{buildroot}%{texmfconfdir}
+mkdir -p %{buildroot}%{_texmfvardir}
+mkdir -p %{buildroot}%{_texmfconfdir}
 
-%if %{with_system_lcdf}
+%if %{_texmf_with_system_lcdf}
 # stray directory left
 rm -fr %{buildroot}%{_datadir}/lcdf-typetools-for-tex-live
 %else
 # openmpi has a program with the same name
-if [ -f %{buildroot}%{texmfbindir}/otfinfo ]; then
-    mv -f %{buildroot}%{texmfbindir}/otfinfo{,-texlive}
+if [ -f %{buildroot}%{_bindir}/otfinfo ]; then
+    mv -f %{buildroot}%{_bindir}/otfinfo{,-texlive}
 fi
 %endif
 
-pushd %{buildroot}%{texmfbindir}
+pushd %{buildroot}%{_bindir}
     # missing symbolic links
     ln -sf aleph lamed
     ln -sf luatex dvilualatex
@@ -472,69 +1080,49 @@ pushd %{buildroot}%{texmfbindir}
     ln -sf pdftex pdflatex
     ln -sf pdftex pdfmex
     ln -sf pdftex pdfxmltex
-    ln -sf pdftex physe
-    ln -sf pdftex phyzzx
     ln -sf pdftex utf8mex
     ln -sf pdftex texsis
     ln -sf pdftex xmltex
     ln -sf ptex platex
-    ln -sf mpost metafun
     ln -sf mpost mfplain
     ln -sf xetex xelatex
-    # correct symlinks
-    for file in *; do
-	link=`readlink $file` || :
-	if [ "x$link" != "x" ]; then
-	    ln -sf `echo $link |					\
-		sed	-e 's|\.\./.*texmf-dist/|%{texmfdistdir}/|'	\
-			-e 's|\.\./.*texmf/|%{texmfdir}/|'`		\
-		$file
-	fi
-    done
-%if %{with_system_dialog}
-    ln -sf %{_bindir}/dialog tcdialog
+%if %{_texmf_enable_asymptote}
+    ln -sf %{_texmfdir}/asymptote/GUI/xasy.py xasy
 %endif
-%if %{enable_asymptote}
-    ln -sf %{texmfdir}/asymptote/GUI/xasy.py xasy
-%endif
-    # install scripts from texlive-texmf
-    rm -f a2ping afm2afm arlatex authorindex autoinst bibexport		\
-	  bundledoc cachepic cmap2enc de-macro dviasm ebong e2pall	\
-	  epspdf epspdftk epstopdf fig4latex findhyph font2afm		\
-	  fragmaster ht htcontext htlatex htmex httex httexi htxelatex	\
-	  htxetex latex2man latexdiff latexdiff-vc latexmk latexrevise	\
-	  listings-ext.sh makeglossaries mathspic mk4ht mkgrkindex	\
-	  mkjobtexmf mkluatexfontdb mkt1font mptopdf ot2kpx pdf180	\
-	  pdf270 pdf90 pdfannotextractor pdfatfi pdfbook pdfcrop	\
+
+    # use scripts from noarch packages
+    rm -f allcm allneeded chkweb context ctxtools dvi2fax dvired	\
+	  fmtutil fmtutil-sys fontinst kpsewhere luatools mtxrun	\
+	  pstopdf rlxtools rubibtex rumakeindex texconfig		\
+	  texconfig-dialog texconfig-sys texexec tpic2pdftex
+
+    # use symlinks from noarch packages
+    rm -f a2ping afm2afm allec arlatex authorindex autoinst bibexport	\
+	  bundledoc cachepic cmap2enc de-macro deweb dviasm dvipdft	\
+	  ebong e2pall epspdf epspdftk epstopdf fig4latex findhyph	\
+	  font2afm fragmaster ht htcontext htlatex htmex httex httexi	\
+	  htxelatex htxetex installfont-tl latex2man latexdiff		\
+	  latexdiff-vc latexmk latexrevise listings-ext.sh		\
+	  makeglossaries mathspic mk4ht mkgrkindex mkjobtexmf		\
+	   mkluatexfontdb mkt1font mptopdf musixflx musixtex ot2kpx	\
+	  pdf180 pdf270 pdf90 pdfannotextractor pdfatfi pdfbook pdfcrop	\
 	  pdfflip pdfjam pdfjam-pocketmod pdfjam-slides3up		\
 	  pdfjam-slides6up pdfjoin pdfnup pdfpun pdfthumb perltex	\
-	  pfm2kpx pkfix  pkfix-helper ppower4 ps4pdf pst2pdf purifyeps	\
+	  pfm2kpx pkfix pkfix-helper ppower4 ps4pdf pst2pdf purifyeps	\
 	  repstopdf rpdfcrop rungs showglyphs simpdftex splitindex	\
-	  svn-multi texcount texdiff texdirflatten texdoc texdoctk	\
-	  texloganalyser thumbpdf tlmgr ulqda updmap vpe vpl2ovp	\
-	  vpl2vpl
+	  sty2dtx svn-multi texcount texdef texdiff texdirflatten	\
+	  texdoc texdoctk texlinks texloganalyser texmfstart thumbpdf	\
+	  tlmgr ulqda updmap updmap-sys vpe vpl2ovp vpl2vpl
 popd
 
 # use texmf data
-rm -fr %{buildroot}%{texmfdir} %{buildroot}%{texmfdistdir}
+rm -fr %{buildroot}%{_texmfdir} %{buildroot}%{_texmfdistdir}
 
-# install manual pages and info files from texlive-texmf tarball
+# install manual pages and info files from noarch packages
 rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
 
 %if !%{enable_shared}
-# do not generate dynamic libraries and do not install static ones
-rm -fr %{buildroot}%{_libdir}
-rm -fr %{buildroot}%{_includedir}
+    # do not generate dynamic libraries and do not install static ones
+    rm -fr %{buildroot}%{_libdir}
+    rm -fr %{buildroot}%{_includedir}
 %endif
-
-#-----------------------------------------------------------------------
-%clean
-rm -rf %{buildroot}
-
-#-----------------------------------------------------------------------
-%posttrans
-rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R
-%{texmfbindir}/mktexlsr %{texmfdir} %{texmfdistdir} > /dev/null
-%{texmfbindir}/updmap-sys --syncwithtrees > /dev/null
-%{texmfbindir}/texconfig-sys init > /dev/null
-%{texmfbindir}/mtxrun --generate > /dev/null
