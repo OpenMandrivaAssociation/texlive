@@ -1,7 +1,17 @@
-%define _binary_payload		w9.gzdio
-%define _source_payload		w9.gzdio
+%define _binary_payload			w9.gzdio
+%define _source_payload			w9.gzdio
 
-%define enable_shared		1
+%define _texmf_enable_asymptote		0
+%define _texmf_enable_xindy		0
+%define _texmf_with_system_dialog	1
+%define _texmf_with_system_lcdf		0
+%define _texmf_with_system_poppler	0
+%define _texmf_with_system_psutils	1
+%define _texmf_with_system_t1lib	1
+%define _texmf_with_system_tex4ht	0
+%define _texmf_with_system_teckit	0
+
+%define enable_shared			1
 
 #-----------------------------------------------------------------------
 Name:		texlive
