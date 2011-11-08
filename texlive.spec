@@ -29,7 +29,7 @@ Requires:	teckit
 
 Conflicts:	texlive <= 20110705-6
 Conflicts:	texlive-texmf < 20110705
-Requires:	texlive-scheme-medium
+Requires:	texlive-scheme-medium texlive-scheme-xml
 Requires(pre):	texlive-tlpkg
 BuildRequires:	texlive-tlpkg
 
@@ -82,31 +82,6 @@ Patch2:		texlive-20110312-asymptote.patch
 Patch3:		texlive-20110312-xdvi.patch
 # http://tug.org/svn/texlive?view=revision&revision=23644
 Patch4:		texlive-20110705-synctex-coordinates.patch
-
-%posttrans
-    # attempt to correct interrupted/killed install
-    if [ -f /var/run/mktexlsr ]; then
-	%{_bindir}/mktexlsr %{_texmfdir} %{_texmfdistdir} > /dev/null
-	rm -f /var/run/mktexlsr
-    fi
-    rm -f /var/run/mktexlsr.lock
-    if [ -f /var/run/updmap ]; then
-	%{_bindir}/updmap-sys --syncwithtrees > /dev/null
-	rm -f /var/run/updmap
-    fi
-    rm -f /var/run/updmap.lock
-
-    if [ -f /var/run/fmtutil ]; then
-	%{_bindir}/fmtutil-sys --all > /dev/null
-	rm -f /var/run/fmtutil
-    fi
-    rm -f /var/run/fmtutil.lock
-    if [ -f /var/run/mtxrun ]; then
-	%{_bindir}/mtxrun --generate > /dev/null
-	rm -f /var/run/mtxrun
-    fi
-    rm -f /var/run/mtxrun.lock
-    rm -f /var/run/language.{dat,def,lua}{,.lock}
 
 #-----------------------------------------------------------------------
 %description
@@ -781,9 +756,6 @@ texlive pstools.bin package.
 
 %files		-n texlive-pstools.bin
 %{_bindir}/bbox
-%{_bindir}/ps2eps
-%{_bindir}/ps2frag
-%{_bindir}/pslatex
 
 #-----------------------------------------------------------------------
 %package	-n texlive-ptex.bin
@@ -1093,8 +1065,8 @@ pushd %{buildroot}%{_bindir}
     # use scripts from noarch packages
     rm -f allcm allneeded chkweb context ctxtools dvi2fax dvired	\
 	  fmtutil fmtutil-sys fontinst kpsewhere luatools mtxrun	\
-	  pstopdf rlxtools rubibtex rumakeindex texconfig		\
-	  texconfig-dialog texconfig-sys texexec tpic2pdftex
+	  ps2frag pslatex pstopdf rlxtools rubibtex rumakeindex		\
+	  texconfig texconfig-dialog texconfig-sys texexec tpic2pdftex
 
     # use symlinks from noarch packages
     rm -f a2ping afm2afm allec arlatex authorindex autoinst bibexport	\
@@ -1104,15 +1076,16 @@ pushd %{buildroot}%{_bindir}
 	  htxelatex htxetex installfont-tl latex2man latexdiff		\
 	  latexdiff-vc latexmk latexrevise listings-ext.sh		\
 	  makeglossaries mathspic mk4ht mkgrkindex mkjobtexmf		\
-	   mkluatexfontdb mkt1font mptopdf musixflx musixtex ot2kpx	\
+	  mkluatexfontdb mkt1font mptopdf musixflx musixtex ot2kpx	\
 	  pdf180 pdf270 pdf90 pdfannotextractor pdfatfi pdfbook pdfcrop	\
 	  pdfflip pdfjam pdfjam-pocketmod pdfjam-slides3up		\
 	  pdfjam-slides6up pdfjoin pdfnup pdfpun pdfthumb perltex	\
-	  pfm2kpx pkfix pkfix-helper ppower4 ps4pdf pst2pdf purifyeps	\
-	  repstopdf rpdfcrop rungs showglyphs simpdftex splitindex	\
-	  sty2dtx svn-multi texcount texdef texdiff texdirflatten	\
-	  texdoc texdoctk texlinks texloganalyser texmfstart thumbpdf	\
-	  tlmgr ulqda updmap updmap-sys vpe vpl2ovp vpl2vpl
+	  pfm2kpx pkfix pkfix-helper ppower4 ps2eps ps4pdf pst2pdf	\
+	  purifyeps repstopdf rpdfcrop rungs showglyphs simpdftex	\
+	  splitindex sty2dtx svn-multi texcount texdef texdiff		\
+	  texdirflatten texdoc texdoctk texlinks texloganalyser		\
+	  texmfstart thumbpdf tlmgr ulqda updmap updmap-sys vpe vpl2ovp	\
+	  vpl2vpl
 popd
 
 # use texmf data
