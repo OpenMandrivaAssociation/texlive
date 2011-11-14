@@ -16,7 +16,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110705
-Release:	7
+Release:	8
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -558,14 +558,14 @@ texlive lacheck.bin package.
 %{_bindir}/lacheck
 
 #-----------------------------------------------------------------------
-%package	-n texlive-latex-bin.bin
-Summary:	binary files of latex-bin
+%package	-n texlive-latex.bin
+Summary:	binary files of latex
 Conflicts:	texlive <= 20110705-6
 
-%description	-n texlive-latex-bin.bin
-texlive latex-bin.bin package.
+%description	-n texlive-latex.bin
+texlive latex.bin package.
 
-%files		-n texlive-latex-bin.bin
+%files		-n texlive-latex.bin
 %{_bindir}/dvilualatex
 %{_bindir}/latex
 %{_bindir}/lualatex
