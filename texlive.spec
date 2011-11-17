@@ -16,7 +16,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110705
-Release:	8
+Release:	9
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -40,6 +40,7 @@ Requires:	teckit
 Conflicts:	texlive <= 20110705-6
 Conflicts:	texlive-texmf < 20110705
 Requires:	texlive-scheme-medium texlive-scheme-xml
+Requires:	texlive-collection-latexextra
 Requires(pre):	texlive-tlpkg
 BuildRequires:	texlive-tlpkg
 
