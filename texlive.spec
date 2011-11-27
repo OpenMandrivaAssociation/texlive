@@ -37,8 +37,6 @@ Requires:	tkinter
 Requires:	teckit
 %endif
 
-Conflicts:	texlive <= 20110705-6
-Conflicts:	texlive-texmf < 20110705
 Requires:	texlive-scheme-medium texlive-scheme-xml
 Requires:	texlive-collection-latexextra
 Requires(pre):	texlive-tlpkg
