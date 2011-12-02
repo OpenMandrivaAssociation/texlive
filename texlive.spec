@@ -16,7 +16,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110705
-Release:	9
+Release:	10
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -39,7 +39,7 @@ Requires:	teckit
 
 Requires:	texlive-scheme-medium texlive-scheme-xml
 Requires:	texlive-collection-latexextra
-Requires(pre):	texlive-tlpkg
+Requires(post):	texlive-tlpkg
 BuildRequires:	texlive-tlpkg
 
 #-----------------------------------------------------------------------
@@ -100,6 +100,9 @@ all the major TeX-related programs, macro packages, and fonts that are
 free software, including support for many languages around the world.
 
 %files
+
+%posttrans
+    %{_sbindir}/texlive.post -
 
 #-----------------------------------------------------------------------
 %if %{enable_shared}
