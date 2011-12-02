@@ -935,15 +935,15 @@ texlive xetex.bin package.
 %patch4 -p1
 
 # setup default builtin values, added to paths.h from texmf.cnf
-perl -pi -e 's%^(TEXMFMAIN\s+= ).*%$1%{_texmfdir}%;'			  \
-	 -e 's%^(TEXMFDIST\s+= ).*%$1%{_texmfdistdir}%;'		  \
-	 -e 's%^(TEXMFLOCAL\s+= ).*%$1%{_texmflocaldir}%;'		  \
-	 -e 's%^(TEXMFSYSVAR\s+= ).*%$1%{_texmfvardir}%;'		  \
-	 -e 's%^(TEXMFSYSCONFIG\s+= ).*%$1%{_texmfconfdir}%;'		  \
-	 -e 's%^(TEXMFHOME\s+= ).*%$1\$HOME/texmf%;'			  \
-	 -e 's%^(TEXMFVAR\s+= ).*%$1\$HOME/.texlive2011/texmf-var%;'	  \
-	 -e 's%^(TEXMFCONFIG\s+= ).*%$1\$HOME/.texlive2011/texmf-config%;'\
-	 -e 's%^(OSFONTDIR\s+= ).*%$1%{_datadir}/fonts%;'		  \
+perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdir}|;'			  \
+	 -e 's|^(TEXMFDIST\s+= ).*|$1%{_texmfdistdir}|;'		  \
+	 -e 's|^(TEXMFLOCAL\s+= ).*|$1%{_texmflocaldir}|;'		  \
+	 -e 's|^(TEXMFSYSVAR\s+= ).*|$1%{_texmfvardir}|;'		  \
+	 -e 's|^(TEXMFSYSCONFIG\s+= ).*|$1%{_texmfconfdir}|;'		  \
+	 -e 's|^(TEXMFHOME\s+= ).*|$1\$HOME/texmf|;'			  \
+	 -e 's|^(TEXMFVAR\s+= ).*|$1\$HOME/.texlive2011/texmf-var|;'	  \
+	 -e 's|^(TEXMFCONFIG\s+= ).*|$1\$HOME/.texlive2011/texmf-config|;'\
+	 -e 's|^(OSFONTDIR\s+= ).*|$1%{_datadir}/fonts|;'		  \
 	texk/kpathsea/texmf.cnf
 
 #-----------------------------------------------------------------------
