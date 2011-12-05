@@ -16,16 +16,15 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20110705
-Release:	10
+Release:	11
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
 Source0:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz.sha256
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-Obsoletes:	tetex-usrlocal <= 3.0
+Obsoletes:	tetex-usrlocal < 3.0-1
 
 #-----------------------------------------------------------------------
 Requires:	ghostscript
@@ -118,8 +117,7 @@ Provides:	kpathsea = %{version}-%{release}
 Kpathsea implements generic path searching, configuration,
 and TeX-specific file searching.
 
-%files		-n %{kpathsea}
-%defattr(-,root,root,-)
+%files -n %{kpathsea}
 %{_libdir}/libkpathsea.so.*
 
 #-----------------------------------------------------------------------
@@ -136,8 +134,7 @@ Kpathsea implements generic path searching, configuration,
 and TeX-specific file searching.
 This package includes the kpathsea development files.
 
-%files		-n %{kpathsea_devel}
-%defattr(-,root,root,-)
+%files -n %{kpathsea_devel}
 %{_includedir}/kpathsea
 %{_libdir}/libkpathsea.la
 %{_libdir}/libkpathsea.so
@@ -156,8 +153,7 @@ Kpathsea implements generic path searching, configuration,
 and TeX-specific file searching.
 This package includes the static kpathsea library.
 
-%files		-n %{kpathsea_static_devel}
-%defattr(-,root,root,-)
+%files -n %{kpathsea_static_devel}
 %{_libdir}/libkpathsea.a
 
 #-----------------------------------------------------------------------
@@ -173,8 +169,7 @@ ptexenc is a useful library for Japanese pTeX
 (which stands for publishing TeX, and is an extension of
 TeX by ASCII Co.) and its surrounding tools.
 
-%files		-n %{ptexenc}
-%defattr(-,root,root,-)
+%files -n %{ptexenc}
 %{_libdir}/libptexenc.so.*
 
 #-----------------------------------------------------------------------
@@ -192,9 +187,8 @@ ptexenc is a useful library for Japanese pTeX
 TeX by ASCII Co.) and its surrounding tools.
 This package includes the ptexenc development files.
 
-%files		-n %{ptexenc_devel}
-%defattr(-,root,root,-)
-%{_includedir}/ptexenc
+%files -n %{ptexenc_devel}
+%{_includedir}/ptexenc/
 %{_libdir}/libptexenc.la
 %{_libdir}/libptexenc.so
 
@@ -213,8 +207,7 @@ ptexenc is a useful library for Japanese pTeX
 TeX by ASCII Co.) and its surrounding tools.
 This package includes the static ptexenc library.
 
-%files		-n %{ptexenc_static_devel}
-%defattr(-,root,root,-)
+%files -n %{ptexenc_static_devel}
 %{_libdir}/libptexenc.a
 
 ########################################################################
@@ -222,92 +215,92 @@ This package includes the static ptexenc library.
 %endif
 
 #-----------------------------------------------------------------------
-%package	-n texlive-afm2pl.bin
+%package -n texlive-afm2pl.bin
 Summary:	binary files of afm2pl
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-afm2pl.bin
 texlive afm2pl.bin package.
 
-%files		-n texlive-afm2pl.bin
+%files -n texlive-afm2pl.bin
 %{_bindir}/afm2pl
 
 #-----------------------------------------------------------------------
 %package	-n texlive-aleph.bin
 Summary:	binary files of aleph
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-aleph.bin
 texlive aleph.bin package.
 
-%files		-n texlive-aleph.bin
+%files -n texlive-aleph.bin
 %{_bindir}/aleph
 %{_bindir}/lamed
 
 #-----------------------------------------------------------------------
 %package	-n texlive-biber.bin
 Summary:	binary files of biber
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-biber.bin
 texlive biber.bin package.
 
-%files		-n texlive-biber.bin
+%files -n texlive-biber.bin
 %{_bindir}/biber
 
 #-----------------------------------------------------------------------
 %package	-n texlive-bibtex.bin
 Summary:	binary files of bibtex
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-bibtex.bin
 texlive bibtex.bin package.
 
-%files		-n texlive-bibtex.bin
+%files -n texlive-bibtex.bin
 %{_bindir}/bibtex
 
 #-----------------------------------------------------------------------
 %package	-n texlive-bibtex8.bin
 Summary:	binary files of bibtex8
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-bibtex8.bin
 texlive bibtex8.bin package.
 
-%files		-n texlive-bibtex8.bin
+%files -n texlive-bibtex8.bin
 %{_bindir}/bibtex8
 
 #-----------------------------------------------------------------------
 %package	-n texlive-bibtexu.bin
 Summary:	binary files of bibtexu
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-bibtexu.bin
 texlive bibtexu.bin package.
 
-%files		-n texlive-bibtexu.bin
+%files -n texlive-bibtexu.bin
 %{_bindir}/bibtexu
 
 #-----------------------------------------------------------------------
 %package	-n texlive-chktex.bin
 Summary:	binary files of chktex
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-chktex.bin
 texlive chktex.bin package.
 
-%files		-n texlive-chktex.bin
+%files -n texlive-chktex.bin
 %{_bindir}/chktex
 
 #-----------------------------------------------------------------------
 %package	-n texlive-cjkutils.bin
 Summary:	binary files of cjkutils
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-cjkutils.bin
 texlive cjkutils.bin package.
 
-%files		-n texlive-cjkutils.bin
+%files -n texlive-cjkutils.bin
 %{_bindir}/bg5+latex
 %{_bindir}/bg5+pdflatex
 %{_bindir}/bg5conv
@@ -333,103 +326,103 @@ texlive cjkutils.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-ctie.bin
 Summary:	binary files of ctie
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-ctie.bin
 texlive ctie.bin package.
 
-%files		-n texlive-ctie.bin
+%files -n texlive-ctie.bin
 %{_bindir}/ctie
 
 #-----------------------------------------------------------------------
 %package	-n texlive-cweb.bin
 Summary:	binary files of cweb
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-cweb.bin
 texlive cweb.bin package.
 
-%files		-n texlive-cweb.bin
+%files -n texlive-cweb.bin
 %{_bindir}/ctangle
 %{_bindir}/cweave
 
 #-----------------------------------------------------------------------
 %package	-n texlive-detex.bin
 Summary:	binary files of detex
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-detex.bin
 texlive detex.bin package.
 
-%files		-n texlive-detex.bin
+%files -n texlive-detex.bin
 %{_bindir}/detex
 
 #-----------------------------------------------------------------------
 %package	-n texlive-devnag.bin
 Summary:	binary files of devnag
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-devnag.bin
 texlive devnag.bin package.
 
-%files		-n texlive-devnag.bin
+%files -n texlive-devnag.bin
 %{_bindir}/devnag
 
 #-----------------------------------------------------------------------
 %package	-n texlive-dtl.bin
 Summary:	binary files of dtl
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-dtl.bin
 texlive dtl.bin package.
 
-%files		-n texlive-dtl.bin
+%files -n texlive-dtl.bin
 %{_bindir}/dt2dv
 %{_bindir}/dv2dt
 
 #-----------------------------------------------------------------------
 %package	-n texlive-dvi2tty.bin
 Summary:	binary files of dvi2tty
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-dvi2tty.bin
 texlive dvi2tty.bin package.
 
-%files		-n texlive-dvi2tty.bin
+%files -n texlive-dvi2tty.bin
 %{_bindir}/disdvi
 %{_bindir}/dvi2tty
 
 #-----------------------------------------------------------------------
 %package	-n texlive-dvicopy.bin
 Summary:	binary files of dvicopy
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-dvicopy.bin
 texlive dvicopy.bin package.
 
-%files		-n texlive-dvicopy.bin
+%files -n texlive-dvicopy.bin
 %{_bindir}/dvicopy
 
 #-----------------------------------------------------------------------
 %package	-n texlive-dvidvi.bin
 Summary:	binary files of dvidvi
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-dvidvi.bin
 texlive dvidvi.bin package.
 
-%files		-n texlive-dvidvi.bin
+%files -n texlive-dvidvi.bin
 %{_bindir}/dvidvi
 
 #-----------------------------------------------------------------------
 %package	-n texlive-dviljk.bin
 Summary:	binary files of dviljk
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-dviljk.bin
 texlive dviljk.bin package.
 
-%files		-n texlive-dviljk.bin
+%files -n texlive-dviljk.bin
 %{_bindir}/dvihp
 %{_bindir}/dvilj
 %{_bindir}/dvilj2p
@@ -441,12 +434,12 @@ texlive dviljk.bin package.
 %package	-n texlive-dvipdfmx.bin
 Summary:	binary files of dvipdfmx
 Provides:	texlive-dvipdfm.bin = %{EVRD}
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-dvipdfmx.bin
 texlive dvipdfmx.bin package.
 
-%files		-n texlive-dvipdfmx.bin
+%files -n texlive-dvipdfmx.bin
 %{_bindir}/dvipdfm
 %{_bindir}/dvipdfmx
 %{_bindir}/ebb
@@ -455,58 +448,58 @@ texlive dvipdfmx.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-dvipng.bin
 Summary:	binary files of dvipng
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-dvipng.bin
 texlive dvipng.bin package.
 
-%files		-n texlive-dvipng.bin
+%files -n texlive-dvipng.bin
 %{_bindir}/dvigif
 %{_bindir}/dvipng
 
 #-----------------------------------------------------------------------
 %package	-n texlive-dvipos.bin
 Summary:	binary files of dvipos
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-dvipos.bin
 texlive dvipos.bin package.
 
-%files		-n texlive-dvipos.bin
+%files -n texlive-dvipos.bin
 %{_bindir}/dvipos
 
 #-----------------------------------------------------------------------
 %package	-n texlive-dvips.bin
 Summary:	binary files of dvips
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-dvips.bin
 texlive dvips.bin package.
 
-%files		-n texlive-dvips.bin
+%files -n texlive-dvips.bin
 %{_bindir}/afm2tfm
 %{_bindir}/dvips
 
 #-----------------------------------------------------------------------
 %package	-n texlive-dvisvgm.bin
 Summary:	binary files of dvisvgm
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-dvisvgm.bin
 texlive dvisvgm.bin package.
 
-%files		-n texlive-dvisvgm.bin
+%files -n texlive-dvisvgm.bin
 %{_bindir}/dvisvgm
 
 #-----------------------------------------------------------------------
 %package	-n texlive-fontware.bin
 Summary:	binary files of fontware
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-fontware.bin
 texlive fontware.bin package.
 
-%files		-n texlive-fontware.bin
+%files -n texlive-fontware.bin
 %{_bindir}/pltotf
 %{_bindir}/tftopl
 %{_bindir}/vftovp
@@ -515,23 +508,23 @@ texlive fontware.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-gsftopk.bin
 Summary:	binary files of gsftopk
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-gsftopk.bin
 texlive gsftopk.bin package.
 
-%files		-n texlive-gsftopk.bin
+%files -n texlive-gsftopk.bin
 %{_bindir}/gsftopk
 
 #-----------------------------------------------------------------------
 %package	-n texlive-kpathsea.bin
 Summary:	binary files of kpathsea
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-kpathsea.bin
 texlive kpathsea.bin package.
 
-%files		-n texlive-kpathsea.bin
+%files -n texlive-kpathsea.bin
 %{_bindir}/kpseaccess
 %{_bindir}/kpsepath
 %{_bindir}/kpsereadlink
@@ -551,23 +544,23 @@ texlive kpathsea.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-lacheck.bin
 Summary:	binary files of lacheck
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-lacheck.bin
 texlive lacheck.bin package.
 
-%files		-n texlive-lacheck.bin
+%files -n texlive-lacheck.bin
 %{_bindir}/lacheck
 
 #-----------------------------------------------------------------------
 %package	-n texlive-latex.bin
 Summary:	binary files of latex
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-latex.bin
 texlive latex.bin package.
 
-%files		-n texlive-latex.bin
+%files -n texlive-latex.bin
 %{_bindir}/dvilualatex
 %{_bindir}/latex
 %{_bindir}/lualatex
@@ -576,12 +569,12 @@ texlive latex.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-lcdftypetools.bin
 Summary:	binary files of lcdftypetools
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-lcdftypetools.bin
 texlive lcdftypetools.bin package.
 
-%files		-n texlive-lcdftypetools.bin
+%files -n texlive-lcdftypetools.bin
 %{_bindir}/cfftot1
 %{_bindir}/mmafm
 %{_bindir}/mmpfb
@@ -597,12 +590,12 @@ texlive lcdftypetools.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-luatex.bin
 Summary:	binary files of luatex
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-luatex.bin
 texlive luatex.bin package.
 
-%files		-n texlive-luatex.bin
+%files -n texlive-luatex.bin
 %{_bindir}/dviluatex
 %{_bindir}/luatex
 %{_bindir}/texlua
@@ -611,24 +604,24 @@ texlive luatex.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-makeindex.bin
 Summary:	binary files of makeindex
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-makeindex.bin
 texlive makeindex.bin package.
 
-%files		-n texlive-makeindex.bin
+%files -n texlive-makeindex.bin
 %{_bindir}/makeindex
 %{_bindir}/mkindex
 
 #-----------------------------------------------------------------------
 %package	-n texlive-metafont.bin
 Summary:	binary files of metafont
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-metafont.bin
 texlive metafont.bin package.
 
-%files		-n texlive-metafont.bin
+%files -n texlive-metafont.bin
 %{_bindir}/inimf
 %{_bindir}/mf
 %{_bindir}/mf-nowin
@@ -636,12 +629,12 @@ texlive metafont.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-metapost.bin
 Summary:	binary files of metapost
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-metapost.bin
 texlive metapost.bin package.
 
-%files		-n texlive-metapost.bin
+%files -n texlive-metapost.bin
 %{_bindir}/dvitomp
 %{_bindir}/mfplain
 %{_bindir}/mpost
@@ -649,12 +642,12 @@ texlive metapost.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-mfware.bin
 Summary:	binary files of mfware
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-mfware.bin
 texlive mfware.bin package.
 
-%files		-n texlive-mfware.bin
+%files -n texlive-mfware.bin
 %{_bindir}/gftodvi
 %{_bindir}/gftopk
 %{_bindir}/gftype
@@ -665,12 +658,12 @@ texlive mfware.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-omegaware.bin
 Summary:	binary files of omegaware
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-omegaware.bin
 texlive omegaware.bin package.
 
-%files		-n texlive-omegaware.bin
+%files -n texlive-omegaware.bin
 %{_bindir}/odvicopy
 %{_bindir}/odvitype
 %{_bindir}/ofm2opl
@@ -685,12 +678,12 @@ texlive omegaware.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-patgen.bin
 Summary:	binary files of patgen
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-patgen.bin
 texlive patgen.bin package.
 
-%files		-n texlive-patgen.bin
+%files -n texlive-patgen.bin
 %{_bindir}/patgen
 
 #-----------------------------------------------------------------------
@@ -705,12 +698,12 @@ Provides:	texlive-mex.bin = %{EVRD}
 Provides:	texlive-mltex.bin = %{EVRD}
 Provides:	texlive-texsis.bin = %{EVRD}
 Provides:	texlive-xmltex.bin = %{EVRD}
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-pdftex.bin
 texlive pdftex.bin package.
 
-%files		-n texlive-pdftex.bin
+%files -n texlive-pdftex.bin
 %{_bindir}/amstex
 %{_bindir}/cslatex
 %{_bindir}/csplain
@@ -734,12 +727,12 @@ texlive pdftex.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-pdftools.bin
 Summary:	binary files of pdftools
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-pdftools.bin
 texlive pdftools.bin package.
 
-%files		-n texlive-pdftools.bin
+%files -n texlive-pdftools.bin
 %{_bindir}/pdfclose
 %{_bindir}/pdfopen
 %{_bindir}/pdftosrc
@@ -747,12 +740,12 @@ texlive pdftools.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-ps2pkm.bin
 Summary:	binary files of ps2pkm
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-ps2pkm.bin
 texlive ps2pkm.bin package.
 
-%files		-n texlive-ps2pkm.bin
+%files -n texlive-ps2pkm.bin
 %{_bindir}/mag
 %{_bindir}/pfb2pfa
 %{_bindir}/pk2bm
@@ -761,23 +754,23 @@ texlive ps2pkm.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-pstools.bin
 Summary:	binary files of pstools
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-pstools.bin
 texlive pstools.bin package.
 
-%files		-n texlive-pstools.bin
+%files -n texlive-pstools.bin
 %{_bindir}/bbox
 
 #-----------------------------------------------------------------------
 %package	-n texlive-ptex.bin
 Summary:	binary files of ptex
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-ptex.bin
 texlive ptex.bin package.
 
-%files		-n texlive-ptex.bin
+%files -n texlive-ptex.bin
 %{_bindir}/eptex
 %{_bindir}/makejvf
 %{_bindir}/mendex
@@ -791,12 +784,12 @@ texlive ptex.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-seetexk.bin
 Summary:	binary files of seetexk
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-seetexk.bin
 texlive seetexk.bin package.
 
-%files		-n texlive-seetexk.bin
+%files -n texlive-seetexk.bin
 %{_bindir}/dvibook
 %{_bindir}/dviconcat
 %{_bindir}/dviselect
@@ -805,70 +798,70 @@ texlive seetexk.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-synctex.bin
 Summary:	binary files of synctex
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-synctex.bin
 texlive synctex.bin package.
 
-%files		-n texlive-synctex.bin
+%files -n texlive-synctex.bin
 %{_bindir}/synctex
 
 #-----------------------------------------------------------------------
 %package	-n texlive-tex.bin
 Summary:	binary files of tex
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-tex.bin
 texlive tex.bin package.
 
-%files		-n texlive-tex.bin
+%files -n texlive-tex.bin
 %{_bindir}/initex
 %{_bindir}/tex
 
 #-----------------------------------------------------------------------
 %package	-n texlive-tex4ht.bin
 Summary:	binary files of tex4ht
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-tex4ht.bin
 texlive tex4ht.bin package.
 
-%files		-n texlive-tex4ht.bin
+%files -n texlive-tex4ht.bin
 %{_bindir}/t4ht
 %{_bindir}/tex4ht
 
 #-----------------------------------------------------------------------
 %package	-n texlive-texware.bin
 Summary:	binary files of texware
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-texware.bin
 texlive texware.bin package.
 
-%files		-n texlive-texware.bin
+%files -n texlive-texware.bin
 %{_bindir}/dvitype
 %{_bindir}/pooltype
 
 #-----------------------------------------------------------------------
 %package	-n texlive-tie.bin
 Summary:	binary files of tie
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-tie.bin
 texlive tie.bin package.
 
-%files		-n texlive-tie.bin
+%files -n texlive-tie.bin
 %{_bindir}/tie
 
 #-----------------------------------------------------------------------
 %package	-n texlive-ttfutils.bin
 Summary:	binary files of ttfutils
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-ttfutils.bin
 texlive ttfutils.bin package.
 
-%files		-n texlive-ttfutils.bin
+%files -n texlive-ttfutils.bin
 %{_bindir}/ttf2afm
 %{_bindir}/ttf2pk
 %{_bindir}/ttf2tfm
@@ -877,47 +870,47 @@ texlive ttfutils.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-vlna.bin
 Summary:	binary files of vlna
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-vlna.bin
 texlive vlna.bin package.
 
-%files		-n texlive-vlna.bin
+%files -n texlive-vlna.bin
 %{_bindir}/vlna
 
 #-----------------------------------------------------------------------
 %package	-n texlive-web.bin
 Summary:	binary files of web
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-web.bin
 texlive web.bin package.
 
-%files		-n texlive-web.bin
+%files -n texlive-web.bin
 %{_bindir}/tangle
 %{_bindir}/weave
 
 #-----------------------------------------------------------------------
 %package	-n texlive-xdvi.bin
 Summary:	binary files of xdvi
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-xdvi.bin
 texlive xdvi.bin package.
 
-%files		-n texlive-xdvi.bin
+%files -n texlive-xdvi.bin
 %{_bindir}/xdvi
 %{_bindir}/xdvi-xaw
 
 #-----------------------------------------------------------------------
 %package	-n texlive-xetex.bin
 Summary:	binary files of xetex
-Conflicts:	texlive <= 20110705-6
+Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-xetex.bin
 texlive xetex.bin package.
 
-%files		-n texlive-xetex.bin
+%files -n texlive-xetex.bin
 %{_bindir}/teckit_compile
 %{_bindir}/xdvipdfmx
 %{_bindir}/xelatex
