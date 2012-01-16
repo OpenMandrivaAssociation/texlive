@@ -4,6 +4,7 @@
 %define _texmf_enable_asymptote		0
 %define _texmf_enable_xindy		0
 %define _texmf_with_system_dialog	1
+%define _texmf_with_system_icu		1
 %define _texmf_with_system_lcdf		0
 %define _texmf_with_system_poppler	0
 %define _texmf_with_system_psutils	1
@@ -13,17 +14,26 @@
 
 %define enable_shared			1
 
+%define historic			0
+
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20110705
-Release:	11
+Version:	20120113
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
+%if %{historic}
 Source0:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz.sha256
-
+%else
+# svn co svn://tug.org/texlive/branches/branch2011/Build/source texlive-source
+# tar Jcf texlive-20120113-source.tar  --exclude .svn --transform 's/^texlive-source/texlive-20120113-source/'  texlive-source/
+Source0:	texlive-20120113-source.tar.xz
+# sha256sum texlive-20120113-source.tar.xz > texlive-20120113-source.tar.xz.sha256
+Source1:	texlive-20120113-source.tar.xz.sha256
+%endif
 Obsoletes:	tetex-usrlocal < 3.0-1
 
 #-----------------------------------------------------------------------
@@ -61,6 +71,9 @@ BuildRequires:	gsl-devel
 BuildRequires:	GL-devel
 %endif
 BuildRequires:	libgd-devel
+%if %{_texmf_with_system_icu}
+BuildRequires:	icu-devel
+%endif
 %if %{_texmf_with_system_poppler}
 BuildRequires:	libpoppler-devel
 %endif
@@ -84,12 +97,10 @@ BuildRequires:	texinfo
 BuildRequires:	zziplib-devel
 
 #-----------------------------------------------------------------------
-Patch0:		texlive-20110312-underlink.patch
-Patch1:		texlive-20110312-format.patch
-Patch2:		texlive-20110312-asymptote.patch
-Patch3:		texlive-20110312-xdvi.patch
-# http://tug.org/svn/texlive?view=revision&revision=23644
-Patch4:		texlive-20110705-synctex-coordinates.patch
+Patch0:		texlive-20120113-underlink.patch
+Patch1:		texlive-20120113-format.patch
+Patch2:		texlive-20120113-asymptote.patch
+Patch3:		texlive-20120113-xdvi.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -925,7 +936,6 @@ texlive xetex.bin package.
 %patch2 -p1
 %endif
 %patch3 -p1
-%patch4 -p1
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdir}|;'			  \
@@ -972,6 +982,9 @@ perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdir}|;'			  \
 	--with-system-gd					\
 %if %{_texmf_with_system_lcdf}
 	--disable-lcdf-typetools				\
+%endif
+%if %{_texmf_with_system_icu}
+	--with-system-icu					\
 %endif
 	--with-system-png					\
 %if %{_texmf_with_system_t1lib}
