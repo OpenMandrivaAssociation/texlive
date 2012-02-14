@@ -18,7 +18,7 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20120113
+Version:	20120214
 Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
@@ -29,10 +29,10 @@ Source0:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar
 Source1:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz.sha256
 %else
 # svn co svn://tug.org/texlive/branches/branch2011/Build/source texlive-source
-# tar Jcf texlive-20120113-source.tar  --exclude .svn --transform 's/^texlive-source/texlive-20120113-source/'  texlive-source/
-Source0:	texlive-20120113-source.tar.xz
-# sha256sum texlive-20120113-source.tar.xz > texlive-20120113-source.tar.xz.sha256
-Source1:	texlive-20120113-source.tar.xz.sha256
+# tar Jcf texlive-20120214-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20120214-source/'  texlive-source/
+Source0:	texlive-20120214-source.tar.xz
+# sha256sum texlive-20120214-source.tar.xz > texlive-20120214-source.tar.xz.sha256
+Source1:	texlive-20120214-source.tar.xz.sha256
 %endif
 Obsoletes:	tetex-usrlocal < 3.0-1
 
@@ -101,6 +101,9 @@ Patch0:		texlive-20120113-underlink.patch
 Patch1:		texlive-20120113-format.patch
 Patch2:		texlive-20120113-asymptote.patch
 Patch3:		texlive-20120113-xdvi.patch
+
+# http://tug.org/pipermail/tldistro/2012q1/000180.html
+Patch4:		unstymie-xetex-with-zlib-1.2.6.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -936,6 +939,7 @@ texlive xetex.bin package.
 %patch2 -p1
 %endif
 %patch3 -p1
+%patch4 -p0
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdir}|;'			  \
