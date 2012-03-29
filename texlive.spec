@@ -19,7 +19,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20120214
-Release:	1
+Release:	2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -150,7 +150,6 @@ This package includes the kpathsea development files.
 
 %files -n %{kpathsea_devel}
 %{_includedir}/kpathsea
-%{_libdir}/libkpathsea.la
 %{_libdir}/libkpathsea.so
 
 #-----------------------------------------------------------------------
@@ -203,7 +202,6 @@ This package includes the ptexenc development files.
 
 %files -n %{ptexenc_devel}
 %{_includedir}/ptexenc/
-%{_libdir}/libptexenc.la
 %{_libdir}/libptexenc.so
 
 #-----------------------------------------------------------------------
