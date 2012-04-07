@@ -6,7 +6,7 @@
 %define _texmf_with_system_dialog	1
 %define _texmf_with_system_icu		1
 %define _texmf_with_system_lcdf		0
-%define _texmf_with_system_poppler	0
+%define _texmf_with_system_poppler	1
 %define _texmf_with_system_psutils	1
 %define _texmf_with_system_t1lib	1
 %define _texmf_with_system_tex4ht	0
