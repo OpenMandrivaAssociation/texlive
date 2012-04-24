@@ -2,6 +2,7 @@
 %define _source_payload			w9.gzdio
 
 %define _texmf_enable_asymptote		0
+%define _texmf_enable_biber		0
 %define _texmf_enable_xindy		0
 %define _texmf_with_system_dialog	1
 %define _texmf_with_system_icu		1
@@ -250,6 +251,7 @@ texlive aleph.bin package.
 %{_bindir}/lamed
 
 #-----------------------------------------------------------------------
+%if %{_texmf_enable_biber}
 %package	-n texlive-biber.bin
 Summary:	binary files of biber
 Conflicts:	texlive < 20110705-7
@@ -259,6 +261,7 @@ texlive biber.bin package.
 
 %files -n texlive-biber.bin
 %{_bindir}/biber
+%endif
 
 #-----------------------------------------------------------------------
 %package	-n texlive-bibtex.bin
@@ -957,6 +960,11 @@ perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdir}|;'			  \
 	--with-banner-add="/Mandriva"				\
 	--disable-native-texlive-build				\
 	--enable-missing					\
+%if %{_texmf_enable_biber}
+	--enable-biber						\
+%else
+	--disable-biber						\
+%endif
 %if %{enable_shared}
 	--enable-shared						\
 %else
