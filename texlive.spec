@@ -19,21 +19,21 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20120214
-Release:	3
+Version:	20120810
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
 %if %{historic}
-Source0:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz
-Source1:	ftp://tug.org/historic/systems/texlive/2011/texlive-20110705-source.tar.xz.sha256
+Source0:	ftp://tug.org/historic/systems/texlive/2012/texlive-20120701-source.tar.xz
+Source1:	ftp://tug.org/historic/systems/texlive/2012/texlive-20120701-source.tar.xz.sha256
 %else
-# svn co svn://tug.org/texlive/branches/branch2011/Build/source texlive-source
-# tar Jcf texlive-20120214-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20120214-source/'  texlive-source/
-Source0:	texlive-20120214-source.tar.xz
-# sha256sum texlive-20120214-source.tar.xz > texlive-20120214-source.tar.xz.sha256
-Source1:	texlive-20120214-source.tar.xz.sha256
+# svn co svn://tug.org/texlive/branches/branch2012/Build/source texlive-source
+# tar Jcf texlive-20120810-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20120810-source/'  texlive-source/
+Source0:	texlive-20120810-source.tar.xz
+# sha256sum texlive-20120810-source.tar.xz > texlive-20120810-source.tar.xz.sha256
+Source1:	texlive-20120810-source.tar.xz.sha256
 %endif
 Obsoletes:	tetex-usrlocal < 3.0-1
 
@@ -98,13 +98,10 @@ BuildRequires:	texinfo
 BuildRequires:	zziplib-devel
 
 #-----------------------------------------------------------------------
-Patch0:		texlive-20120113-underlink.patch
-Patch1:		texlive-20120113-format.patch
-Patch2:		texlive-20120113-asymptote.patch
-Patch3:		texlive-20120113-xdvi.patch
-
-# http://tug.org/pipermail/tldistro/2012q1/000180.html
-Patch4:		unstymie-xetex-with-zlib-1.2.6.patch
+Patch0:		texlive-20120810-underlink.patch
+Patch1:		texlive-20120810-format.patch
+Patch2:		texlive-20120810-asymptote.patch
+Patch3:		texlive-20120810-xdvi.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -617,6 +614,17 @@ texlive luatex.bin package.
 %{_bindir}/texluac
 
 #-----------------------------------------------------------------------
+%package	-n texlive-m-tx.bin
+Summary:	binary files of m-tx
+Conflicts:	texlive < 20110705-7
+
+%description	-n texlive-m-tx.bin
+texlive m-tx.bin package.
+
+%files -n texlive-m-tx.bin
+%{_bindir}/prepmx
+
+#-----------------------------------------------------------------------
 %package	-n texlive-makeindex.bin
 Summary:	binary files of makeindex
 Conflicts:	texlive < 20110705-7
@@ -753,6 +761,18 @@ texlive pdftools.bin package.
 %{_bindir}/pdftosrc
 
 #-----------------------------------------------------------------------
+%package	-n texlive-pmx.bin
+Summary:	binary files of pmx
+Conflicts:	texlive < 20110705-7
+
+%description	-n texlive-pmx.bin
+texlive m-tx.bin package.
+
+%files -n texlive-pmx.bin
+%{_bindir}/pmxab
+%{_bindir}/scor2prt
+
+#-----------------------------------------------------------------------
 %package	-n texlive-ps2pkm.bin
 Summary:	binary files of ps2pkm
 Conflicts:	texlive < 20110705-7
@@ -883,6 +903,24 @@ texlive ttfutils.bin package.
 %{_bindir}/ttfdump
 
 #-----------------------------------------------------------------------
+%package	-n texlive-uptex.bin
+Summary:	binary files of uptex
+Conflicts:	texlive < 20110705-7
+
+%description	-n texlive-uptex.bin
+texlive uptex.bin package.
+
+%files -n texlive-uptex.bin
+%{_bindir}/euptex
+%{_bindir}/upbibtex
+%{_bindir}/updvitype
+%{_bindir}/uplatex
+%{_bindir}/uppltotf
+%{_bindir}/uptex
+%{_bindir}/uptftopl
+%{_bindir}/wovp2ovf
+
+#-----------------------------------------------------------------------
 %package	-n texlive-vlna.bin
 Summary:	binary files of vlna
 Conflicts:	texlive < 20110705-7
@@ -940,7 +978,6 @@ texlive xetex.bin package.
 %patch2 -p1
 %endif
 %patch3 -p1
-%patch4 -p0
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdir}|;'			  \
@@ -949,13 +986,16 @@ perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdir}|;'			  \
 	 -e 's|^(TEXMFSYSVAR\s+= ).*|$1%{_texmfvardir}|;'		  \
 	 -e 's|^(TEXMFSYSCONFIG\s+= ).*|$1%{_texmfconfdir}|;'		  \
 	 -e 's|^(TEXMFHOME\s+= ).*|$1\$HOME/texmf|;'			  \
-	 -e 's|^(TEXMFVAR\s+= ).*|$1\$HOME/.texlive2011/texmf-var|;'	  \
-	 -e 's|^(TEXMFCONFIG\s+= ).*|$1\$HOME/.texlive2011/texmf-config|;'\
+	 -e 's|^(TEXMFVAR\s+= ).*|$1\$HOME/.texlive2012/texmf-var|;'	  \
+	 -e 's|^(TEXMFCONFIG\s+= ).*|$1\$HOME/.texlive2012/texmf-config|;'\
 	 -e 's|^(OSFONTDIR\s+= ).*|$1%{_datadir}/fonts|;'		  \
 	texk/kpathsea/texmf.cnf
 
 #-----------------------------------------------------------------------
 %build
+mkdir texlive
+pushd texlive
+CONFIGURE_TOP=.. \
 %configure2_5x							\
 	--with-banner-add="/Mandriva"				\
 	--disable-native-texlive-build				\
@@ -1015,9 +1055,12 @@ perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdir}|;'			  \
 %endif
 	--with-system-zziplib
 %make
+popd
 
 %if %{_texmf_enable_asymptote}
-pushd utils/asymptote
+mkdir asympote
+pushd asympote
+CONFIGURE_TOP=../utils/asymptote
 %configure2_5x							\
 	--enable-gc=system					\
 	--enable-texlive-build					\
@@ -1028,10 +1071,12 @@ popd
 
 #-----------------------------------------------------------------------
 %install
+pushd texlive
 %makeinstall_std
+popd
 
 %if %{_texmf_enable_asymptote}
-pushd utils/asymptote
+pushd asymptote
 %makeinstall_std
 popd
 %endif
@@ -1060,6 +1105,7 @@ fi
 pushd %{buildroot}%{_bindir}
     # missing symbolic links
     ln -sf aleph lamed
+    ln -sf euptex uplatex
     ln -sf luatex dvilualatex
     ln -sf luatex lualatex
     ln -sf luatex dviluatex
@@ -1098,22 +1144,24 @@ pushd %{buildroot}%{_bindir}
 
     # use symlinks from noarch packages
     rm -f a2ping afm2afm allec arlatex authorindex autoinst bibexport	\
-	  bundledoc cachepic cmap2enc de-macro deweb dviasm dvipdft	\
-	  ebong e2pall epspdf epspdftk epstopdf fig4latex findhyph	\
+	  bundledoc cachepic checkcites cmap2enc convbkmk ctanify	\
+	  ctanupload de-macro deweb dviasm dvipdft dosepsbin ebong	\
+	  e2pall epspdf epspdftk epstopdf exceltex fig4latex findhyph	\
 	  font2afm fragmaster ht htcontext htlatex htmex httex httexi	\
 	  htxelatex htxetex installfont-tl latex2man latexdiff		\
-	  latexdiff-vc latexmk latexrevise listings-ext.sh		\
-	  makeglossaries mathspic mk4ht mkgrkindex mkjobtexmf		\
-	  mkluatexfontdb mkt1font mptopdf musixflx musixtex ot2kpx	\
-	  pdf180 pdf270 pdf90 pdfannotextractor pdfatfi pdfbook pdfcrop	\
-	  pdfflip pdfjam pdfjam-pocketmod pdfjam-slides3up		\
-	  pdfjam-slides6up pdfjoin pdfnup pdfpun pdfthumb perltex	\
-	  pfm2kpx pkfix pkfix-helper ppower4 ps2eps ps4pdf pst2pdf	\
-	  purifyeps repstopdf rpdfcrop rungs showglyphs simpdftex	\
-	  splitindex sty2dtx svn-multi texcount texdef texdiff		\
-	  texdirflatten texdoc texdoctk texlinks texloganalyser		\
-	  texmfstart thumbpdf tlmgr ulqda updmap updmap-sys vpe vpl2ovp	\
-	  vpl2vpl
+	  latexdiff-vc latexfileversion latexmk latexrevise listbib	\
+	  listings-ext.sh m-tx makeglossaries match_parens mathspic	\
+	  mf2pt1 mk4ht mkgrkindex mkjobtexmf mkluatexfontdb mkt1font	\
+	  mptopdf musixflx musixtex ot2kpx pdf180 pdf270 pdf90		\
+	  pdfannotextractor pdfatfi pdfbook pdfcrop pdfflip pdfjam	\
+	  pdfjam-pocketmod pdfjam-slides3up pdfjam-slides6up pdfjoin	\
+	  pdfnup pdfpun pdfthumb pedigree perltex pfm2kpx pkfix		\
+	  pkfix-helper ppower4 ps2eps ps4pdf pst2pdf pmx2pdf purifyeps	\
+	  repstopdf rpdfcrop rungs showglyphs simpdftex splitindex	\
+	  sty2dtx svn-multi texcount texdef texdiff texdirflatten	\
+	  texdoc texdoctk texlinks texliveonfly texloganalyser		\
+	  texmfstart thumbpdf tlmgr typeoutfileinfo ulqda updmap	\
+	  updmap-setup-kanji updmap-sys urlbst vpe vpl2ovp vpl2vpl
 popd
 
 # use texmf data
