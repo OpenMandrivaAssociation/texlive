@@ -20,7 +20,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20121026
-Release:	1
+Release:	2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -115,9 +115,7 @@ free software, including support for many languages around the world.
 %posttrans
     %{_sbindir}/texlive.post -
 
-#-----------------------------------------------------------------------
 %if %{enable_shared}
-########################################################################
 %define	kpathsea		%{mklibname kpathsea 6}
 
 %package	-n %{kpathsea}
