@@ -1,0 +1,23 @@
+--- texlive-20120810-source/utils/asymptote/settings.cc.orig	2012-08-10 13:53:33.856768325 -0300
++++ texlive-20120810-source/utils/asymptote/settings.cc	2012-08-10 13:54:26.048766966 -0300
+@@ -100,7 +100,7 @@ string defaultPSViewer="gv";
+ #ifdef __APPLE__
+ string defaultPDFViewer="open";
+ #else  
+-string defaultPDFViewer="acroread";
++string defaultPDFViewer="xdg-open";
+ #endif  
+ string defaultGhostscript="gs";
+ string defaultDisplay="display";
+@@ -1351,9 +1351,9 @@ string lookup(const string& symbol)
+ 
+ void initDir() {
+   if(getSetting<string>("sysdir").empty()) {
+-    string s=lookup("SELFAUTOPARENT");
++    string s=lookup("TEXMFMAIN");
+     if(s.size() > 1) {
+-      string texmf=s+dirsep+"texmf"+dirsep;
++      string texmf=s+dirsep;
+       docdir=texmf+"doc"+dirsep+"asymptote";
+       Setting("sysdir")=texmf+"asymptote";
+       s=lookup("ASYMPTOTE_HOME");

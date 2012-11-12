@@ -1,0 +1,324 @@
+--- texlive-20120810-source/texk/devnag/src/devnag.c.orig	2012-08-10 13:39:26.857791249 -0300
++++ texlive-20120810-source/texk/devnag/src/devnag.c	2012-08-10 13:39:35.772790936 -0300
+@@ -2395,7 +2395,7 @@ void put_macro(short macro) {
+ void err_ill(const char *str) {
+    fprintf(stderr, "Error: illegal character(s) \"%s\" detected at line %d:\n",
+ 	  str, linenumber);
+-   fprintf(stderr, inbuf);
++   fprintf(stderr, "%s", inbuf);
+    exit(1);
+ }
+ 
+--- texlive-20120810-source/texk/dvidvi/dvidvi.c.orig	2012-08-10 13:40:14.210789894 -0300
++++ texlive-20120810-source/texk/dvidvi/dvidvi.c	2012-08-10 13:40:47.128789027 -0300
+@@ -331,7 +331,7 @@ static void stringdvibuf(integer p, inte
+  *   Print a usage error messsage, and quit.
+  */
+ static void usage(void) {
+-   (void)fprintf(stderr,banner);
++   (void)fprintf(stderr,"%s",banner);
+    (void)fprintf(stderr,"Usage:  dvidvi [options] input[.dvi] [output]\n");
+    (void)fprintf(stderr,"where options are:\n");
+    (void)fprintf(stderr,"    [-f n] first page printed     [-l n] last page printed\n");
+@@ -810,7 +810,7 @@ default:
+       } /* else argument with '-' */
+    }  /* for */
+    if (*iname == 0) {
+-       (void)fprintf(stderr, banner) ;
++       (void)fprintf(stderr, "%s", banner) ;
+        error("! no input file specified");
+    }
+    /* Inserted by djc@dsmail.hmi.de 3.8.1994 */
+@@ -821,7 +821,7 @@ default:
+    }
+ 
+    if (*oname != 0 && !quiet) {
+-       (void)fprintf(stderr, banner) ;
++       (void)fprintf(stderr, "%s", banner) ;
+        (void)fprintf(stderr, "%s -> %s\n",iname,oname);
+        temp = nextstring ;
+    }
+--- texlive-20120810-source/texk/ps2pkm/objects.h.orig	2012-08-10 13:41:18.630788153 -0300
++++ texlive-20120810-source/texk/ps2pkm/objects.h	2012-08-10 13:41:26.945787921 -0300
+@@ -232,7 +232,7 @@ struct xobject {
+ /*SHARED*/
+ /* NDW: personally, I want to see status and error messages! */
+ #define IfTrace0(condition,model)                                 \
+-        {if (condition) printf(model);}
++        {if (condition) printf("%s", model);}
+ #define IfTrace1(condition,model,arg0)                            \
+         {if (condition) printf(model,arg0);}
+ #define IfTrace2(condition,model,arg0,arg1)                       \
+--- texlive-20120810-source/texk/web2c/cwebboot.cin.orig	2012-08-10 13:41:58.904787084 -0300
++++ texlive-20120810-source/texk/web2c/cwebboot.cin	2012-08-10 13:42:06.067786867 -0300
+@@ -1084,7 +1084,7 @@ void
+  fatal(const char*s,const char*t)
+ #line 1182 "cwebdir/common.w"
+ {
+-if(*s)printf(s);
++if(s&&*s)printf("%s",s);
+ err_print(t);
+ history= fatal_message;exit(wrap_up());
+ }
+--- texlive-20120810-source/texk/web2c/cwebdir/common.w.orig	2012-08-10 13:42:32.722786173 -0300
++++ texlive-20120810-source/texk/web2c/cwebdir/common.w	2012-08-10 13:42:42.429785929 -0300
+@@ -1180,7 +1180,7 @@ concatenated to print the final error me
+ fatal(s,t)
+   char *s,*t;
+ {
+-  if (*s) printf(s);
++  if (s && *s) printf("%s", s);
+   err_print(t);
+   history=fatal_message; exit(wrap_up());
+ }
+--- texlive-20120810-source/texk/web2c/cwebdir/cweave.w.orig	2012-08-10 13:43:11.164785131 -0300
++++ texlive-20120810-source/texk/web2c/cwebdir/cweave.w	2012-08-10 13:43:18.847785065 -0300
+@@ -1784,7 +1784,7 @@ void
+ print_cat(c) /* symbolic printout of a category */
+ eight_bits c;
+ {
+-  printf(cat_name[c]);
++  printf("%s", cat_name[c]);
+ }
+ 
+ @ The token lists for translated \TEX/ output contain some special control
+--- texlive-20120810-source/texk/web2c/luatexdir/image/writeimg.w.orig	2012-08-10 13:43:37.815784396 -0300
++++ texlive-20120810-source/texk/web2c/luatexdir/image/writeimg.w	2012-08-10 13:43:55.513783994 -0300
+@@ -644,7 +644,7 @@ void write_pdfstream(PDF pdf, image_dict
+     sprintf(s, "/BBox [%.8f %.8f %.8f %.8f]\n", int2bp(img_bbox(idict)[0]),
+             int2bp(img_bbox(idict)[1]), int2bp(img_bbox(idict)[2]),
+             int2bp(img_bbox(idict)[3]));
+-    pdf_printf(pdf, stripzeros(s));
++    pdf_printf(pdf, "%s", stripzeros(s));
+     pdf_begin_stream(pdf);
+     if (img_pdfstream_stream(idict) != NULL)
+         pdf_puts(pdf, img_pdfstream_stream(idict));
+--- texlive-20120810-source/texk/web2c/luatexdir/tex/printing.w.orig	2012-08-10 13:44:14.905783408 -0300
++++ texlive-20120810-source/texk/web2c/luatexdir/tex/printing.w	2012-08-10 13:44:35.042782742 -0300
+@@ -391,7 +391,7 @@ void log_banner(const char *v, int e, in
+     print_char(' ');
+     print_int(int_par(day_code));
+     print_char(' ');
+-    fprintf(log_file, months[month]);
++    fprintf(log_file, "%s", months[month]);
+     print_char(' ');
+     print_int(int_par(year_code));
+     print_char(' ');
+@@ -418,7 +418,7 @@ void log_banner(const char *v, int e, in
+ @ @c
+ void print_version_banner(void)
+ {
+-    fprintf(term_out, ptexbanner);
++    fprintf(term_out, "%s", ptexbanner);
+ }
+ 
+ @ The procedure |print_esc| prints a string that is preceded by
+--- texlive-20120810-source/texk/web2c/omegafonts/error_routines.c.orig	2012-08-10 13:44:56.938782276 -0300
++++ texlive-20120810-source/texk/web2c/omegafonts/error_routines.c	2012-08-10 13:45:28.801781428 -0300
+@@ -32,6 +32,70 @@ They
+ 
+ */
+ 
++#if defined(__GNUC__) && (__GNUC__ >= 3)
++#include <string.h>
++#include <stdarg.h>
++#include <stdlib.h>
++
++void
++lex_error(string fmt, ...)
++{
++    va_list	ap;
++
++    fprintf(stderr, "line %d (lexing): ", line_number);
++    va_start(ap, fmt);
++    vfprintf(stderr, fmt, ap);
++    va_end(ap);
++    fprintf(stderr, "\n");
++}
++
++void
++fatal_error(string fmt, ...)
++{
++    va_list	ap;
++
++    fprintf(stderr, "line %d (fatal): ", line_number);
++    va_start(ap, fmt);
++    vfprintf(stderr, fmt, ap);
++    va_end(ap);
++    fprintf(stderr, "\n");
++    exit(1);
++}
++
++void
++yyerror(string fmt)
++{
++    fprintf(stderr, "line %d (parsing): ", line_number);
++    fprintf(stderr, "%s", fmt);
++    fprintf(stderr, "\n");
++}
++
++void
++warning_(string fmt, ...)
++{
++    va_list	ap;
++
++    fprintf(stderr, "line %d (warning): ", line_number);
++    va_start(ap, fmt);
++    vfprintf(stderr, fmt, ap);
++    va_end(ap);
++    fprintf(stderr, "\n");
++}
++
++void
++internal_error(string fmt, ...)
++{
++    va_list	ap;
++
++    fprintf(stderr, "line %d (internal): ", line_number);
++    va_start(ap, fmt);
++    vfprintf(stderr, fmt, ap);
++    va_end(ap);
++    fprintf(stderr, "\n");
++    exit(2);
++}
++
++#else
+ void
+ lex_error_0(const_string fmt)
+ {
+@@ -183,3 +247,4 @@ internal_error_s(const_string fmt, const
+     fprintf(stderr, "\n");
+     exit(2);
+ }
++#endif
+--- texlive-20120810-source/texk/web2c/omegafonts/error_routines.h.orig	2012-08-10 13:45:45.250780970 -0300
++++ texlive-20120810-source/texk/web2c/omegafonts/error_routines.h	2012-08-10 13:45:58.484780589 -0300
+@@ -21,6 +21,30 @@ along with Omega; if not, write to the F
+ 
+ */
+ 
++#if defined(__GNUC__) && (__GNUC__ >= 3)
++#define lex_error_0(a)			lex_error("%s", a)
++#define lex_error_1(a, b)		lex_error(a, b)
++#define lex_error_s(a, b)		lex_error(a, b)
++#define lex_error_s_1(a, b, c)		lex_error(a, b, c)
++extern void lex_error(string, ...) __attribute__ ((format (printf, 1, 2)));
++#define fatal_error_0(a)		fatal_error("%s", a)
++#define fatal_error_1(a, b)		fatal_error(a, b)
++#define fatal_error_2(a, b, c)		fatal_error(a, b, c)
++#define fatal_error_s(a, b)		fatal_error(a, b)
++extern void fatal_error(string, ...) __attribute__ ((format (printf, 1, 2)));
++extern void yyerror(string);
++#define warning_0(a)			warning_("%s", a)
++#define warning_1(a, b)			warning_(a, b)
++#define warning_2(a, b, c)		warning_(a, b, c)
++#define warning_s(a, b)			warning_(a, b)
++#define warning_s_1(a, b, c)		warning_(a, b, c)
++#define warning_s_2(a, b, c, d)		warning_(a, b, c, d)
++extern void warning_(string, ...) __attribute__ ((format (printf, 1, 2)));
++#define internal_error_0(a)		internal_error("%s", a)
++#define internal_error_1(a, b)		internal_error(a, b)
++#define internal_error_s(a, b)		internal_error(a, b)
++extern void internal_error(string, ...) __attribute__ ((format (printf, 1, 2)));
++#else
+ extern void lex_error_0(const_string);
+ extern void lex_error_1(const_string, int);
+ extern void lex_error_s(const_string, const_string);
+@@ -43,3 +67,4 @@ extern void warning_s_2(const_string, co
+ extern void internal_error_0(const_string);
+ extern void internal_error_1(const_string, int);
+ extern void internal_error_s(const_string, const_string);
++#endif
+--- texlive-20120810-source/texk/web2c/omegafonts/out_routines.c.orig	2012-08-10 13:46:20.061780094 -0300
++++ texlive-20120810-source/texk/web2c/omegafonts/out_routines.c	2012-08-10 13:46:37.646779691 -0300
+@@ -383,5 +383,5 @@ out_digits(unsigned counter)
+ void
+ out(const_string sval)
+ {
+-	fprintf(file_output, sval);
++	fprintf(file_output, "%s", sval);
+ }
+--- texlive-20120810-source/texk/web2c/tiedir/tie-w2c.ch.orig	2012-08-10 13:46:56.087779136 -0300
++++ texlive-20120810-source/texk/web2c/tiedir/tie-w2c.ch	2012-08-10 13:47:08.352778729 -0300
+@@ -130,7 +130,7 @@ int main (int argc, string *argv)
+ @y
+   kpse_set_program_name(argv[0], "tie");
+   print(banner); /* print a ``banner line'' */
+-  print_ln(versionstring);  /* Web2C version */
++  printf("%s", versionstring);  /* Web2C version */
+   print_ln(copyright); /* include the copyright notice */
+ @z
+ 
+--- texlive-20120810-source/texk/xdvik/gui/message-window.c.orig	2012-08-10 13:47:25.863778255 -0300
++++ texlive-20120810-source/texk/xdvik/gui/message-window.c	2012-08-10 13:48:10.998777101 -0300
+@@ -713,7 +713,7 @@ internal_popup_window(Widget parent,
+     Widget ret;
+ 
+     ASSERT(type < (sizeof my_msg_map / sizeof my_msg_map[0]), "too few elements in my_msg_map");
+-    sprintf(win_title, my_msg_map[type].window_title);
++    snprintf(win_title, sizeof(win_title), "%s", my_msg_map[type].window_title);
+ 
+ #if DEBUG
+     fprintf(stderr, "internal_popup_window called with prompt: \"%s\"\n", msg_buf);
+@@ -725,11 +725,10 @@ internal_popup_window(Widget parent,
+ 	   supposed to be printf-format strings (i.e. with doubled `%' to escape them)
+ 	*/
+ 	fprintf(stderr, "\n%s:\n", my_msg_map[type].window_title);
+-	fprintf(stderr, msg_buf);
+-	fprintf(stderr, "\n");
++	fprintf(stderr, "%s\n", msg_buf);
+ 	if (helptext) {
+ 	    fprintf(stderr, "---------- helptext ----------\n");
+-	    fprintf(stderr, helptext);
++	    fprintf(stderr, "%s", helptext);
+ 	    fprintf(stderr, "\n---------- end of helptext ----------\n");
+ 	}
+ 	return NULL;
+@@ -741,8 +740,7 @@ internal_popup_window(Widget parent,
+     if (my_popup_num == MAX_POPUPS) {
+ 	/* already enough popups on screen, just dump it to stderr */
+ 	fprintf(stderr, "%s: ", win_title);
+-	fprintf(stderr, msg_buf);
+-	fputc('\n', stderr);
++	fprintf(stderr, "%s\n", msg_buf);
+ 	/* Note: If a mad function continues to open popups, this will
+ 	 * stop after MAX_POPUPS, but open a new window for each
+ 	 * window the user pops down. Maybe we ought to do something
+--- texlive-20120810-source/utils/chktex/chktex-1.6.6/ChkTeX.c.orig	2012-08-10 13:49:04.505775592 -0300
++++ texlive-20120810-source/utils/chktex/chktex-1.6.6/ChkTeX.c	2012-08-10 13:51:32.077771613 -0300
+@@ -350,7 +350,7 @@ int main(int argc, char **argv)
+         }
+ 
+         if (!Quiet || LicenseOnly)
+-            fprintf(stderr, Banner);
++            fprintf(stderr, "%s", Banner);
+ 
+         if (CurArg == argc)
+             UsingStdIn = TRUE;
+@@ -368,7 +368,7 @@ int main(int argc, char **argv)
+ 
+         if ((UsingStdIn && StdInTTY && !Quiet) || LicenseOnly)
+         {
+-            fprintf(stderr, BigBanner);
++            fprintf(stderr, "%s", BigBanner);
+         }
+ 
+         if (!StdOutTTY && PipeOutputFormat)
+@@ -376,7 +376,7 @@ int main(int argc, char **argv)
+ 
+         if (LicenseOnly)
+         {
+-            fprintf(stderr, Distrib);
++            fprintf(stderr, "%s", Distrib);
+         }
+         else
+         {
+@@ -953,7 +953,7 @@ static int ParseArgs(int argc, char **ar
+                 nextc = ParseBoolArg(&HeadErrOut, &optarg);
+                 break;
+             case 'W':
+-                printf(Banner);
++                printf("%s", Banner);
+                 exit(EXIT_SUCCESS);
+             case '?':
+             default:
