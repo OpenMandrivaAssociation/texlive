@@ -1,0 +1,22 @@
+--- texlive-20110705-source/texk/web2c/enctex.ch.tex-segfault	2012-04-17 13:00:51.603621340 +0400
++++ texlive-20110705-source/texk/web2c/enctex.ch	2012-04-17 13:02:09.475691807 +0400
+@@ -42,7 +42,7 @@ for i:=@'177 to @'377 do xchr[i]:=i;
+ {Initialize enc\TeX\ data.}
+ for i:=0 to 255 do mubyte_read[i]:=null;
+ for i:=0 to 255 do mubyte_write[i]:=0;
+-for i:=0 to 128 do mubyte_cswrite[i]:=null;
++for i:=0 to 127 do mubyte_cswrite[i]:=null;
+ mubyte_keep := 0; mubyte_start := false;
+ write_noexpanding := false; cs_converting := false;
+ special_printing := false; message_printing := false;
+--- texlive-20110705-source/texk/web2c/xetexdir/xetex.ch.tex-segfault	2012-04-17 13:01:03.692530157 +0400
++++ texlive-20110705-source/texk/web2c/xetexdir/xetex.ch	2012-04-17 13:01:47.807548539 +0400
+@@ -328,7 +328,7 @@ for i:=@'177 to @'377 do xchr[i]:=i;
+ {Initialize enc\TeX\ data.}
+ for i:=0 to 255 do mubyte_read[i]:=null;
+ for i:=0 to 255 do mubyte_write[i]:=0;
+-for i:=0 to 128 do mubyte_cswrite[i]:=null;
++for i:=0 to 127 do mubyte_cswrite[i]:=null;
+ mubyte_keep := 0; mubyte_start := false;
+ write_noexpanding := false; cs_converting := false;
+ special_printing := false; message_printing := false;

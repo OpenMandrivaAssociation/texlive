@@ -19,7 +19,7 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20121026
+Version:	20120810
 Release:	2
 Summary:	The TeX formatting system
 Group:		Publishing
@@ -30,10 +30,10 @@ Source0:	ftp://tug.org/historic/systems/texlive/2012/texlive-20120701-source.tar
 Source1:	ftp://tug.org/historic/systems/texlive/2012/texlive-20120701-source.tar.xz.sha256
 %else
 # svn co svn://tug.org/texlive/branches/branch2012/Build/source texlive-source
-# tar Jcf texlive-20121026-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20121026-source/'  texlive-source/
-Source0:	texlive-20121026-source.tar.xz
-# sha256sum texlive-20121026-source.tar.xz > texlive-20121026-source.tar.xz.sha256
-Source1:	texlive-20121026-source.tar.xz.sha256
+# tar Jcf texlive-20120810-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20120810-source/'  texlive-source/
+Source0:	texlive-20120810-source.tar.xz
+# sha256sum texlive-20120810-source.tar.xz > texlive-20120810-source.tar.xz.sha256
+Source1:	texlive-20120810-source.tar.xz.sha256
 %endif
 Obsoletes:	tetex-usrlocal < 3.0-1
 
@@ -115,7 +115,9 @@ free software, including support for many languages around the world.
 %posttrans
     %{_sbindir}/texlive.post -
 
+#-----------------------------------------------------------------------
 %if %{enable_shared}
+########################################################################
 %define	kpathsea		%{mklibname kpathsea 6}
 
 %package	-n %{kpathsea}
@@ -1173,3 +1175,385 @@ rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
     rm -fr %{buildroot}%{_libdir}
     rm -fr %{buildroot}%{_includedir}
 %endif
+
+
+%changelog
+* Fri Aug 17 2012 Paulo Andrade <pcpa@mandriva.com.br> 20120810-2
++ Revision: 815205
+- Bump release and rebuild as some packages were uploaded only to i586.
+
+* Fri Aug 10 2012 Paulo Andrade <pcpa@mandriva.com.br> 20120810-1
++ Revision: 813897
+- Update to TeX Live 2012
+- Disable build of texlive-biber.bin by default.
+
+  + Bernhard Rosenkraenzer <bero@bero.eu>
+    - Re-enable building with system poppler
+    - Rebuild for icu 49.1
+
+  + Bogdano Arendartchuk <bogdano@mandriva.com>
+    - removed {libkpathsea,libptexenc}.la
+
+* Tue Feb 14 2012 Paulo Andrade <pcpa@mandriva.com.br> 20120214-1
++ Revision: 773911
+- Update to more recent checkout of bug fixes texlive branch2011.
+- Add patch to correct xetex problem with zlib 1.2.6.
+
+* Mon Jan 16 2012 Paulo Andrade <pcpa@mandriva.com.br> 20120113-1
++ Revision: 761749
+- Update to bug fixes texlive branch2011.
+- Use system libicu.
+- Drop patch already in branch2011 and rediff others.
+
+* Mon Dec 05 2011 Zé <ze@mandriva.org> 20110705-11
++ Revision: 737796
+- clean defattr and BR
+- rpm isnt able to handle = in conflicts
+
+* Fri Dec 02 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-10
++ Revision: 737277
+- Add posttrans logic to block waiting for texlive.post to finish.
+
+* Thu Nov 17 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-9
++ Revision: 731256
+- Add implicit requires of texlive-collection-latexextra
+
+* Mon Nov 14 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-8
++ Revision: 730630
+- Merge latex-bin and latex packages.
+
+* Tue Nov 08 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-7
++ Revision: 729180
+- Remove unused and duplicated files and patches.
+- Redefine some rpm macros to be able to detect texlive-tlpkg build requires.
+- Correct pstools.bin to not include scripts provided by pstools
+- Update for new texlive texmf packages.
+- Temporarily revert to monolithic texlive packages
+
+* Fri Oct 28 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-6.3
++ Revision: 707731
+- Update micro release to match texlive-texmf.
+
+* Thu Oct 27 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-6.2
++ Revision: 707592
+- Add mktexlsr.post helper script to keep instalation always consistent.
+
+* Thu Oct 27 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-6.1
++ Revision: 707496
+- Experimental rework to map TeX Live packages as rpm packages
+
+* Sun Oct 02 2011 Oden Eriksson <oeriksson@mandriva.com> 20110705-6
++ Revision: 702455
+- attempt to relink against libpng15.so.15
+
+* Wed Aug 24 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-5
++ Revision: 696528
+- Change default user dir to .texlive2011 to match texlive version
+- Run "mtxrun --generate" to correct context (thanks to Mojca Miklavec)
+
+* Tue Aug 09 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-4
++ Revision: 693789
+- Correct wrong texlive-texmf conflicts.
+
+* Sat Aug 06 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-3
++ Revision: 693390
+- Add extra conflicts with older texlive-texmf for easier upgrade
+
+* Sun Jul 24 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-2
++ Revision: 691468
+- Require texlive-texmf version matching texlive one
+- Run "updmap-sys --syncwithtrees" to ensure cfg files math installed files
+
+* Fri Jul 22 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110705-1
++ Revision: 690910
+- Update to texlive 2011
+
+* Wed Jun 22 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110312-5
++ Revision: 686606
+- Avoid conflict with the vlna package
+  CCBUG: 63171
+
+* Thu May 05 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110312-4
++ Revision: 668841
+- Provides kpathsea libs for evince (qa.mandriva.com #63192)
+
+* Tue May 03 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110312-3
++ Revision: 664189
+- Rebuild with new poppler
+- Disable xindy and asymptote build by default
+- Rebuild with gcc 4.6.0 and redirect scriptlets to /dev/null
+- Redirect posttrans output to /dev/null - only print messages sent to stderr
+
+* Sun Mar 13 2011 Paulo Andrade <pcpa@mandriva.com.br> 20110312-1
++ Revision: 644407
+- Update to use texlive svn checkout dated 20110312
+
+* Sat Mar 12 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-15
++ Revision: 643994
+- Rebuild again now that it can build requires itself, after rebuild for poppler
+
+* Sat Mar 12 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-14
++ Revision: 643974
+- Rebuild with new poppler
+
+* Thu Mar 10 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-13
++ Revision: 643248
+- Add provides/obsoletes to ps2eps
+  CCBUG: 62747
+
+* Mon Mar 07 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-12
++ Revision: 642404
+- Correct remaining broken symbolic links
+- Add tkinter to requires when enabling asymptote
+- Build with system poppler
+- Enable back build of asymptote and xindy
+- Correct broken symbolic links
+
+* Fri Mar 04 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-10
++ Revision: 641869
+- Change license tag to point to license file
+- Add basic infrastructure to allow test installs with tetex
+  on older distro releases
+- Add gv as requires (default ps viewer for asymptote)
+
+* Sat Feb 26 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-9
++ Revision: 640010
+- Correct tex4ht provides/obsoletes
+- Correct xasy symlink
+
+* Thu Feb 24 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-8
++ Revision: 639733
+- Enable asymptote and xindy build
+
+* Sat Feb 19 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-7
++ Revision: 638745
+- Setup proper default values for kpathsea
+- Enable asymptote and xindy build
+- Move scriptlet from post to postrans
+
+* Thu Feb 17 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-5
++ Revision: 638288
+- Remove dependency loop of texlive and texlive-texmf
+
+* Thu Feb 17 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-4
++ Revision: 638246
+- Rebuild with proper post and updated Provides/Requires
+
+* Tue Feb 15 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-3
++ Revision: 637825
+- Correct build for asymptote and xindy, but still disabled
+- Correct post that was passing incorrect arguments to mktexlsr
+
+* Mon Feb 14 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-2
++ Revision: 637731
++ rebuild (emptylog)
+
+* Mon Feb 14 2011 Paulo Andrade <pcpa@mandriva.com.br> 20100722-1
++ Revision: 637669
+- Update to texlive 20100722
+
+* Tue Feb 01 2011 Paulo Andrade <pcpa@mandriva.com.br> 2007-22
++ Revision: 634608
+- Update to match the fedora texlive package
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - the mass rebuild of 2010.1 packages
+    - sync security patches with fedora
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild for new poppler
+
+* Wed Feb 17 2010 Lev Givon <lev@mandriva.org> 0:2007-21.r6295.8mdv2010.1
++ Revision: 507127
+- Fix compilation issue reported in Ubuntu bug #438031.
+- Cron job in texlive-fonts requires tmpwatch (#48739).
+
+* Thu Jul 16 2009 Eugeni Dodonov <eugeni@mandriva.com> 0:2007-21.r6295.7mdv2010.0
++ Revision: 396656
+- Added patch to fix conflict with glibc getline().
+  Rebuild for new poppler.
+
+* Wed May 20 2009 Götz Waschk <waschk@mandriva.org> 0:2007-20.r6295.7mdv2010.0
++ Revision: 378035
+- really fix bug #51077
+
+* Wed May 20 2009 Götz Waschk <waschk@mandriva.org> 0:2007-20.r6295.6mdv2010.0
++ Revision: 377976
+- fix wrong deps of xdvi (bug #51077)
+
+* Tue May 19 2009 Götz Waschk <waschk@mandriva.org> 0:2007-20.r6295.5mdv2010.0
++ Revision: 377705
+- fix build with gcc 4.4
+- fix build with new poppler
+
+  + Paulo Andrade <pcpa@mandriva.com.br>
+    - o Correct a typo xdvv -> xdvi
+      o Make texlive-xdvi provide xdvi
+      o Make texlive-xdvi require missing font packages
+      o This should correct #48029 (texlive-xdvi should Provides: xdvi), and
+      to some extent, help in #38016 (texlive misses some fonts for xdvi)
+
+* Thu Feb 12 2009 Rafael da Veiga Cabral <cabral@mandriva.com> 0:2007-20.r6295.3mdv2009.1
++ Revision: 339794
+- added build fix patches:
+     texlive-2007-buildfix2009.1.patch
+     texlive-2007-buildfix2009.1-2.patch
+     texlive-2007-buildfix2009.1-3.patch
+  some of hunks are in disabled patches for further rediff
+- disabled patches:
+    texlive-fix_epstopdf_invocation.patch
+    texlive-builtin-searchpath-fix.patch
+    texlive-pdftex.patch
+    texlive-source-t1lib.patch
+- rediff texlive-libpoppler_new.patch
+- including libpng as build require
+
+  + Colin Guthrie <cguthrie@mandriva.org>
+    - Fix the release
+    - Rebuild against new libxcb
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild early 2009.0 package (before pixel changes)
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Thu May 01 2008 Funda Wang <fwang@mandriva.org> 0:2007-20.r6295.3mdv2009.0
++ Revision: 199843
+- rebuild
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - fix description-line-too-long
+
+* Sat Jan 19 2008 David Walluck <walluck@mandriva.org> 0:2007-20.r6295.2mdv2008.1
++ Revision: 155147
+- Provides should not depend on status of obsolete_tetex option
+- SVN r6295 (fixes build)
+- keep source directory when creating tarball
+
+  + Anssi Hannula <anssi@mandriva.org>
+    - do not provide jadetex+xmltex when not obsoleting them
+
+* Thu Jan 17 2008 Thierry Vignaud <tv@mandriva.org> 0:2007-20.r6225mdv2008.1
++ Revision: 154135
+- stop providing/obsoleting tetex (too much issues)
+
+  + Anssi Hannula <anssi@mandriva.org>
+    - fix conflicts when built with obsolete_tetex=0 (not default)
+
+* Mon Jan 14 2008 David Walluck <walluck@mandriva.org> 0:2007-19.r6225mdv2008.1
++ Revision: 151174
+- fix  E: description-line-too-long
+- comment out %%{_texmf_main}/web2c/xetex.pool, %%{_bindir}/platex, and %%{_bindir}/pdfplatex from file list
+- use standard menu category for xdvi
+- SVN r6225
+- rediff and modify texlive-libpoppler_new.patch
+- rediff texlive-Build_script.patch
+- remove texlive-source-CVE-2007-0650.patch (applied upstream)
+- remove texlive-2007-copyright-utf8-man.patch (no longer needed)
+- modify texlive-build.patch
+- add texlive-no-lzma.patch (avoid building lzma which is already in the distro)
+- modify texlive-warns.patch
+- this release adds mkjobtexmf, texcount, and tpic2pdftex
+
+* Fri Jan 11 2008 Anssi Hannula <anssi@mandriva.org> 0:2007-19mdv2008.1
++ Revision: 147946
+- restore lots of requires (it seems that someone had wrongly assumed
+  that "requires" is a subset of "requires(post)" and replaced a lot of
+  requires with requires(post); I restored them, but did not remove
+  the added requires(post), even while some of them seem like they are
+  superfluous)
+- texlive-mfwin conflicts with old tetex
+- versionize obsoletes and provides to avoid conflicts with other
+  texlive packages
+
+* Thu Jan 10 2008 Thierry Vignaud <tv@mandriva.org> 0:2007-18mdv2008.1
++ Revision: 147646
+- make texlive-fonts conflict with tetex
+
+* Thu Jan 10 2008 David Walluck <walluck@mandriva.org> 0:2007-17mdv2008.1
++ Revision: 147471
+- change Requires to Requires(post) for scriptlets
+
+* Wed Jan 09 2008 Thierry Vignaud <tv@mandriva.org> 0:2007-16mdv2008.1
++ Revision: 147226
+- conflict with old tetex-doc (#36582)
+- fix xdvi not working (#35288)
+- fix descriptions (texlive-doc doesn't exists)
+- texlive-xdvi conflicts with xdvi (#35288)
+
+* Tue Jan 08 2008 Thierry Vignaud <tv@mandriva.org> 0:2007-15mdv2008.1
++ Revision: 146441
+- really enable obsoloting/provides tetex
+
+* Fri Jan 04 2008 Thierry Vignaud <tv@mandriva.org> 0:2007-14mdv2008.1
++ Revision: 145501
+- enable obsoloting/provides tetex
+- kill re-definition of %%buildroot on Pixel's request
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+* Tue Sep 04 2007 David Walluck <walluck@mandriva.org> 0:2007-13mdv2008.0
++ Revision: 79575
+- rebuild
+- fix Icon entry in xdvi.desktop
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill desktop-file-validate's 'warning: key "Encoding" in group "Desktop Entry" is deprecated'
+
+* Sat Aug 25 2007 David Walluck <walluck@mandriva.org> 0:2007-12mdv2008.0
++ Revision: 71099
+- add some Requires
+
+* Sat Aug 25 2007 David Walluck <walluck@mandriva.org> 0:2007-11mdv2008.0
++ Revision: 71098
+- split out jadetex and xmltex packages
+
+* Thu Aug 16 2007 David Walluck <walluck@mandriva.org> 0:2007-10mdv2008.0
++ Revision: 64085
+- rebuild
+
+* Wed Aug 15 2007 David Walluck <walluck@mandriva.org> 0:2007-9mdv2008.0
++ Revision: 63853
+- fix conflict with context subpackage
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - move out of descriptions stuff that do not actually describe these packages
+
+* Sun Aug 12 2007 David Walluck <walluck@mandriva.org> 0:2007-8mdv2008.0
++ Revision: 62221
+- remove file Requires
+
+* Sat Aug 11 2007 David Walluck <walluck@mandriva.org> 0:2007-7mdv2008.0
++ Revision: 61921
+- version tetex provide
+
+* Sat Aug 11 2007 David Walluck <walluck@mandriva.org> 0:2007-6mdv2008.0
++ Revision: 61915
+- safer calls in scriptlets
+
+* Sat Aug 11 2007 David Walluck <walluck@mandriva.org> 0:2007-5mdv2008.0
++ Revision: 61864
+- Xaw3d-devel is incorrectly named
+- BuildRequires: xaw3d-devel
+- BuildRequires: xaw-devel, not Xaw3d-devel
+- fix %%bcond_with option
+- fix %%with syntax
+- update svn instructions
+- don't obsolete tetex by default
+- stricter version requirements on subpackages
+- remove some library provides
+- don't exclude .pool files
+- exclude .pool files already shipped in texlive-texmf
+- update to latest SVN for pdftex 1.40.5 support
+- remove Fedora tkdep patch (we hopefully require perl-Tk from main automatically)
+- remove Fedora kpse extensions patch (capital letters are bugs in themselves)
+- remove dvips_fontbug_fix_upstream and fix_makempx_installation patches (merged upstream)
+- rediff some Debian patches
+- libpoppler_new patch disables pdftosrc
+- fix pdftex patch
+- add libpoppler_new patch
+- installation fixes
+- Import texlive
+
