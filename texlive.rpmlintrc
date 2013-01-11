@@ -1,0 +1,2 @@
+# Should be fixed at some point... But not necessarily right now
+addFilter("E: binary-or-shlib-defines-rpath")

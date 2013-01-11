@@ -35,6 +35,7 @@ Source0:	texlive-20120810-source.tar.xz
 # sha256sum texlive-20120810-source.tar.xz > texlive-20120810-source.tar.xz.sha256
 Source1:	texlive-20120810-source.tar.xz.sha256
 %endif
+Source100:	%name.rpmlintrc
 Obsoletes:	tetex-usrlocal < 3.0-1
 
 #-----------------------------------------------------------------------
@@ -1015,8 +1016,6 @@ CONFIGURE_TOP=.. \
 %else
 	--disable-xindy						\
 %endif
-	--with-system-freetype					\
-	--with-freetype-includes=%{_includedir}/freetype	\
 	--with-system-freetype2					\
 	--with-freetype2-includes=%{_includedir}/freetype2	\
 %if %{_texmf_with_system_dialog}
