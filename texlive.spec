@@ -72,7 +72,7 @@ BuildRequires:	ghostscript-dvipdf
 BuildRequires:	gsl-devel
 BuildRequires:	GL-devel
 %endif
-BuildRequires:	libgd-devel
+BuildRequires:	gd-devel
 %if %{_texmf_with_system_icu}
 BuildRequires:	icu-devel >= 49
 %endif
