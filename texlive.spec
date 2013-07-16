@@ -19,8 +19,8 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20120810
-Release:	4
+Version:	20121026
+Release:	3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -30,10 +30,10 @@ Source0:	ftp://tug.org/historic/systems/texlive/2012/texlive-20120701-source.tar
 Source1:	ftp://tug.org/historic/systems/texlive/2012/texlive-20120701-source.tar.xz.sha256
 %else
 # svn co svn://tug.org/texlive/branches/branch2012/Build/source texlive-source
-# tar Jcf texlive-20120810-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20120810-source/'  texlive-source/
-Source0:	texlive-20120810-source.tar.xz
-# sha256sum texlive-20120810-source.tar.xz > texlive-20120810-source.tar.xz.sha256
-Source1:	texlive-20120810-source.tar.xz.sha256
+# tar Jcf texlive-20121026-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20121026-source/'  texlive-source/
+Source0:      texlive-20121026-source.tar.xz
+# sha256sum texlive-20121026-source.tar.xz > texlive-20121026-source.tar.xz.sha256
+Source1:      texlive-20121026-source.tar.xz.sha256
 %endif
 Source100:	%name.rpmlintrc
 Obsoletes:	tetex-usrlocal < 3.0-1
