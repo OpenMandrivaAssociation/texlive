@@ -79,7 +79,7 @@ BuildRequires:	icu-devel >= 49
 %if %{_texmf_with_system_poppler}
 BuildRequires:	libpoppler-devel
 %endif
-BuildRequires:	libxaw-devel
+BuildRequires:	xaw-devel
 %if !%{_texmf_with_system_dialog}
 BuildRequires:	ncurses-devel
 %endif
