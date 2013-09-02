@@ -1016,7 +1016,7 @@ CONFIGURE_TOP=.. \
 %else
 	--without-system-xpdf					\
 %endif
-	--enable-static						\
+	--disable-static					\
 	--with-system-zziplib
 %make
 popd
