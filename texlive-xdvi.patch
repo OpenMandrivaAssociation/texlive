@@ -1,0 +1,39 @@
+--- texlive-20130530-source/texk/xdvik/xdvi-sh.in.orig	2013-10-12 01:19:12.738668246 -0300
++++ texlive-20130530-source/texk/xdvik/xdvi-sh.in	2013-10-12 01:19:41.828670244 -0300
+@@ -7,16 +7,6 @@
+ # This script sets some environment variables to make sure that xdvi's
+ # resource file in $XDVIINPUTS/xdvi is read by xdvi.bin.
+ 
+-test -f /bin/sh5 && test -z "$RUNNING_SH5" \
+-  && test x"`(uname -s) 2>&1`" = xULTRIX \
+-  && { RUNNING_SH5=true; export RUNNING_SH5; exec /bin/sh5 $0 ${1+"$@"}; }
+-RUNNING_SH5=
+-
+-test -f /bin/bsh && test -z "$RUNNING_BSH" \
+-  && test x"`(uname -s) 2>&1`" = xAIX \
+-  && { RUNNING_BSH=true; export RUNNING_BSH; exec /bin/bsh $0 ${1+"$@"}; }
+-RUNNING_BSH=
+-
+ # -help and -version only used to work if they were the only options,
+ # so the "-name xdvi" parameter wasn't used in that case. With current
+ # xdvik, it should work in any case, but we keep this logic for compatibility
+@@ -35,19 +25,4 @@ case "$#:$1" in
+     NAMEOPT="-name $BASE_NAME";;
+ esac
+ 
+-xdviappfile=`kpsewhich -progname=xdvi --format='other text files' XDvi`
+-if test -n "$xdviappfile"; then
+-  xdviappdir=`dirname "$xdviappfile"`
+-  xdviapppath="${xdviappdir}/%l_%t/%N:${xdviappdir}/%N"
+-
+-  # For R3, we have to set XAPPLRESDIR.
+-  ### SU: removed, xdvik won't work with R3 anyway, and XAPPLRESDIR is
+-  ### for user customizations in current X
+-  ### XAPPLRESDIR="$xdviappdir"; export XAPPLRESDIR
+-
+-  # For R4 or later, we have to set XFILESEARCHPATH, since XAPPLRESDIR might
+-  # be ignored (if XUSERFILESEARCHPATH is set)
+-  XFILESEARCHPATH="$xdviapppath:${XFILESEARCHPATH-%D}"; export XFILESEARCHPATH
+-fi
+-
+ exec @final_exec_name@ $NAMEOPT ${1+"$@"}

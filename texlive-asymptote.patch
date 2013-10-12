@@ -1,0 +1,11 @@
+--- texlive-20130530-source/utils/asymptote/settings.cc.orig	2013-10-12 01:32:24.356722609 -0300
++++ texlive-20130530-source/utils/asymptote/settings.cc	2013-10-12 01:32:42.207723835 -0300
+@@ -94,7 +94,7 @@ string defaultPSViewer="gv";
+ #ifdef __APPLE__
+ string defaultPDFViewer="open";
+ #else  
+-string defaultPDFViewer="acroread";
++string defaultPDFViewer="xdg-open";
+ #endif  
+ string defaultGhostscript="gs";
+ string defaultDisplay="display";
