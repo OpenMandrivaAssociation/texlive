@@ -1,2 +1,5 @@
 # Should be fixed at some point... But not necessarily right now
 addFilter("E: binary-or-shlib-defines-rpath")
+# There is no changelog but it says changelog not utf-8; looks
+# like some of the memory corruption in rpm5 triggering (again)
+addFilter("E: tag-not-utf8")
