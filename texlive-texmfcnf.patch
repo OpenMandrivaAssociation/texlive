@@ -1,0 +1,55 @@
+--- texlive-20131212-source/texk/kpathsea/texmf.cnf.orig	2013-12-12 15:12:48.863467747 -0200
++++ texlive-20131212-source/texk/kpathsea/texmf.cnf	2013-12-12 15:15:27.550476690 -0200
+@@ -451,51 +451,7 @@ RUBYINPUTS   = .;$TEXMF/scripts/{$progna
+ %% The mktex* scripts rely on KPSE_DOT. Do not set it in the environment.
+ % KPSE_DOT = .
+ 
+-% This definition isn't used from this .cnf file itself (that would be
+-% paradoxical), but the compile-time default in paths.h is built from it.
+-% The SELFAUTO* variables are set automatically from the location of
+-% argv[0], in kpse_set_program_name.
+-% 
+-% This main texmf.cnf file is installed, for a release YYYY, in a
+-% directory such as /usr/local/texlive/YYYY/texmf/web2c/texmf.cnf.
+-% Since this file is subject to future updates, the TeX Live installer
+-% or human administrator may also create a file
+-% /usr/local/texlive/YYYY/texmf.cnf; any settings in this latter file
+-% will take precedence over the distributed one under texmf/web2c.
+-% 
+-% For security reasons, it is best not to include . in this path.
+-%
+-% The idea behind this lengthy definition: for each of
+-% SELFAUTO{LOC,DIR,AUTO}, look in the directory,
+-% then the subdirectories share/texmf-local and share/texmf,
+-% then ./texmf-local and ./texmf.
+-% 
+-% However, we want to include one more directory: the
+-% great-grandparent's texmf-local, because that is how TL is installed
+-% by default.  That is, given a binary
+-% /usr/local/texlive/YYYY/bin/PLATFORM/kpsewhich, it should find
+-% /usr/local/texlive/texmf-local/web2c/texmf.cnf.  I.e., not under YYYY.
+-% 
+-% As a result, we cannot use actual brace expansion in the definition,
+-% since we don't want to scatter ../'s throughout the value.  Hence we
+-% explicitly list every directory.  Arguably more understandable this
+-% way anyway.
+-%
+-TEXMFCNF = {\
+-$SELFAUTOLOC,\
+-$SELFAUTOLOC/share/texmf-local/web2c,$SELFAUTOLOC/share/texmf/web2c,\
+-$SELFAUTOLOC/texmf-local/web2c,$SELFAUTOLOC/texmf/web2c,\
+-$SELFAUTODIR,\
+-$SELFAUTODIR/share/texmf-local/web2c,$SELFAUTODIR/share/texmf/web2c,\
+-$SELFAUTODIR/texmf-local/web2c,$SELFAUTODIR/texmf/web2c,\
+-$SELFAUTOPARENT/../texmf-local/web2c,\
+-$SELFAUTOPARENT,\
+-$SELFAUTOPARENT/share/texmf-local/web2c,$SELFAUTOPARENT/share/texmf/web2c,\
+-$SELFAUTOPARENT/texmf-local/web2c,$SELFAUTOPARENT/texmf/web2c\
+-}
+-%
+-% For reference, here is the old brace-using definition:
+-%TEXMFCNF = {$SELFAUTOLOC,$SELFAUTODIR,$SELFAUTOPARENT}{,{/share,}/texmf{-local,}/web2c}
++TEXMFCNF = @@TEXMFCNF@@
+ 
+ % kpathsea 3.5.3 and later sets these at runtime. To avoid empty
+ % expansions from binaries linked against an earlier version of the

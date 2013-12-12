@@ -15,12 +15,12 @@
 
 %define enable_shared			1
 
-%define historic			1
+%define historic			0
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20130530
-Release:	5
+Version:	20131212
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -30,10 +30,10 @@ Source0:	ftp://tug.org/historic/systems/texlive/2013/texlive-20130530-source.tar
 Source1:	ftp://tug.org/historic/systems/texlive/2013/texlive-20130530-source.tar.xz.sha256
 %else
 # svn co svn://tug.org/texlive/branches/branch2012/Build/source texlive-source
-# tar Jcf texlive-20121026-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20121026-source/'  texlive-source/
-Source0:      texlive-20121026-source.tar.xz
-# sha256sum texlive-20121026-source.tar.xz > texlive-20121026-source.tar.xz.sha256
-Source1:      texlive-20121026-source.tar.xz.sha256
+# tar Jcf texlive-20131212-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20131212-source/'  texlive-source/
+Source0:	texlive-20131212-source.tar.xz
+# sha256sum texlive-20131212-source.tar.xz > texlive-20131212-source.tar.xz.sha256
+Source1:	texlive-20131212-source.tar.xz.sha256
 %endif
 Source100:	%name.rpmlintrc
 Obsoletes:	tetex-usrlocal < 3.0-1
@@ -77,7 +77,7 @@ BuildRequires:	gd-devel
 BuildRequires:	icu-devel >= 49
 %endif
 %if %{_texmf_with_system_poppler}
-BuildRequires:	libpoppler-devel
+BuildRequires:	poppler-devel
 %endif
 BuildRequires:	xaw-devel
 %if !%{_texmf_with_system_dialog}
@@ -99,10 +99,11 @@ BuildRequires:	texinfo
 BuildRequires:	zziplib-devel
 
 #-----------------------------------------------------------------------
-Patch0:		texlive-underlink.patch
-Patch1:		texlive-format.patch
-Patch2:		texlive-asymptote.patch
-Patch3:		texlive-xdvi.patch
+Patch0:		texlive-format.patch
+Patch1:		texlive-asymptote.patch
+Patch2:		texlive-xdvi.patch
+# New definition only misses default location...
+Patch3:		texlive-texmfcnf.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -938,15 +939,16 @@ texlive xetex.bin package.
 %prep
 %setup -q -n %{name}-%{version}-source
 %patch0 -p1
-%patch1 -p1
 %if %{_texmf_enable_asymptote}
-%patch2 -p1
+%patch1 -p1
 %endif
+%patch2 -p1
 %patch3 -p1
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdistdir}|;'		  \
 	 -e 's|^(TEXMFDIST\s+= ).*|$1%{_texmfdistdir}|;'		  \
+	 -e 's|\@\@TEXMFCNF\@\@|%{_texmfdistdir}/web2c|;'		  \
 	 -e 's|^(TEXMFLOCAL\s+= ).*|$1%{_texmflocaldir}|;'		  \
 	 -e 's|^(TEXMFSYSVAR\s+= ).*|$1%{_texmfvardir}|;'		  \
 	 -e 's|^(TEXMFSYSCONFIG\s+= ).*|$1%{_texmfconfdir}|;'		  \
