@@ -39,6 +39,7 @@ Source100:	%name.rpmlintrc
 Obsoletes:	tetex-usrlocal < 3.0-1
 
 #-----------------------------------------------------------------------
+Provides:	task-texlive = %{EVRD}
 Requires:	ghostscript
 %if %{_texmf_enable_asymptote}
 Requires:	gv
