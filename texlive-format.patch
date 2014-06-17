@@ -1,6 +1,6 @@
---- texlive-20131212-source/texk/devnag/src/devnag.c.orig	2013-12-12 04:11:13.013457639 -0200
-+++ texlive-20131212-source/texk/devnag/src/devnag.c	2013-12-12 04:11:17.461457720 -0200
-@@ -2395,7 +2395,7 @@ void put_macro(short macro) {
+--- texlive-20140525-source/texk/devnag/src/devnag.c.p0~	2014-02-18 08:57:08.000000000 +0100
++++ texlive-20140525-source/texk/devnag/src/devnag.c	2014-06-16 23:44:00.913963976 +0200
+@@ -2394,7 +2394,7 @@ void put_macro(short macro) {
  void err_ill(const char *str) {
     fprintf(stderr, "Error: illegal character(s) \"%s\" detected at line %d:\n",
  	  str, linenumber);
@@ -9,9 +9,9 @@
     exit(1);
  }
  
---- texlive-20131212-source/texk/dvidvi/dvidvi.c.orig	2013-12-12 04:10:22.520456717 -0200
-+++ texlive-20131212-source/texk/dvidvi/dvidvi.c	2013-12-12 04:11:17.465457720 -0200
-@@ -331,7 +331,7 @@ static void stringdvibuf(integer p, inte
+--- texlive-20140525-source/texk/dvidvi/dvidvi.c.p0~	2013-06-28 15:27:05.000000000 +0200
++++ texlive-20140525-source/texk/dvidvi/dvidvi.c	2014-06-16 23:44:00.913963976 +0200
+@@ -327,7 +327,7 @@ static void stringdvibuf(integer p, inte
   *   Print a usage error messsage, and quit.
   */
  static void usage(void) {
@@ -20,7 +20,7 @@
     (void)fprintf(stderr,"Usage:  dvidvi [options] input[.dvi] [output]\n");
     (void)fprintf(stderr,"where options are:\n");
     (void)fprintf(stderr,"    [-f n] first page printed     [-l n] last page printed\n");
-@@ -810,7 +810,7 @@ default:
+@@ -806,7 +806,7 @@ default:
        } /* else argument with '-' */
     }  /* for */
     if (*iname == 0) {
@@ -29,7 +29,7 @@
         error("! no input file specified");
     }
     /* Inserted by djc@dsmail.hmi.de 3.8.1994 */
-@@ -821,7 +821,7 @@ default:
+@@ -817,7 +817,7 @@ default:
     }
  
     if (*oname != 0 && !quiet) {
@@ -38,8 +38,8 @@
         (void)fprintf(stderr, "%s -> %s\n",iname,oname);
         temp = nextstring ;
     }
---- texlive-20131212-source/texk/ps2pkm/objects.h.orig	2013-12-12 04:11:13.029457639 -0200
-+++ texlive-20131212-source/texk/ps2pkm/objects.h	2013-12-12 04:11:17.466457720 -0200
+--- texlive-20140525-source/texk/ps2pkm/objects.h.p0~	2009-06-22 16:33:57.000000000 +0200
++++ texlive-20140525-source/texk/ps2pkm/objects.h	2014-06-16 23:44:00.913963976 +0200
 @@ -232,7 +232,7 @@ struct xobject {
  /*SHARED*/
  /* NDW: personally, I want to see status and error messages! */
@@ -49,9 +49,9 @@
  #define IfTrace1(condition,model,arg0)                            \
          {if (condition) printf(model,arg0);}
  #define IfTrace2(condition,model,arg0,arg1)                       \
---- texlive-20131212-source/texk/web2c/cwebboot.cin.orig	2013-12-12 04:10:22.531456717 -0200
-+++ texlive-20131212-source/texk/web2c/cwebboot.cin	2013-12-12 04:11:17.468457720 -0200
-@@ -1084,7 +1084,7 @@ void
+--- texlive-20140525-source/texk/web2c/cwebboot.cin.p0~	2014-02-12 09:50:58.000000000 +0100
++++ texlive-20140525-source/texk/web2c/cwebboot.cin	2014-06-16 23:44:00.913963976 +0200
+@@ -1092,7 +1092,7 @@ void
   fatal(const char*s,const char*t)
  #line 1182 "cwebdir/common.w"
  {
@@ -60,8 +60,8 @@
  err_print(t);
  history= fatal_message;exit(wrap_up());
  }
---- texlive-20131212-source/texk/web2c/cwebdir/common.w.orig	2013-12-12 04:11:13.033457639 -0200
-+++ texlive-20131212-source/texk/web2c/cwebdir/common.w	2013-12-12 04:11:17.468457720 -0200
+--- texlive-20140525-source/texk/web2c/cwebdir/common.w.p0~	2012-09-05 15:27:45.000000000 +0200
++++ texlive-20140525-source/texk/web2c/cwebdir/common.w	2014-06-16 23:44:00.913963976 +0200
 @@ -1180,7 +1180,7 @@ concatenated to print the final error me
  fatal(s,t)
    char *s,*t;
@@ -71,8 +71,8 @@
    err_print(t);
    history=fatal_message; exit(wrap_up());
  }
---- texlive-20131212-source/texk/web2c/cwebdir/cweave.w.orig	2013-12-12 04:11:13.037457639 -0200
-+++ texlive-20131212-source/texk/web2c/cwebdir/cweave.w	2013-12-12 04:11:17.470457720 -0200
+--- texlive-20140525-source/texk/web2c/cwebdir/cweave.w.p0~	2012-09-05 15:27:45.000000000 +0200
++++ texlive-20140525-source/texk/web2c/cwebdir/cweave.w	2014-06-16 23:44:00.913963976 +0200
 @@ -1784,7 +1784,7 @@ void
  print_cat(c) /* symbolic printout of a category */
  eight_bits c;
@@ -82,8 +82,8 @@
  }
  
  @ The token lists for translated \TEX/ output contain some special control
---- texlive-20131212-source/texk/web2c/omegafonts/error_routines.c.orig	2013-12-12 04:11:13.039457639 -0200
-+++ texlive-20131212-source/texk/web2c/omegafonts/error_routines.c	2013-12-12 04:11:17.471457720 -0200
+--- texlive-20140525-source/texk/web2c/omegafonts/error_routines.c.p0~	2009-11-10 11:27:09.000000000 +0100
++++ texlive-20140525-source/texk/web2c/omegafonts/error_routines.c	2014-06-16 23:44:00.913963976 +0200
 @@ -32,6 +32,70 @@ They
  
  */
@@ -160,8 +160,8 @@
      exit(2);
  }
 +#endif
---- texlive-20131212-source/texk/web2c/omegafonts/error_routines.h.orig	2013-12-12 04:11:13.041457639 -0200
-+++ texlive-20131212-source/texk/web2c/omegafonts/error_routines.h	2013-12-12 04:11:17.473457720 -0200
+--- texlive-20140525-source/texk/web2c/omegafonts/error_routines.h.p0~	2009-11-10 11:27:09.000000000 +0100
++++ texlive-20140525-source/texk/web2c/omegafonts/error_routines.h	2014-06-16 23:44:00.913963976 +0200
 @@ -21,6 +21,30 @@ along with Omega; if not, write to the F
  
  */
@@ -198,8 +198,8 @@
  extern void internal_error_1(const_string, int);
  extern void internal_error_s(const_string, const_string);
 +#endif
---- texlive-20131212-source/texk/web2c/omegafonts/out_routines.c.orig	2013-12-12 04:11:13.042457639 -0200
-+++ texlive-20131212-source/texk/web2c/omegafonts/out_routines.c	2013-12-12 04:11:17.473457720 -0200
+--- texlive-20140525-source/texk/web2c/omegafonts/out_routines.c.p0~	2009-11-10 11:27:09.000000000 +0100
++++ texlive-20140525-source/texk/web2c/omegafonts/out_routines.c	2014-06-16 23:44:00.914963976 +0200
 @@ -383,5 +383,5 @@ out_digits(unsigned counter)
  void
  out(const_string sval)
@@ -207,9 +207,9 @@
 -	fprintf(file_output, sval);
 +	fprintf(file_output, "%s", sval);
  }
---- texlive-20131212-source/texk/web2c/tiedir/tie-w2c.ch.orig	2013-12-12 04:10:22.552456717 -0200
-+++ texlive-20131212-source/texk/web2c/tiedir/tie-w2c.ch	2013-12-12 04:11:17.474457720 -0200
-@@ -130,7 +130,7 @@ int main (int argc, string *argv)
+--- texlive-20140525-source/texk/web2c/tiedir/tie-w2c.ch.p0~	2014-02-12 09:50:58.000000000 +0100
++++ texlive-20140525-source/texk/web2c/tiedir/tie-w2c.ch	2014-06-16 23:44:00.914963976 +0200
+@@ -148,7 +148,7 @@ int main (int argc, string *argv)
  @y
    kpse_set_program_name(argv[0], "tie");
    print(banner); /* print a ``banner line'' */
@@ -218,107 +218,3 @@
    print_ln(copyright); /* include the copyright notice */
  @z
  
---- texlive-20131212-source/texk/xdvik/gui/message-window.c.orig	2013-12-12 04:11:13.043457639 -0200
-+++ texlive-20131212-source/texk/xdvik/gui/message-window.c	2013-12-12 04:11:17.474457720 -0200
-@@ -713,7 +713,7 @@ internal_popup_window(Widget parent,
-     Widget ret;
- 
-     ASSERT(type < (sizeof my_msg_map / sizeof my_msg_map[0]), "too few elements in my_msg_map");
--    sprintf(win_title, my_msg_map[type].window_title);
-+    snprintf(win_title, sizeof(win_title), "%s", my_msg_map[type].window_title);
- 
- #if DEBUG
-     fprintf(stderr, "internal_popup_window called with prompt: \"%s\"\n", msg_buf);
-@@ -725,11 +725,10 @@ internal_popup_window(Widget parent,
- 	   supposed to be printf-format strings (i.e. with doubled `%' to escape them)
- 	*/
- 	fprintf(stderr, "\n%s:\n", my_msg_map[type].window_title);
--	fprintf(stderr, msg_buf);
--	fprintf(stderr, "\n");
-+	fprintf(stderr, "%s\n", msg_buf);
- 	if (helptext) {
- 	    fprintf(stderr, "---------- helptext ----------\n");
--	    fprintf(stderr, helptext);
-+	    fprintf(stderr, "%s", helptext);
- 	    fprintf(stderr, "\n---------- end of helptext ----------\n");
- 	}
- 	return NULL;
-@@ -741,8 +740,7 @@ internal_popup_window(Widget parent,
-     if (my_popup_num == MAX_POPUPS) {
- 	/* already enough popups on screen, just dump it to stderr */
- 	fprintf(stderr, "%s: ", win_title);
--	fprintf(stderr, msg_buf);
--	fputc('\n', stderr);
-+	fprintf(stderr, "%s\n", msg_buf);
- 	/* Note: If a mad function continues to open popups, this will
- 	 * stop after MAX_POPUPS, but open a new window for each
- 	 * window the user pops down. Maybe we ought to do something
---- texlive-20131212-source/utils/chktex/chktex-1.6.6/ChkTeX.c.orig	2013-12-12 04:11:58.823458475 -0200
-+++ texlive-20131212-source/utils/chktex/chktex-1.6.6/ChkTeX.c	2013-12-12 04:13:07.163459722 -0200
-@@ -350,7 +350,7 @@ int main(int argc, char **argv)
-         }
- 
-         if (!Quiet || LicenseOnly)
--            fprintf(stderr, Banner);
-+            fprintf(stderr, "%s", Banner);
- 
-         if (CurArg == argc)
-             UsingStdIn = TRUE;
-@@ -368,7 +368,7 @@ int main(int argc, char **argv)
- 
-         if ((UsingStdIn && StdInTTY && !Quiet) || LicenseOnly)
-         {
--            fprintf(stderr, BigBanner);
-+            fprintf(stderr, "%s", BigBanner);
-         }
- 
-         if (!StdOutTTY && PipeOutputFormat)
-@@ -376,7 +376,7 @@ int main(int argc, char **argv)
- 
-         if (LicenseOnly)
-         {
--            fprintf(stderr, Distrib);
-+            fprintf(stderr, "%s", Distrib);
-         }
-         else
-         {
-@@ -953,7 +953,7 @@ static int ParseArgs(int argc, char **ar
-                 nextc = ParseBoolArg(&HeadErrOut, &optarg);
-                 break;
-             case 'W':
--                printf(Banner);
-+                printf("%s", Banner);
-                 exit(EXIT_SUCCESS);
-             case '?':
-             default:
---- texlive-20131212-source/texk/web2c/luatexdir/image/writeimg.w.orig	2013-12-12 12:32:46.438926574 -0200
-+++ texlive-20131212-source/texk/web2c/luatexdir/image/writeimg.w	2013-12-12 12:33:31.318929103 -0200
-@@ -644,7 +644,7 @@ void write_pdfstream(PDF pdf, image_dict
-     sprintf(s, "/BBox [%.8f %.8f %.8f %.8f]\n", int2bp(img_bbox(idict)[0]),
-             int2bp(img_bbox(idict)[1]), int2bp(img_bbox(idict)[2]),
-             int2bp(img_bbox(idict)[3]));
--    pdf_printf(pdf, stripzeros(s));
-+    pdf_printf(pdf, "%s", stripzeros(s));
-     pdf_begin_stream(pdf);
-     if (img_pdfstream_stream(idict) != NULL)
-         pdf_puts(pdf, img_pdfstream_stream(idict));
---- texlive-20131212-source/texk/web2c/luatexdir/tex/printing.w.orig	2013-12-12 13:29:23.205118009 -0200
-+++ texlive-20131212-source/texk/web2c/luatexdir/tex/printing.w	2013-12-12 13:30:01.021120140 -0200
-@@ -391,7 +391,7 @@ void log_banner(const char *v, int e, in
-     print_char(' ');
-     print_int(int_par(day_code));
-     print_char(' ');
--    fprintf(log_file, months[month]);
-+    fprintf(log_file, "%s", months[month]);
-     print_char(' ');
-     print_int(int_par(year_code));
-     print_char(' ');
-@@ -418,7 +418,7 @@ void log_banner(const char *v, int e, in
- @ @c
- void print_version_banner(void)
- {
--    fprintf(term_out, ptexbanner);
-+    fprintf(term_out, "%s", ptexbanner);
- }
- 
- @ The procedure |print_esc| prints a string that is preceded by

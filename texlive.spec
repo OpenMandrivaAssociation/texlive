@@ -15,19 +15,19 @@
 
 %define enable_shared			1
 
-%define historic			0
+%define historic			1
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20131212
-Release:	5
+Version:	20140525
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
 %if %{historic}
-Source0:	ftp://tug.org/historic/systems/texlive/2013/texlive-20130530-source.tar.xz
-Source1:	ftp://tug.org/historic/systems/texlive/2013/texlive-20130530-source.tar.xz.sha256
+Source0:	ftp://tug.org/historic/systems/texlive/2014/texlive-%{version}-source.tar.xz
+Source1:	ftp://tug.org/historic/systems/texlive/2014/texlive-%{version}-source.tar.xz.sha256
 %else
 # svn co svn://tug.org/texlive/branches/branch2012/Build/source texlive-source
 # tar Jcf texlive-20131212-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20131212-source/'  texlive-source/
@@ -105,6 +105,7 @@ Patch1:		texlive-asymptote.patch
 Patch2:		texlive-xdvi.patch
 # New definition only misses default location...
 Patch3:		texlive-texmfcnf.patch
+Patch4:		texlive-20140525-clang.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -939,12 +940,13 @@ texlive xetex.bin package.
 #-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}-%{version}-source
-%patch0 -p1
+%patch0 -p1 -b .p0~
 %if %{_texmf_enable_asymptote}
-%patch1 -p1
+%patch1 -p1 -b .p1~
 %endif
-%patch2 -p1
-%patch3 -p1
+%patch2 -p1 -b .p2~
+%patch3 -p1 -b .p3~
+%patch4 -p1 -b .clang~
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdistdir}|;'		  \
@@ -1017,8 +1019,10 @@ CONFIGURE_TOP=.. \
 %endif
 %if %{_texmf_with_system_poppler}
 	--with-system-xpdf					\
+	--with-system-poppler					\
 %else
 	--without-system-xpdf					\
+	--without-system-poppler				\
 %endif
 	--enable-static						\
 	--with-system-zziplib
@@ -1116,24 +1120,29 @@ pushd %{buildroot}%{_bindir}
 
     # use symlinks from noarch packages
     rm -f a2ping afm2afm allec arlatex authorindex autoinst bibexport	\
-	  bundledoc cachepic checkcites cmap2enc convbkmk ctanify	\
-	  ctanupload de-macro deweb dviasm dvipdft dosepsbin ebong	\
-	  e2pall epspdf epspdftk epstopdf exceltex fig4latex findhyph	\
-	  font2afm fragmaster ht htcontext htlatex htmex httex httexi	\
-	  htxelatex htxetex installfont-tl latex2man latexdiff		\
-	  latexdiff-vc latexfileversion latexmk latexrevise listbib	\
-	  listings-ext.sh m-tx makeglossaries match_parens mathspic	\
-	  mf2pt1 mk4ht mkgrkindex mkjobtexmf mkluatexfontdb mkt1font	\
-	  mptopdf musixflx musixtex ot2kpx pdf180 pdf270 pdf90		\
-	  pdfannotextractor pdfatfi pdfbook pdfcrop pdfflip pdfjam	\
-	  pdfjam-pocketmod pdfjam-slides3up pdfjam-slides6up pdfjoin	\
-	  pdfnup pdfpun pdfthumb pedigree perltex pfm2kpx pkfix		\
-	  pkfix-helper ppower4 ps2eps ps4pdf pst2pdf pmx2pdf purifyeps	\
-	  repstopdf rpdfcrop rungs showglyphs simpdftex splitindex	\
-	  sty2dtx svn-multi texcount texdef texdiff texdirflatten	\
-	  texdoc texdoctk texlinks texliveonfly texloganalyser		\
-	  texmfstart thumbpdf tlmgr typeoutfileinfo ulqda updmap	\
-	  updmap-setup-kanji updmap-sys urlbst vpe vpl2ovp vpl2vpl
+	  bundledoc cachepic checkcites cmap2enc contextjit convbkmk	\
+	  ctanify ctanupload de-macro depythontex deweb dviasm dvipdft	\
+	  dosepsbin ebong e2pall epspdf epspdftk epstopdf exceltex	\
+	  fig4latex findhyph font2afm fragmaster ht htcontext htlatex	\
+	  htmex httex httexi htxelatex htxetex installfont-tl 		\
+	  jamo-normalize komkindex latex2man latex-git-log latexdiff	\
+	  latexdiff-vc latexfileversion	latexindent latexmk latexrevise \
+	  lily-glyph-commands lily-image-commands lily-rebuild-pdfs	\
+	  listbib listings-ext.sh ltximg luajittex m-tx makeglossaries	\
+	  match_parens mathspic	mf2pt1 mk4ht mkgrkindex mkjobtexmf	\
+	  mkluatexfontdb mkpic mkt1font mptopdf mtxrunjit musixflx 	\
+	  musixtex ot2kpx pdf180 pdf270 pdf90 pdfannotextractor pdfatfi	\
+	  pdfbook pdfcrop pdfflip pdfjam pdfjam-pocketmod		\
+	  pdfjam-slides3up pdfjam-slides6up pdfjoin pdfnup pdfpun 	\
+	  pdfthumb pedigree perltex pfm2kpx pkfix pkfix-helper		\
+	  pmxchords ppower4 ps2eps ps4pdf pst2pdf pmx2pdf purifyeps	\
+	  pythontex repstopdf rpdfcrop rubikrotation rungs showglyphs	\
+	  simpdftex splitindex sty2dtx svn-multi texcount texdef	\
+	  texdiff texdirflatten texdoc texdoctk texfot texlinks		\
+	  texliveonfly texloganalyser texluajit texluajitc texmfstart	\
+	  thumbpdf tlmgr ttf2kotexfont typeoutfileinfo ulqda updmap	\
+	  updmap-setup-kanji updmap-sys urlbst vpe vpl2ovp vpl2vpl	\
+	  wofm2opl wopl2ofm wovf2ovp
 popd
 
 # use texmf data
