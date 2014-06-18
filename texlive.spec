@@ -975,7 +975,9 @@ CONFIGURE_TOP=.. \
 %configure2_5x							\
 	--with-banner-add="/OpenMandriva"			\
 	--disable-native-texlive-build				\
+%ifarch aarch64
 	--disable-luajittex					\
+%endif
 	--enable-missing					\
 %if %{_texmf_enable_biber}
 	--enable-biber						\
