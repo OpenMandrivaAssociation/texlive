@@ -4,6 +4,7 @@
 %define _texmf_enable_asymptote		0
 %define _texmf_enable_biber		0
 %define _texmf_enable_xindy		0
+%bcond_with	dvik
 %define _texmf_with_system_dialog	1
 %define _texmf_with_system_icu		1
 %define _texmf_with_system_lcdf		0
@@ -98,8 +99,10 @@ BuildRequires:	texlive
 BuildRequires:	texinfo
 %endif
 BuildRequires:	zziplib-devel
+%if %{with dvik}
 BuildRequires:	pkgconfig(xaw3d)
 BuildRequires:	X11-devel
+%endif
 
 #-----------------------------------------------------------------------
 Patch0:		texlive-format.patch
@@ -913,6 +916,7 @@ texlive web.bin package.
 %{_bindir}/tangle
 %{_bindir}/weave
 
+%if %{with xdvik}
 #-----------------------------------------------------------------------
 %package	-n texlive-xdvi.bin
 Summary:	binary files of xdvi
@@ -924,6 +928,7 @@ texlive xdvi.bin package.
 %files -n texlive-xdvi.bin
 %{_bindir}/xdvi
 %{_bindir}/xdvi-xaw
+%endif
 
 #-----------------------------------------------------------------------
 %package	-n texlive-xetex.bin
@@ -1032,6 +1037,9 @@ CONFIGURE_TOP=.. \
 %else
 	--without-system-xpdf					\
 	--without-system-poppler				\
+%endif
+%if !%{with xdvik}
+	--disable-xdvik						\
 %endif
 	--enable-static						\
 	--with-system-zziplib
