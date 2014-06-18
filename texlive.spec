@@ -963,6 +963,10 @@ perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdistdir}|;'		  \
 
 #-----------------------------------------------------------------------
 %build
+# arm build failed with clang
+%ifarch %arm
+export CC=gcc
+%endif
 mkdir texlive
 pushd texlive
 CONFIGURE_TOP=.. \
