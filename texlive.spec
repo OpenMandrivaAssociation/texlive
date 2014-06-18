@@ -98,6 +98,8 @@ BuildRequires:	texlive
 BuildRequires:	texinfo
 %endif
 BuildRequires:	zziplib-devel
+BuildRequires:	pkgconfig(xaw3d)
+BuildRequires:	X11-devel
 
 #-----------------------------------------------------------------------
 Patch0:		texlive-format.patch
@@ -973,6 +975,7 @@ CONFIGURE_TOP=.. \
 %configure2_5x							\
 	--with-banner-add="/OpenMandriva"			\
 	--disable-native-texlive-build				\
+	--disable-luajittex					\
 	--enable-missing					\
 %if %{_texmf_enable_biber}
 	--enable-biber						\
