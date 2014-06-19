@@ -21,7 +21,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20140525
-Release:	1
+Release:	2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -540,6 +540,7 @@ texlive lacheck.bin package.
 #-----------------------------------------------------------------------
 %package	-n texlive-latex.bin
 Summary:	binary files of latex
+Provides:	texlive-latex-bin.bin = %{EVRD}
 Conflicts:	texlive < 20110705-7
 
 %description	-n texlive-latex.bin
