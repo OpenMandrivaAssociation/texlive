@@ -4,7 +4,7 @@
 %define _texmf_enable_asymptote		0
 %define _texmf_enable_biber		0
 %define _texmf_enable_xindy		0
-%bcond_with	dvik
+%bcond_without	dvik
 %define _texmf_with_system_dialog	1
 %define _texmf_with_system_icu		1
 %define _texmf_with_system_lcdf		0
@@ -21,7 +21,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20140525
-Release:	2
+Release:	3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
