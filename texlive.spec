@@ -932,7 +932,6 @@ texlive xdvi.bin package.
 %files -n texlive-xdvi.bin
 %{_bindir}/xdvi
 %{_bindir}/xdvi-xaw
-%endif
 
 #-----------------------------------------------------------------------
 %package	-n texlive-xetex.bin
@@ -1042,7 +1041,7 @@ CONFIGURE_TOP=.. \
 	--without-system-xpdf					\
 	--without-system-poppler				\
 %endif
-%if !%{with dvik}
+%if %{without dvik}
 	--disable-xdvik						\
 %else
 	--enable-xdvik						\
