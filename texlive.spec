@@ -978,7 +978,7 @@ export CC=gcc
 mkdir texlive
 pushd texlive
 CONFIGURE_TOP=.. \
-%configure2_5x							\
+%configure							\
 	--with-banner-add="/OpenMandriva"			\
 	--disable-native-texlive-build				\
 %ifarch aarch64
@@ -1053,7 +1053,7 @@ popd
 mkdir asympote
 pushd asympote
 CONFIGURE_TOP=../utils/asymptote
-%configure2_5x							\
+%configure							\
 	--enable-gc=system					\
 	--enable-texlive-build					\
 	--datadir=%{_texmfdir}
