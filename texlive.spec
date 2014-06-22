@@ -103,9 +103,6 @@ BuildRequires:	texlive
 BuildRequires:	texinfo
 %endif
 BuildRequires:	zziplib-devel
-%if %{with dvik}
-BuildRequires:	xaw-devel
-%endif
 
 #-----------------------------------------------------------------------
 Patch0:		texlive-format.patch
@@ -932,6 +929,7 @@ texlive xdvi.bin package.
 %files -n texlive-xdvi.bin
 %{_bindir}/xdvi
 %{_bindir}/xdvi-xaw
+%endif
 
 #-----------------------------------------------------------------------
 %package	-n texlive-xetex.bin
