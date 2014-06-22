@@ -86,6 +86,7 @@ BuildRequires:	icu-devel >= 49
 BuildRequires:	poppler-devel
 %endif
 BuildRequires:	xaw-devel
+BuildRequires:	X11-devel
 %if !%{_texmf_with_system_dialog}
 BuildRequires:	ncurses-devel
 %endif
