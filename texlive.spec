@@ -25,7 +25,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20140525
-Release:	3
+Release:	4
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -104,8 +104,7 @@ BuildRequires:	texinfo
 %endif
 BuildRequires:	zziplib-devel
 %if %{with dvik}
-BuildRequires:	pkgconfig(xaw3d)
-BuildRequires:	X11-devel
+BuildRequires:	xaw-devel
 %endif
 
 #-----------------------------------------------------------------------
@@ -921,7 +920,7 @@ texlive web.bin package.
 %{_bindir}/tangle
 %{_bindir}/weave
 
-%if %{with xdvik}
+%if %{with dvik}
 #-----------------------------------------------------------------------
 %package	-n texlive-xdvi.bin
 Summary:	binary files of xdvi
@@ -1043,8 +1042,10 @@ CONFIGURE_TOP=.. \
 	--without-system-xpdf					\
 	--without-system-poppler				\
 %endif
-%if !%{with xdvik}
+%if !%{with dvik}
 	--disable-xdvik						\
+%else
+	--enable-xdvik						\
 %endif
 	--enable-static						\
 	--with-system-zziplib
