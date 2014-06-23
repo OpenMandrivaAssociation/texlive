@@ -12,7 +12,7 @@
 %define _texmf_with_system_psutils	1
 %define _texmf_with_system_t1lib	1
 %define _texmf_with_system_tex4ht	0
-%define _texmf_with_system_teckit	0
+%define _texmf_with_system_teckit	1
 
 %define enable_shared			1
 
@@ -21,7 +21,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20140525
-Release:	4
+Release:	5
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -100,6 +100,10 @@ BuildRequires:	texlive
 BuildRequires:	texinfo
 %endif
 BuildRequires:	zziplib-devel
+BuildRequires:	pkgconfig(pixman-1)
+BuildRequires:	pkgconfig(harfbuzz)
+BuildRequires:	pkgconfig(cairo)
+BuildRequires:	libpaper-devel
 
 #-----------------------------------------------------------------------
 Patch0:		texlive-format.patch
@@ -932,12 +936,17 @@ texlive xdvi.bin package.
 %package	-n texlive-xetex.bin
 Summary:	binary files of xetex
 Conflicts:	texlive < 20110705-7
+%if ! %{_texmf_with_system_teckit}
+Requires:	teckit
+%endif
 
 %description	-n texlive-xetex.bin
 texlive xetex.bin package.
 
 %files -n texlive-xetex.bin
+%if ! %{_texmf_with_system_teckit}
 %{_bindir}/teckit_compile
+%endif
 %{_bindir}/xdvipdfmx
 %{_bindir}/xelatex
 %{_bindir}/xetex
@@ -1023,7 +1032,7 @@ CONFIGURE_TOP=.. \
 	--disable-t1utils					\
 %endif
 %if %{_texmf_with_system_teckit}
-	--disable-teckit					\
+	--with-system-teckit					\
 	--with-teckit-includes=%{_includedir}/teckit		\
 %endif
 %if %{_texmf_with_system_tex4ht}
@@ -1042,6 +1051,10 @@ CONFIGURE_TOP=.. \
 	--enable-xdvik						\
 %endif
 	--enable-static						\
+	--with-system-pixman					\
+	--with-system-harfbuzz					\
+	--with-system-cairo					\
+	--with-system-libpaper					\
 	--with-system-zziplib
 %make
 popd
