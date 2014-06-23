@@ -1,10 +1,6 @@
 %define _binary_payload			w9.gzdio
 %define _source_payload			w9.gzdio
 
-%global __cc				%{_bindir}/gcc
-%global __cpp				%{_bindir}/gcc -E
-%global __cxx				%{_bindir}/g++
-
 %define _texmf_enable_asymptote		0
 %define _texmf_enable_biber		0
 %define _texmf_enable_xindy		0
