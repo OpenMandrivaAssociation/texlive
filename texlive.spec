@@ -21,7 +21,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20140525
-Release:	5
+Release:	6
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
