@@ -981,6 +981,9 @@ perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdistdir}|;'		  \
 %ifarch %arm aarch64
 export CC=gcc
 %endif
+%ifarch x86_64
+export ax_cv_c_float_words_bigendian=no
+%endif
 mkdir texlive
 pushd texlive
 CONFIGURE_TOP=.. \
