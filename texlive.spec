@@ -1,5 +1,6 @@
 %define _binary_payload			w9.gzdio
 %define _source_payload			w9.gzdio
+%define _disable_lto			1
 
 %define _texmf_enable_asymptote		0
 %define _texmf_enable_biber		0
