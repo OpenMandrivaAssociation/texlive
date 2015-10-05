@@ -978,8 +978,9 @@ perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdistdir}|;'		  \
 #-----------------------------------------------------------------------
 %build
 # arm build failed with clang
-%ifarch %arm aarch64
+%ifarch %armx
 export CC=gcc
+export ax_cv_c_float_words_bigendian=yes
 %endif
 %ifarch x86_64
 export ax_cv_c_float_words_bigendian=no
