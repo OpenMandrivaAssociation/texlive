@@ -86,6 +86,7 @@ BuildRequires:	pkgconfig(poppler) >= 0.33.0
 BuildRequires:	xaw-devel
 BuildRequires:	pkgconfig(xaw3d)
 BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xi)
 %if !%{_texmf_with_system_dialog}
 BuildRequires:	ncurses-devel
 %endif
