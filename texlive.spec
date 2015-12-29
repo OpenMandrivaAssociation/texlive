@@ -1,6 +1,7 @@
 %define _binary_payload			w9.gzdio
 %define _source_payload			w9.gzdio
 %define _disable_lto			1
+%define _disable_rebuild_configure	1
 
 %define _texmf_enable_asymptote		0
 %define _texmf_enable_biber		0
@@ -83,6 +84,7 @@ BuildRequires:	icu-devel >= 49
 BuildRequires:	pkgconfig(poppler) >= 0.33.0
 %endif
 BuildRequires:	xaw-devel
+BuildRequires:	pkgconfig(xaw3d)
 BuildRequires:	pkgconfig(x11)
 %if !%{_texmf_with_system_dialog}
 BuildRequires:	ncurses-devel
