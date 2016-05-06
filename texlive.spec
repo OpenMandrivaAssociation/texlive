@@ -22,15 +22,15 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20140525
-Release:	19.1
+Version:	20150521
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
 %if %{historic}
-Source0:	ftp://tug.org/historic/systems/texlive/2014/texlive-%{version}-source.tar.xz
-Source1:	ftp://tug.org/historic/systems/texlive/2014/texlive-%{version}-source.tar.xz.sha256
+Source0:	ftp://tug.org/historic/systems/texlive/2015/texlive-%{version}-source.tar.xz
+Source1:	ftp://tug.org/historic/systems/texlive/2015/texlive-%{version}-source.tar.xz.sha256
 %else
 # svn co svn://tug.org/texlive/branches/branch2012/Build/source texlive-source
 # tar Jcf texlive-20131212-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20131212-source/'  texlive-source/
@@ -49,7 +49,7 @@ Requires:	gv
 Requires:	tkinter
 %endif
 %if %{_texmf_with_system_teckit}
-Requires:	teckit
+Requires:	teckit >= 0:2.5.3-1
 %endif
 
 Requires:	texlive-scheme-medium texlive-scheme-xml
@@ -115,7 +115,7 @@ Patch1:		texlive-asymptote.patch
 Patch2:		texlive-xdvi.patch
 # New definition only misses default location...
 Patch3:		texlive-texmfcnf.patch
-Patch4:		texlive-20140525-clang.patch
+Patch4:		texlive-20150521-clang-3.8.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -163,6 +163,8 @@ This package includes the kpathsea development files.
 %files -n %{kpathsea_devel}
 %{_includedir}/kpathsea
 %{_libdir}/libkpathsea.so
+%{_libdir}/pkgconfig/kpathsea.pc
+%{_libdir}/kpathsea
 
 #-----------------------------------------------------------------------
 %define	ptexenc			%{mklibname ptexenc 1}
@@ -198,6 +200,7 @@ This package includes the ptexenc development files.
 %files -n %{ptexenc_devel}
 %{_includedir}/ptexenc/
 %{_libdir}/libptexenc.so
+%{_libdir}/pkgconfig/ptexenc.pc
 ########################################################################
 # enable_shared
 %endif
@@ -556,6 +559,27 @@ texlive latex.bin package.
 %{_bindir}/latex
 %{_bindir}/lualatex
 %{_bindir}/pdflatex
+%{_bindir}/ltx2crossrefxml
+
+#-----------------------------------------------------------------------
+%package	-n texlive-fixmsxpart.bin
+Summary:	binary files of fixmsxpart
+
+%description	-n texlive-fixmsxpart.bin
+texlive fixmsxpart.bin package.
+
+%files -n texlive-fixmsxpart.bin
+%{_bindir}/fixmsxpart
+
+#-----------------------------------------------------------------------
+%package	-n texlive-msxlint.bin
+Summary:	binary files of msxlint
+
+%description	-n texlive-msxlint.bin
+texlive msxlint.bin package.
+
+%files -n texlive-msxlint.bin
+%{_bindir}/msxlint
 
 #-----------------------------------------------------------------------
 %package	-n texlive-lcdftypetools.bin
@@ -591,6 +615,9 @@ texlive luatex.bin package.
 %{_bindir}/luatex
 %{_bindir}/texlua
 %{_bindir}/texluac
+
+%libpackage texluajit 2
+%libpackage texlua52 5
 
 #-----------------------------------------------------------------------
 %package	-n texlive-m-tx.bin
@@ -640,6 +667,10 @@ texlive metapost.bin package.
 %{_bindir}/dvitomp
 %{_bindir}/mfplain
 %{_bindir}/mpost
+%{_bindir}/pdvitomp
+%{_bindir}/pmpost
+%{_bindir}/updvitomp
+%{_bindir}/upmpost
 
 #-----------------------------------------------------------------------
 %package	-n texlive-mfware.bin
@@ -820,6 +851,22 @@ texlive synctex.bin package.
 %files -n texlive-synctex.bin
 %{_bindir}/synctex
 
+%libpackage synctex 1
+
+%define	synctex_devel		%{mklibname -d synctex}
+%package	-n %{synctex_devel}
+Summary:	SyncTeX development files
+Group:		Development/C
+Requires:	texlive-synctex.bin = %{version}-%{release}
+Requires:	%{mklibname synctex 1} = %{version}-%{release}
+
+%description	-n %{synctex_devel}
+This package includes the SyncTeX development files.
+
+%files -n %{synctex_devel}
+%{_includedir}/synctex
+%{_libdir}/libsynctex.so
+%{_libdir}/pkgconfig/synctex.pc
 #-----------------------------------------------------------------------
 %package	-n texlive-tex.bin
 Summary:	binary files of tex
@@ -964,7 +1011,14 @@ texlive xetex.bin package.
 %endif
 %patch2 -p1 -b .p2~
 %patch3 -p1 -b .p3~
-%patch4 -p1 -b .clang~
+%patch4 -p1 -b .clang38~
+
+cd libs/luajit
+libtoolize --force
+aclocal
+automake -a
+autoconf
+cd ../..
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdistdir}|;'		  \
@@ -1158,7 +1212,8 @@ pushd %{buildroot}%{_bindir}
 
     # use symlinks from noarch packages
     rm -f a2ping afm2afm allec arlatex authorindex autoinst bibexport	\
-	  bundledoc cachepic checkcites cmap2enc contextjit convbkmk	\
+	  bibdoiadd bibzbladd bundledoc cachepic checkcites cjk-gs-integrate \
+	  cmap2enc contextjit convbkmk getmapdl pygmentex \
 	  ctanify ctanupload de-macro depythontex deweb dviasm dvipdft	\
 	  dosepsbin ebong e2pall epspdf epspdftk epstopdf exceltex	\
 	  fig4latex findhyph font2afm fragmaster ht htcontext htlatex	\
@@ -1180,7 +1235,7 @@ pushd %{buildroot}%{_bindir}
 	  texliveonfly texloganalyser texluajit texluajitc texmfstart	\
 	  thumbpdf tlmgr ttf2kotexfont typeoutfileinfo ulqda updmap	\
 	  updmap-setup-kanji updmap-sys urlbst vpe vpl2ovp vpl2vpl	\
-	  wofm2opl wopl2ofm wovf2ovp
+	  wofm2opl wopl2ofm wovf2ovp yplan
 popd
 
 # use texmf data
@@ -1189,8 +1244,15 @@ rm -fr %{buildroot}%{_texmfdir} %{buildroot}%{_texmfdistdir}
 # install manual pages and info files from noarch packages
 rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
 
+# Stuff should really use upstream lua
+rm -rf %{buildroot}%{_includedir}/texlua52 \
+	%{buildroot}%{_includedir}/texluajit \
+	%{buildroot}%{_libdir}/libtexlua*.a \
+	%{buildroot}%{_libdir}/libtexlua*.so \
+	%{buildroot}%{_libdir}/pkgconfig/texlua*.pc
+
 %if %{enable_shared}
-    rm %{buildroot}%{_libdir}/{libkpathsea,libptexenc}.a
+    rm %{buildroot}%{_libdir}/{libkpathsea,libptexenc,libsynctex}.a
 %else
     # do not generate dynamic libraries and do not install static ones
     rm -fr %{buildroot}%{_libdir}
