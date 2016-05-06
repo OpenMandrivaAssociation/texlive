@@ -80,3 +80,71 @@
    print_ln(copyright); /* include the copyright notice */
  @z
  
+--- texlive-20150521-source/texk/ps2pk/objects.h.omv~	2016-05-06 21:41:05.533902923 +0200
++++ texlive-20150521-source/texk/ps2pk/objects.h	2016-05-06 21:41:22.680828874 +0200
+@@ -231,7 +231,7 @@ struct xobject {
+ /*SHARED*/
+ /* NDW: personally, I want to see status and error messages! */
+ #define IfTrace0(condition,model)                                 \
+-        {if (condition) printf(model);}
++        {if (condition) printf("%s",model);}
+ #define IfTrace1(condition,model,arg0)                            \
+         {if (condition) printf(model,arg0);}
+ #define IfTrace2(condition,model,arg0,arg1)                       \
+--- texlive-20150521-source/texk/web2c/omegafonts/error_routines.c.omv~	2016-05-06 21:34:20.105561810 +0200
++++ texlive-20150521-source/texk/web2c/omegafonts/error_routines.c	2016-05-06 21:43:44.102223681 +0200
+@@ -61,9 +61,7 @@ lex_error_s_1(const_string fmt, const_st
+ void
+ yyerror(const_string fmt)
+ {
+-    fprintf(stderr, "line %d (parsing): ", line_number);
+-    fprintf(stderr, fmt);
+-    fprintf(stderr, "\n");
++    fprintf(stderr, "line %d (parsing): %s\n", line_number, fmt);
+     num_errors++;
+ }
+ 
+@@ -71,9 +69,7 @@ yyerror(const_string fmt)
+ void
+ warning_0(const_string fmt)
+ {
+-    fprintf(stderr, "line %d (warning): ", line_number);
+-    fprintf(stderr, fmt);
+-    fprintf(stderr, "\n");
++    fprintf(stderr, "line %d (warning): %s\n", line_number, fmt);
+ }
+ 
+ void
+@@ -119,9 +115,7 @@ warning_s_2(const_string fmt, const_stri
+ void
+ fatal_error_0(const_string fmt)
+ {
+-    fprintf(stderr, "line %d (fatal): ", line_number);
+-    fprintf(stderr, fmt);
+-    fprintf(stderr, "\n");
++    fprintf(stderr, "line %d (fatal): %s\n", line_number, fmt);
+     exit(1);
+ }
+ 
+@@ -155,9 +149,7 @@ fatal_error_s(const_string fmt, const_st
+ void
+ internal_error_0(const_string fmt)
+ {
+-    fprintf(stderr, "line %d (internal): ", line_number);
+-    fprintf(stderr, fmt);
+-    fprintf(stderr, "\n");
++    fprintf(stderr, "line %d (internal): %s\n", line_number, fmt);
+     exit(2);
+ }
+ 
+--- texlive-20150521-source/utils/devnag/src/devnag.c.omv~	2016-05-06 21:00:44.817976048 +0200
++++ texlive-20150521-source/utils/devnag/src/devnag.c	2016-05-06 21:00:52.054946597 +0200
+@@ -2400,7 +2400,7 @@ void put_macro(short macro) {
+ void err_ill(const char *str) {
+    fprintf(stderr, "Error: illegal character(s) \"%s\" detected at line %d:\n",
+ 	  str, linenumber);
+-   fprintf(stderr, inbuf);
++   fprintf(stderr, "%s", inbuf);
+    exit(1);
+ }
+ 
