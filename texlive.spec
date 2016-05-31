@@ -615,6 +615,7 @@ texlive luatex.bin package.
 %{_bindir}/luatex
 %{_bindir}/texlua
 %{_bindir}/texluac
+%{_bindir}/luajittex
 
 %libpackage texluajit 2
 %libpackage texlua52 5
