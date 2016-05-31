@@ -23,7 +23,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20150521
-Release:	1
+Release:	2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -1218,7 +1218,7 @@ pushd %{buildroot}%{_bindir}
 	  jamo-normalize komkindex latex2man latex-git-log latexdiff	\
 	  latexdiff-vc latexfileversion	latexindent latexmk latexrevise \
 	  lily-glyph-commands lily-image-commands lily-rebuild-pdfs	\
-	  listbib listings-ext.sh ltximg luajittex m-tx makeglossaries	\
+	  listbib listings-ext.sh ltximg m-tx makeglossaries	\
 	  match_parens mathspic	mf2pt1 mk4ht mkgrkindex mkjobtexmf	\
 	  mkluatexfontdb mkpic mkt1font mptopdf mtxrunjit musixflx 	\
 	  musixtex ot2kpx pdf180 pdf270 pdf90 pdfannotextractor pdfatfi	\
