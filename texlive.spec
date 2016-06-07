@@ -22,24 +22,25 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20150521
-Release:	2
+Version:	20160523
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
 %if %{historic}
-Source0:	ftp://tug.org/historic/systems/texlive/2015/texlive-%{version}-source.tar.xz
-Source1:	ftp://tug.org/historic/systems/texlive/2015/texlive-%{version}-source.tar.xz.sha256
+Source0:	ftp://tug.org/historic/systems/texlive/%(echo %{version}|cut -b1-4)/texlive-%{version}-source.tar.xz
+Source1:	ftp://tug.org/historic/systems/texlive/%(echo %{version}|cut -b1-4)/texlive-%{version}-source.tar.xz.sha512
 %else
 # svn co svn://tug.org/texlive/branches/branch2012/Build/source texlive-source
 # tar Jcf texlive-20131212-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20131212-source/'  texlive-source/
 Source0:	texlive-20131212-source.tar.xz
-# sha256sum texlive-20131212-source.tar.xz > texlive-20131212-source.tar.xz.sha256
-Source1:	texlive-20131212-source.tar.xz.sha256
+# sha512sum texlive-20131212-source.tar.xz > texlive-20131212-source.tar.xz.sha512
+Source1:	texlive-20131212-source.tar.xz.sha512
 %endif
 Source100:	%name.rpmlintrc
 Obsoletes:	tetex-usrlocal < 3.0-1
+Obsoletes:	texlive-fixmsxpart.bin < %{EVRD}
 
 #-----------------------------------------------------------------------
 Provides:	task-texlive = %{EVRD}
@@ -562,16 +563,6 @@ texlive latex.bin package.
 %{_bindir}/ltx2crossrefxml
 
 #-----------------------------------------------------------------------
-%package	-n texlive-fixmsxpart.bin
-Summary:	binary files of fixmsxpart
-
-%description	-n texlive-fixmsxpart.bin
-texlive fixmsxpart.bin package.
-
-%files -n texlive-fixmsxpart.bin
-%{_bindir}/fixmsxpart
-
-#-----------------------------------------------------------------------
 %package	-n texlive-msxlint.bin
 Summary:	binary files of msxlint
 
@@ -616,6 +607,10 @@ texlive luatex.bin package.
 %{_bindir}/texlua
 %{_bindir}/texluac
 %{_bindir}/luajittex
+%{_bindir}/mflua
+%{_bindir}/mflua-nowin
+%{_bindir}/mfluajit
+%{_bindir}/mfluajit-nowin
 
 %libpackage texluajit 2
 %libpackage texlua52 5
@@ -942,6 +937,7 @@ texlive uptex.bin package.
 %{_bindir}/upbibtex
 %{_bindir}/updvitype
 %{_bindir}/uplatex
+%{_bindir}/upmendex
 %{_bindir}/uppltotf
 %{_bindir}/uptex
 %{_bindir}/uptftopl
@@ -1004,6 +1000,26 @@ texlive xetex.bin package.
 %{_bindir}/xetex
 
 #-----------------------------------------------------------------------
+%package -n texlive-autosp.bin
+Summary: autosp binary, part of TeX Live
+
+%description -n texlive-autosp.bin
+autosp binary, part of TeX Live
+
+%files -n texlive-autosp.bin
+%{_bindir}/autosp
+
+#-----------------------------------------------------------------------
+%package -n texlive-gregorio.bin
+Summary: gregorio - tool for working with Gregorian Chants in TeX
+
+%description -n texlive-gregorio.bin
+gregorio - tool for working with Gregorian Chants in TeX
+
+%files -n texlive-gregorio.bin
+%{_bindir}/gregorio
+
+#-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}-%{version}-source
 %patch0 -p1 -b .p0~
@@ -1012,7 +1028,7 @@ texlive xetex.bin package.
 %endif
 %patch2 -p1 -b .p2~
 %patch3 -p1 -b .p3~
-%patch4 -p1 -b .clang38~
+%patch4 -p1 -b .p4~
 
 cd libs/luajit
 libtoolize --force
@@ -1210,8 +1226,8 @@ pushd %{buildroot}%{_bindir}
 
     # use symlinks from noarch packages
     rm -f a2ping afm2afm allec arlatex authorindex autoinst bibexport	\
-	  bibdoiadd bibzbladd bundledoc cachepic checkcites cjk-gs-integrate \
-	  cmap2enc contextjit convbkmk getmapdl pygmentex \
+	  bibdoiadd bibzbladd bundledoc cachepic checkcites checklistings \
+	  cjk-gs-integrate cmap2enc contextjit convbkmk diadia getmapdl pygmentex \
 	  ctanify ctanupload de-macro depythontex deweb dviasm dvipdft	\
 	  dosepsbin ebong e2pall epspdf epspdftk epstopdf exceltex	\
 	  fig4latex findhyph font2afm fragmaster ht htcontext htlatex	\
@@ -1219,16 +1235,16 @@ pushd %{buildroot}%{_bindir}
 	  jamo-normalize komkindex latex2man latex-git-log latexdiff	\
 	  latexdiff-vc latexfileversion	latexindent latexmk latexrevise \
 	  lily-glyph-commands lily-image-commands lily-rebuild-pdfs	\
-	  listbib listings-ext.sh ltximg m-tx makeglossaries	\
-	  match_parens mathspic	mf2pt1 mk4ht mkgrkindex mkjobtexmf	\
+	  listbib listings-ext.sh ltximg m-tx make4ht makedtx makeglossaries \
+	  makeglossaries-lite match_parens mathspic mf2pt1 mk4ht mkgrkindex mkjobtexmf \
 	  mkluatexfontdb mkpic mkt1font mptopdf mtxrunjit musixflx 	\
 	  musixtex ot2kpx pdf180 pdf270 pdf90 pdfannotextractor pdfatfi	\
-	  pdfbook pdfcrop pdfflip pdfjam pdfjam-pocketmod		\
+	  pdfbook pdfbook2 pdfcrop pdfflip pdfjam pdfjam-pocketmod	\
 	  pdfjam-slides3up pdfjam-slides6up pdfjoin pdfnup pdfpun 	\
-	  pdfthumb pedigree perltex pfm2kpx pkfix pkfix-helper		\
-	  pmxchords ppower4 ps2eps ps4pdf pst2pdf pmx2pdf purifyeps	\
-	  pythontex repstopdf rpdfcrop rubikrotation rungs showglyphs	\
-	  simpdftex splitindex sty2dtx svn-multi texcount texdef	\
+	  pdfthumb pdfxup pedigree perltex pfm2kpx pkfix pkfix-helper	\
+	  pmxchords pn2pdf ppower4 ps2eps ps4pdf pst2pdf pmx2pdf purifyeps \
+	  pythontex repstopdf rpdfcrop rubikrotation rungs srcredact showglyphs \
+	  simpdftex splitindex sty2dtx svn-multi tex4ebook texcount texdef	\
 	  texdiff texdirflatten texdoc texdoctk texfot texlinks		\
 	  texliveonfly texloganalyser texluajit texluajitc texmfstart	\
 	  thumbpdf tlmgr ttf2kotexfont typeoutfileinfo ulqda updmap	\
