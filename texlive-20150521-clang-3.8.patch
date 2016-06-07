@@ -1,0 +1,10 @@
+--- texlive-20160523-source/libs/luajit/Makefile.am.p4~	2016-06-06 23:49:42.116178035 +0200
++++ texlive-20160523-source/libs/luajit/Makefile.am	2016-06-06 23:55:12.120026194 +0200
+@@ -25,6 +25,7 @@ SUBDIRS = . native include
+ lib_LTLIBRARIES = libtexluajit.la
+ 
+ libtexluajit_la_LDFLAGS = -bindir @bindir@ -no-undefined -version-info $(LUAJIT_LT_VERSINFO) $(LIBLUAJIT_LDEXTRA)
++libtexluajit_la_LIBADD = -lgcc_s
+ 
+ dist_libtexluajit_la_SOURCES = \
+ 	lbitlib.c
