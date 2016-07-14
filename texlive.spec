@@ -23,7 +23,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20160523
-Release:	2
+Release:	3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -53,8 +53,10 @@ Requires:	tkinter
 Requires:	teckit >= 0:2.5.3-1
 %endif
 
-Requires:	texlive-scheme-medium texlive-scheme-xml
+Requires:	texlive-scheme-medium
+Requires:	texlive-scheme-xml
 Requires:	texlive-collection-latexextra
+Requires:	texlive-latex.bin
 Requires(post):	texlive-tlpkg
 BuildRequires:	texlive-tlpkg
 
@@ -126,6 +128,8 @@ all the major TeX-related programs, macro packages, and fonts that are
 free software, including support for many languages around the world.
 
 %files
+%dir %{_texmfvardir}
+%dir %{_texmfconfdir}
 
 %posttrans
     %{_sbindir}/texlive.post -
