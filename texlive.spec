@@ -22,8 +22,8 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20160523
-Release:	5
+Version:	20170524
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -169,7 +169,6 @@ This package includes the kpathsea development files.
 %{_includedir}/kpathsea
 %{_libdir}/libkpathsea.so
 %{_libdir}/pkgconfig/kpathsea.pc
-%{_libdir}/kpathsea
 
 #-----------------------------------------------------------------------
 %define	ptexenc			%{mklibname ptexenc 1}
@@ -1231,21 +1230,25 @@ pushd %{buildroot}%{_bindir}
 	  texconfig-sys texexec tpic2pdftex
 
     # use symlinks from noarch packages
-    rm -f a2ping afm2afm allec arlatex authorindex autoinst bibexport	\
-	  bibdoiadd bibzbladd bundledoc cachepic checkcites checklistings \
-	  cjk-gs-integrate cmap2enc contextjit convbkmk diadia getmapdl pygmentex \
+    rm -f a2ping afm2afm allec arlatex authorindex autoinst bbl2bib	\
+	  bibexport bibdoiadd bibmradd bibzbladd bundledoc cachepic	\
+	  checkcites checklistings cjk-gs-integrate cmap2enc contextjit \
+	  convbkmk diadia getmapdl pygmentex \
 	  ctanify ctanupload de-macro depythontex deweb dviasm dvipdft	\
 	  dosepsbin ebong e2pall epspdf epspdftk epstopdf exceltex	\
-	  fig4latex findhyph font2afm fragmaster ht htcontext htlatex	\
-	  htmex httex httexi htxelatex htxetex installfont-tl 		\
-	  jamo-normalize komkindex latex2man latex-git-log latexdiff	\
-	  latexdiff-vc latexfileversion	latexindent latexmk latexrevise \
+	  fig4latex findhyph font2afm fragmaster fmtutil-user		\
+	  ht htcontext htlatex htmex httex httexi htxelatex htxetex	\
+	  installfont-tl jamo-normalize					\
+	  kanji-config-updmap-user komkindex latex2man latex-git-log	\
+	  latexdiff latexdiff-vc latexfileversion latexindent latexmk	\
+	  latex-papersize latexrevise latex2nemeth			\
 	  lily-glyph-commands lily-image-commands lily-rebuild-pdfs	\
-	  listbib listings-ext.sh ltximg m-tx make4ht makedtx makeglossaries \
+	  listbib listings-ext.sh ltximg lwarpmk			\
+	  m-tx make4ht makedtx makeglossaries				\
 	  makeglossaries-lite match_parens mathspic mf2pt1 mk4ht mkgrkindex mkjobtexmf \
 	  mkluatexfontdb mkpic mkt1font mptopdf mtxrunjit musixflx 	\
 	  musixtex ot2kpx pdf180 pdf270 pdf90 pdfannotextractor pdfatfi	\
-	  pdfbook pdfbook2 pdfcrop pdfflip pdfjam pdfjam-pocketmod	\
+	  pdfbook pdfbook2 pdfcrop pdfflip pdflatexpicscale pdfjam pdfjam-pocketmod	\
 	  pdfjam-slides3up pdfjam-slides6up pdfjoin pdfnup pdfpun 	\
 	  pdfthumb pdfxup pedigree perltex pfm2kpx pkfix pkfix-helper	\
 	  pmxchords pn2pdf ppower4 ps2eps ps4pdf pst2pdf pmx2pdf purifyeps \
@@ -1253,9 +1256,11 @@ pushd %{buildroot}%{_bindir}
 	  simpdftex splitindex sty2dtx svn-multi tex4ebook texcount texdef	\
 	  texdiff texdirflatten texdoc texdoctk texfot texlinks		\
 	  texliveonfly texloganalyser texluajit texluajitc texmfstart	\
+	  texosquery texosquery-jre5 texosquery-jre8			\
 	  thumbpdf tlmgr ttf2kotexfont typeoutfileinfo ulqda updmap	\
+	  updmap-user							\
 	  updmap-setup-kanji updmap-sys urlbst vpe vpl2ovp vpl2vpl	\
-	  wofm2opl wopl2ofm wovf2ovp yplan
+	  wofm2opl wopl2ofm wovf2ovp xhlatex yplan
 popd
 
 # use texmf data
