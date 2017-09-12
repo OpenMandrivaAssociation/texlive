@@ -10,7 +10,7 @@
 %define _texmf_with_system_dialog	1
 %define _texmf_with_system_icu		1
 %define _texmf_with_system_lcdf		0
-%define _texmf_with_system_poppler	1
+%define _texmf_with_system_poppler	0
 %define _texmf_with_system_psutils	1
 %define _texmf_with_system_t1lib	1
 %define _texmf_with_system_tex4ht	0
@@ -23,7 +23,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20170524
-Release:	3
+Release:	4
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
