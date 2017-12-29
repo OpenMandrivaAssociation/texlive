@@ -10,7 +10,7 @@
 %define _texmf_with_system_dialog	1
 %define _texmf_with_system_icu		1
 %define _texmf_with_system_lcdf		0
-%define _texmf_with_system_poppler	0
+%define _texmf_with_system_poppler	1
 %define _texmf_with_system_psutils	1
 %define _texmf_with_system_t1lib	1
 %define _texmf_with_system_tex4ht	0
@@ -119,6 +119,10 @@ Patch2:		texlive-xdvi.patch
 # New definition only misses default location...
 Patch3:		texlive-texmfcnf.patch
 Patch4:		texlive-20150521-clang-3.8.patch
+# Patches from LFS
+Patch10:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-gcc7-1.patch
+Patch11:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-upstream_fixes-2.patch
+Patch12:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-poppler059-1.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -1032,6 +1036,9 @@ gregorio - tool for working with Gregorian Chants in TeX
 %patch2 -p1 -b .p2~
 %patch3 -p1 -b .p3~
 %patch4 -p1 -b .p4~
+%patch10 -p1 -b .p10~
+%patch11 -p1 -b .p11~
+%patch12 -p1 -b .p12~
 
 cd libs/luajit
 libtoolize --force
