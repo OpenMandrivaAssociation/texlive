@@ -23,7 +23,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20170524
-Release:	5
+Release:	6
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -123,7 +123,8 @@ Patch4:		texlive-20150521-clang-3.8.patch
 Patch10:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-gcc7-1.patch
 Patch11:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-upstream_fixes-2.patch
 Patch12:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-poppler059-1.patch
-
+# from upstream
+Patch13:	texlive-20170524-poppler0.64.patch
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -1039,7 +1040,7 @@ gregorio - tool for working with Gregorian Chants in TeX
 %patch10 -p1 -b .p10~
 %patch11 -p1 -b .p11~
 %patch12 -p1 -b .p12~
-
+%patch13 -p1 -b .p13~
 cd libs/luajit
 libtoolize --force
 aclocal
