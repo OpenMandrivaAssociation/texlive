@@ -22,8 +22,8 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20170524
-Release:	6
+Version:	20180414
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -113,15 +113,16 @@ BuildRequires:	pkgconfig(cairo)
 BuildRequires:	libpaper-devel
 
 #-----------------------------------------------------------------------
-Patch0:		texlive-format.patch
+#Patch0:		texlive-format.patch
 Patch1:		texlive-asymptote.patch
 Patch2:		texlive-xdvi.patch
 # New definition only misses default location...
 Patch3:		texlive-texmfcnf.patch
 Patch4:		texlive-20150521-clang-3.8.patch
+Patch5:		texlive-20180414-compile.patch
 # Patches from LFS
-Patch10:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-gcc7-1.patch
-Patch11:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-upstream_fixes-2.patch
+#Patch10:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-gcc7-1.patch
+#Patch11:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-upstream_fixes-2.patch
 Patch12:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-poppler059-1.patch
 # from upstream
 Patch13:	texlive-20170524-poppler0.64.patch
@@ -236,6 +237,17 @@ texlive aleph.bin package.
 %files -n texlive-aleph.bin
 %{_bindir}/aleph
 %{_bindir}/lamed
+
+#-----------------------------------------------------------------------
+%package -n texlive-axohelp.bin
+Summary:	binary files of axohelp
+
+%description	-n texlive-axohelp.bin
+texlive axohelp.bin package.
+
+%files -n texlive-axohelp.bin
+%{_bindir}/axohelp
+
 
 #-----------------------------------------------------------------------
 %if %{_texmf_enable_biber}
@@ -610,6 +622,8 @@ Conflicts:	texlive < 20110705-7
 texlive luatex.bin package.
 
 %files -n texlive-luatex.bin
+%{_bindir}/luatex53
+%{_bindir}/texlua53
 %{_bindir}/dviluatex
 %{_bindir}/luatex
 %{_bindir}/texlua
@@ -622,6 +636,7 @@ texlive luatex.bin package.
 
 %libpackage texluajit 2
 %libpackage texlua52 5
+%libpackage texlua53 5
 
 #-----------------------------------------------------------------------
 %package	-n texlive-m-tx.bin
@@ -986,6 +1001,7 @@ texlive xdvi.bin package.
 %files -n texlive-xdvi.bin
 %{_bindir}/xdvi
 %{_bindir}/xdvi-xaw
+%{_datadir}/applications/xdvi.desktop
 %endif
 
 #-----------------------------------------------------------------------
@@ -1028,17 +1044,28 @@ gregorio - tool for working with Gregorian Chants in TeX
 %{_bindir}/gregorio
 
 #-----------------------------------------------------------------------
+%package -n texlive-tex2aspc.bin
+Summary:	binary files of tex2aspc
+
+%description	-n texlive-tex2aspc.bin
+texlive tex2aspc.bin package.
+
+%files -n texlive-tex2aspc.bin
+%{_bindir}/tex2aspc
+
+#-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}-%{version}-source
-%patch0 -p1 -b .p0~
+#patch0 -p1 -b .p0~
 %if %{_texmf_enable_asymptote}
 %patch1 -p1 -b .p1~
 %endif
 %patch2 -p1 -b .p2~
 %patch3 -p1 -b .p3~
 %patch4 -p1 -b .p4~
-%patch10 -p1 -b .p10~
-%patch11 -p1 -b .p11~
+%patch5 -p1 -b .compile~
+#patch10 -p1 -b .p10~
+#patch11 -p1 -b .p11~
 %patch12 -p1 -b .p12~
 %patch13 -p1 -b .p13~
 cd libs/luajit
@@ -1064,17 +1091,35 @@ perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdistdir}|;'		  \
 #-----------------------------------------------------------------------
 %build
 # arm build failed with clang
-export CC=gcc
-export CXX=g++
+#export CC=gcc
+#export CXX=g++
 %ifarch %armx
-export CC=gcc
-export ax_cv_c_float_words_bigendian=yes
+#export CC=gcc
+#export ax_cv_c_float_words_bigendian=yes
 %endif
 %ifarch x86_64
-export ax_cv_c_float_words_bigendian=no
+#export ax_cv_c_float_words_bigendian=no
 %endif
 mkdir texlive
 pushd texlive
+
+# As of 2.9.1, freetype-config doesn't exist anymore -- but texlive
+# uses it in so many places that patching its use away would be painful.
+# Let's provide it instead...
+cat >freetype-config <<'EOF'
+#!/bin/sh
+for i in "$@"; do
+	if [ "$i" = "--ftversion" ]; then
+		ARGS="$ARGS --modversion"
+	else
+		ARGS="$ARGS $i"
+	fi
+done
+exec pkg-config $ARGS freetype2
+EOF
+chmod +x freetype-config
+export PATH=$PATH:`pwd`
+
 CONFIGURE_TOP=.. \
 %configure							\
 	--with-banner-add="/OpenMandriva"			\
@@ -1228,14 +1273,17 @@ pushd %{buildroot}%{_bindir}
 %endif
 
     # use scripts from noarch packages
-    rm -f a5toa4 adhocfilelist allcm allneeded arara chkweb context	\
-	  ctxtools dtxgen dvi2fax dvired fmtutil fmtutil-sys fontinst	\
+    rm -f a5toa4 adhocfilelist allcm allneeded arara bib2gls biburl2doi	\
+	  chkweb context convertgls2bib ctan-o-mat			\
+	  ctxtools dtxgen dvi2fax dviinfox dvired fmtutil fmtutil-sys	\
+	  fontinst jfmutil						\
 	  kanji-config-updmap kanji-config-updmap-sys			\
-	  kanji-fontmap-creator kpsewhere latexpand ltxfileinfo		\
+	  kanji-fontmap-creator kpsewhere				\
+	  l3build latexdef  latexpand ltxfileinfo			\
 	  lua2dox_filter luaotfload-tool luatools mtxrun		\
 	  multibibliography pfarrei ps2frag pslatex pstopdf ptex2pdf	\
 	  rlxtools rubibtex rumakeindex texconfig texconfig-dialog	\
-	  texconfig-sys texexec tpic2pdftex
+	  texconfig-sys texexec tlcockpit tlshell tpic2pdftex wordcount
 
     # use symlinks from noarch packages
     rm -f a2ping afm2afm allec arlatex authorindex autoinst bbl2bib	\
@@ -1278,7 +1326,8 @@ rm -fr %{buildroot}%{_texmfdir} %{buildroot}%{_texmfdistdir}
 rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
 
 # Stuff should really use upstream lua
-rm -rf %{buildroot}%{_includedir}/texlua52 \
+rm -rf %{buildroot}%{_includedir}/texlua53 \
+	%{buildroot}%{_includedir}/texlua52 \
 	%{buildroot}%{_includedir}/texluajit \
 	%{buildroot}%{_libdir}/libtexlua*.a \
 	%{buildroot}%{_libdir}/libtexlua*.so \
