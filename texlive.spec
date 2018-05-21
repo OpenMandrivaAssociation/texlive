@@ -120,6 +120,7 @@ Patch2:		texlive-xdvi.patch
 Patch3:		texlive-texmfcnf.patch
 Patch4:		texlive-20150521-clang-3.8.patch
 Patch5:		texlive-20180414-compile.patch
+Patch6:		texlive-2018-libdl-linkage.patch
 # Patches from LFS
 #Patch10:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-gcc7-1.patch
 #Patch11:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-upstream_fixes-2.patch
@@ -1064,6 +1065,7 @@ texlive tex2aspc.bin package.
 %patch3 -p1 -b .p3~
 %patch4 -p1 -b .p4~
 %patch5 -p1 -b .compile~
+%patch6 -p1 -b .p6~
 #patch10 -p1 -b .p10~
 #patch11 -p1 -b .p11~
 %patch12 -p1 -b .p12~

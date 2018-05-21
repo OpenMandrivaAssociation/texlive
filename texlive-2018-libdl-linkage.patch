@@ -1,0 +1,13 @@
+diff -up texlive-20180414-source/texk/dvisvgm/dvisvgm-src/src/Makefile.am.omv~ texlive-20180414-source/texk/dvisvgm/dvisvgm-src/src/Makefile.am
+--- texlive-20180414-source/texk/dvisvgm/dvisvgm-src/src/Makefile.am.omv~	2018-05-21 17:50:00.397949751 +0200
++++ texlive-20180414-source/texk/dvisvgm/dvisvgm-src/src/Makefile.am	2018-05-21 17:50:13.110660135 +0200
+@@ -28,7 +28,7 @@ dvisvgm_LDADD += \
+ 	$(FREETYPE2_LIBS) \
+ 	$(FONTFORGE_LIBS) \
+ 	$(ZLIB_LIBS) \
+-	$(LIBGS_LIBS)
++	$(LIBGS_LIBS) -ldl
+ 
+ dvisvgm_DEPENDENCIES = $(noinst_LIBRARIES)
+ dvisvgm_DEPENDENCIES += $(KPATHSEA_DEPEND) $(ZLIB_DEPEND) $(FREETYPE2_DEPEND)
+diff -up texlive-20180414-source/texlive/texk/dvisvgm/dvisvgm-src/src/Makefile.omv~ texlive-20180414-source/texlive/texk/dvisvgm/dvisvgm-src/src/Makefile
