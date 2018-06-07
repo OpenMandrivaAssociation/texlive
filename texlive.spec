@@ -86,6 +86,8 @@ BuildRequires:	icu-devel >= 49
 %if %{_texmf_with_system_poppler}
 BuildRequires:	pkgconfig(poppler) >= 0.53.0
 %endif
+BuildRequires:	gmp-devel
+BuildRequires:	pkgconfig(mpfr)
 BuildRequires:	xaw-devel
 BuildRequires:	pkgconfig(xaw3d)
 BuildRequires:	pkgconfig(x11)
@@ -109,6 +111,7 @@ BuildRequires:	texinfo
 BuildRequires:	zziplib-devel
 BuildRequires:	pkgconfig(pixman-1)
 BuildRequires:	pkgconfig(harfbuzz)
+BuildRequires:	pkgconfig(graphite2)
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	libpaper-devel
 
