@@ -1156,6 +1156,8 @@ CONFIGURE_TOP=.. \
 	--enable-psutils					\
 %endif
 	--with-system-gd					\
+	--with-system-mpfr					\
+	--with-system-gmp					\
 %if %{_texmf_with_system_lcdf}
 	--disable-lcdf-typetools				\
 %endif
@@ -1186,7 +1188,7 @@ CONFIGURE_TOP=.. \
 %else
 	--enable-xdvik						\
 %endif
-	--enable-static						\
+	--disable-static					\
 	--with-system-pixman					\
 	--with-system-harfbuzz					\
 	--with-system-cairo					\
@@ -1335,9 +1337,7 @@ rm -rf %{buildroot}%{_includedir}/texlua53 \
 	%{buildroot}%{_libdir}/libtexlua*.so \
 	%{buildroot}%{_libdir}/pkgconfig/texlua*.pc
 
-%if %{enable_shared}
-    rm %{buildroot}%{_libdir}/{libkpathsea,libptexenc,libsynctex}.a
-%else
+%if ! %{enable_shared}
     # do not generate dynamic libraries and do not install static ones
     rm -fr %{buildroot}%{_libdir}
     rm -fr %{buildroot}%{_includedir}
