@@ -86,6 +86,7 @@ BuildRequires:	icu-devel >= 49
 %if %{_texmf_with_system_poppler}
 BuildRequires:	pkgconfig(poppler) >= 0.53.0
 %endif
+BuildRequires:	glibc-static-devel
 BuildRequires:	gmp-devel
 BuildRequires:	pkgconfig(mpfr)
 BuildRequires:	xaw-devel
