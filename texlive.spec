@@ -132,6 +132,7 @@ Patch6:		texlive-2018-libdl-linkage.patch
 Patch12:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-poppler059-1.patch
 # from upstream
 Patch13:	texlive-20170524-poppler0.64.patch
+Patch14:	texlive-20180414-poppler-69.patch
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -1075,6 +1076,7 @@ texlive tex2aspc.bin package.
 #patch11 -p1 -b .p11~
 %patch12 -p1 -b .p12~
 %patch13 -p1 -b .p13~
+%patch14 -p1 -b .p14~
 cd libs/luajit
 libtoolize --force
 aclocal

@@ -1,0 +1,81 @@
+diff -up texlive-20180414-source/texk/web2c/pdftexdir/pdftoepdf.cc.p14~ texlive-20180414-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20180414-source/texk/web2c/pdftexdir/pdftoepdf.cc.p14~	2018-10-11 13:18:03.612473472 +0200
++++ texlive-20180414-source/texk/web2c/pdftexdir/pdftoepdf.cc	2018-10-11 13:26:39.688247937 +0200
+@@ -269,7 +269,7 @@ static int getNewObjectNumber(Ref ref)
+ 
+ static void copyObject(Object *);
+ 
+-static void copyName(char *s)
++static void copyName(const char *s)
+ {
+     pdf_puts("/");
+     for (; *s != 0; s++) {
+@@ -304,7 +304,7 @@ static void copyDict(Object * obj)
+ static void copyFontDict(Object * obj, InObj * r)
+ {
+     int i, l;
+-    char *key;
++    const char *key;
+     if (!obj->isDict())
+         pdftex_fail("PDF inclusion: invalid dict type <%s>",
+                     obj->getTypeName());
+@@ -357,7 +357,7 @@ static void copyProcSet(Object * obj)
+ 
+ #define REPLACE_TYPE1C true
+ 
+-static void copyFont(char *tag, Object * fontRef)
++static void copyFont(const char *tag, Object * fontRef)
+ {
+     Object fontdict, subtype, basefont, fontdescRef, fontdesc, charset,
+         fontfile, ffsubtype, stemV;
+@@ -452,7 +452,7 @@ static void copyFontResources(Object * o
+     pdf_puts(">>\n");
+ }
+ 
+-static void copyOtherResources(Object * obj, char *key)
++static void copyOtherResources(Object * obj, const char *key)
+ {
+     // copies all other resources (write_epdf handles Fonts and ProcSets),
+ 
+@@ -820,7 +820,7 @@ void write_epdf(void)
+     Object groupDict;
+     bool writeSepGroup = false;
+     Object info;
+-    char *key;
++    const char *key;
+     char s[256];
+     int i, l;
+     int rotate;
+diff -up texlive-20180414-source/texk/web2c/luatexdir/image/pdftoepdf.w.omv~ texlive-20180414-source/texk/web2c/luatexdir/image/pdftoepdf.w
+--- texlive-20180414-source/texk/web2c/luatexdir/image/pdftoepdf.w.omv~	2018-10-11 13:46:52.812623978 +0200
++++ texlive-20180414-source/texk/web2c/luatexdir/image/pdftoepdf.w	2018-10-11 13:47:17.673739377 +0200
+@@ -393,7 +393,7 @@ static void copyString(PDF pdf, GooStrin
+     pdf->cave = true;
+ }
+ 
+-static void copyName(PDF pdf, char *s)
++static void copyName(PDF pdf, const char *s)
+ {
+     pdf_out(pdf, '/');
+     for (; *s != 0; s++) {
+diff -up texlive-20180414-source/texk/web2c/luatexdir/lua/lepdflib.cc.omv~ texlive-20180414-source/texk/web2c/luatexdir/lua/lepdflib.cc
+--- texlive-20180414-source/texk/web2c/luatexdir/lua/lepdflib.cc.omv~	2018-10-11 14:07:21.258968834 +0200
++++ texlive-20180414-source/texk/web2c/luatexdir/lua/lepdflib.cc	2018-10-11 14:07:40.576066305 +0200
+@@ -1125,7 +1125,7 @@ m_poppler_get_INT(Dict, getLength);
+ 
+ static int m_Dict_add(lua_State * L)
+ {
+-    char *s;
++    const char *s;
+     udstruct *uin, *uobj;
+     uin = (udstruct *) luaL_checkudata(L, 1, M_Dict);
+     if (uin->pd != NULL && uin->pd->pc != uin->pc)
+@@ -2051,7 +2051,7 @@ static int m_Object_dictAdd(lua_State *
+         pdfdoc_changed_error(L);
+     if (!((Object *) uin->d)->isDict())
+         luaL_error(L, "Object is not a Dict");
+-    ((Object *) uin->d)->dictAdd(copyString(s), std::move(*((Object *) uobj->d)));
++    ((Object *) uin->d)->dictAdd((const char*)copyString(s), std::move(*((Object *) uobj->d)));
+     return 0;
+ }
+ 
