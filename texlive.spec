@@ -131,8 +131,9 @@ Patch6:		texlive-2018-libdl-linkage.patch
 #Patch11:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-upstream_fixes-2.patch
 Patch12:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-poppler059-1.patch
 # from upstream
-Patch13:	texlive-20170524-poppler0.64.patch
-Patch14:	texlive-20180414-poppler-69.patch
+Patch17:	poppler-compat-fixes-up-to-0.70.patch
+Patch18:	texlive-poppler-0.71.patch
+Patch19:	luatex-poppler-0.70-const-fixes.patch
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -1072,11 +1073,10 @@ texlive tex2aspc.bin package.
 %patch4 -p1 -b .p4~
 %patch5 -p1 -b .compile~
 %patch6 -p1 -b .p6~
-#patch10 -p1 -b .p10~
-#patch11 -p1 -b .p11~
 %patch12 -p1 -b .p12~
-%patch13 -p1 -b .p13~
-%patch14 -p1 -b .p14~
+%patch17 -p1 -b .p17
+%patch18 -p1 -b .p18
+%patch19 -p1 -b .p18
 cd libs/luajit
 libtoolize --force
 aclocal
@@ -1096,6 +1096,15 @@ perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdistdir}|;'		  \
 	 -e 's|^(TEXMFCONFIG\s+= ).*|$1\$HOME/.texlive2013/texmf-config|;'\
 	 -e 's|^(OSFONTDIR\s+= ).*|$1%{_datadir}/fonts|;'		  \
 	texk/kpathsea/texmf.cnf
+
+# t4ht expects to be un /usr/share/texmf/bin/t4ht (FS#27251)
+sed -i s/SELFAUTOPARENT/TEXMFROOT/ texk/tex4htk/t4ht.c
+
+## prevent compiling Xdvi with libXp
+sed -i~ 's|-lXp ||' texk/xdvik/configure
+find texk/web2c/{lua,pdf}texdir -type f | xargs sed -e 's|gTrue|true|g' -e 's|gFalse|false|g' -e 's|GBool|bool|g' -i
+cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.70.0,}.cc
+cp -pv texk/web2c/pdftexdir/pdftosrc{-newpoppler,}.cc
 
 #-----------------------------------------------------------------------
 %build
