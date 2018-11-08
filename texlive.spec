@@ -23,7 +23,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20180414
-Release:	6
+Release:	7
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -84,7 +84,7 @@ BuildRequires:	gd-devel
 BuildRequires:	icu-devel >= 49
 %endif
 %if %{_texmf_with_system_poppler}
-BuildRequires:	pkgconfig(poppler) >= 0.53.0
+BuildRequires:	pkgconfig(poppler) >= 0.71.0
 %endif
 BuildRequires:	ghostscript-devel
 BuildRequires:	glibc-static-devel stdc++-static-devel
