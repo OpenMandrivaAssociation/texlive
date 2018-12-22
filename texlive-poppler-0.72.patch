@@ -1,0 +1,138 @@
+diff -up texlive-20180414-source/texk/web2c/luatexdir/image/pdftoepdf.w.omv~ texlive-20180414-source/texk/web2c/luatexdir/image/pdftoepdf.w
+--- texlive-20180414-source/texk/web2c/luatexdir/image/pdftoepdf.w.omv~	2018-12-22 21:25:08.356111031 +0100
++++ texlive-20180414-source/texk/web2c/luatexdir/image/pdftoepdf.w	2018-12-22 21:25:21.157299503 +0100
+@@ -366,7 +366,7 @@ static void copyString(PDF pdf, GooStrin
+     const char *p;
+     unsigned char c;
+     size_t i, l;
+-    p = string->getCString();
++    p = string->c_str();
+     l = (size_t) string->getLength();
+     if (pdf->cave)
+         pdf_out(pdf, ' ');
+diff -up texlive-20180414-source/texk/web2c/luatexdir/lua/lepdflib.cc.omv~ texlive-20180414-source/texk/web2c/luatexdir/lua/lepdflib.cc
+--- texlive-20180414-source/texk/web2c/luatexdir/lua/lepdflib.cc.omv~	2018-12-22 21:24:22.137430472 +0100
++++ texlive-20180414-source/texk/web2c/luatexdir/lua/lepdflib.cc	2018-12-22 21:24:27.903515382 +0100
+@@ -676,7 +676,7 @@ static int m_##in##_##function(lua_State
+         pdfdoc_changed_error(L);                               \
+     gs = (GooString *)((in *) uin->d)->function();             \
+     if (gs != NULL)                                            \
+-        lua_pushlstring(L, gs->getCString(), gs->getLength()); \
++        lua_pushlstring(L, gs->c_str(), gs->getLength()); \
+     else                                                       \
+         lua_pushnil(L);                                        \
+     return 1;                                                  \
+@@ -911,7 +911,7 @@ static int m_Array_getString(lua_State *
+     if (i > 0 && i <= len) {
+         gs = new GooString();
+         if (((Array *) uin->d)->getString(i - 1, gs))
+-            lua_pushlstring(L, gs->getCString(), gs->getLength());
++            lua_pushlstring(L, gs->c_str(), gs->getLength());
+         else
+             lua_pushnil(L);
+         delete gs;
+@@ -1063,7 +1063,7 @@ static int m_Catalog_getJS(lua_State * L
+     if (i > 0 && i <= len) {
+         gs = ((Catalog *) uin->d)->getJS(i - 1);
+         if (gs != NULL)
+-            lua_pushlstring(L, gs->getCString(), gs->getLength());
++            lua_pushlstring(L, gs->c_str(), gs->getLength());
+         else
+             lua_pushnil(L);
+         delete gs;
+@@ -1378,7 +1378,7 @@ static int m_GooString__tostring(lua_Sta
+     uin = (udstruct *) luaL_checkudata(L, 1, M_GooString);
+     if (uin->pd != NULL && uin->pd->pc != uin->pc)
+         pdfdoc_changed_error(L);
+-    lua_pushlstring(L, ((GooString *) uin->d)->getCString(),
++    lua_pushlstring(L, ((GooString *) uin->d)->c_str(),
+                     ((GooString *) uin->d)->getLength());
+     return 1;
+ }
+@@ -1814,7 +1814,7 @@ static int m_Object_getString(lua_State
+         pdfdoc_changed_error(L);
+     if (((Object *) uin->d)->isString()) {
+         gs = (GooString *)((Object *) uin->d)->getString();
+-        lua_pushlstring(L, gs->getCString(), gs->getLength());
++        lua_pushlstring(L, gs->c_str(), gs->getLength());
+     } else
+         lua_pushnil(L);
+     return 1;
+@@ -2472,7 +2472,7 @@ static int m_PDFDoc_getFileName(lua_Stat
+         pdfdoc_changed_error(L);
+     gs = (GooString *) ((PdfDocument *) uin->d)->doc->getFileName();
+     if (gs != NULL)
+-        lua_pushlstring(L, gs->getCString(), gs->getLength());
++        lua_pushlstring(L, gs->c_str(), gs->getLength());
+     else
+         lua_pushnil(L);
+     return 1;
+@@ -2561,7 +2561,7 @@ static int m_PDFDoc_readMetadata(lua_Sta
+     if (((PdfDocument *) uin->d)->doc->getCatalog()->isOk()) {
+         gs = (GooString *) ((PdfDocument *) uin->d)->doc->readMetadata();
+         if (gs != NULL)
+-            lua_pushlstring(L, gs->getCString(), gs->getLength());
++            lua_pushlstring(L, gs->c_str(), gs->getLength());
+         else
+             lua_pushnil(L);
+     } else
+@@ -3235,7 +3235,7 @@ static int m_StructElement_getText(lua_S
+     i = (bool) lua_toboolean(L, 2);
+     gs =  ((StructElement *) uin->d)->getText(i);
+     if (gs != NULL)
+-        lua_pushlstring(L, gs->getCString(), gs->getLength());
++        lua_pushlstring(L, gs->c_str(), gs->getLength());
+     else
+         lua_pushnil(L);
+     return 1;
+diff -up texlive-20180414-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-20180414-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20180414-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~	2018-12-22 21:17:09.220048055 +0100
++++ texlive-20180414-source/texk/web2c/pdftexdir/pdftoepdf.cc	2018-12-22 21:17:23.967265784 +0100
+@@ -427,7 +427,7 @@ static void copyFont(char *tag, Object *
+         charset = fontdesc.dictLookup("CharSet");
+         if (!charset.isNull() &&
+             charset.isString() && is_subsetable(fontmap))
+-            epdf_mark_glyphs(fd, (char *)charset.getString()->getCString());
++            epdf_mark_glyphs(fd, (char *)charset.getString()->c_str());
+         else
+             embed_whole_font(fd);
+         addFontDesc(fontdescRef.getRef(), fd);
+@@ -566,7 +566,7 @@ static void copyObject(Object * obj)
+         pdf_printf("%s", convertNumToPDF(obj->getNum()));
+     } else if (obj->isString()) {
+         s = (GooString *)obj->getString();
+-        p = (char *)s->getCString();
++        p = (char *)s->c_str();
+         l = s->getLength();
+         if (strlen(p) == (unsigned int) l) {
+             pdf_puts("(");
+diff -up texlive-20180414-source/texk/web2c/pdftexdir/pdftosrc.cc.omv~ texlive-20180414-source/texk/web2c/pdftexdir/pdftosrc.cc
+--- texlive-20180414-source/texk/web2c/pdftexdir/pdftosrc.cc.omv~	2018-12-22 21:22:21.016646385 +0100
++++ texlive-20180414-source/texk/web2c/pdftexdir/pdftosrc.cc	2018-12-22 21:22:38.709907070 +0100
+@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
+             fprintf(stderr, "No SourceName found\n");
+             exit(1);
+         }
+-        outname = (char *)srcName.getString()->getCString();
++        outname = (char *)srcName.getString()->c_str();
+         // We cannot free srcName, as objname shares its string.
+         // srcName.free();
+     } else if (objnum > 0) {
+@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
+             fprintf(stderr, "Not a Stream object\n");
+             exit(1);
+         }
+-        sprintf(buf, "%s", fileName->getCString());
++        sprintf(buf, "%s", fileName->c_str());
+         if ((p = strrchr(buf, '.')) == 0)
+             p = strchr(buf, 0);
+         if (objgen == 0)
+@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
+         outname = buf;
+     } else {                    // objnum < 0 means we are extracting the XRef table
+         extract_xref_table = true;
+-        sprintf(buf, "%s", fileName->getCString());
++        sprintf(buf, "%s", fileName->c_str());
+         if ((p = strrchr(buf, '.')) == 0)
+             p = strchr(buf, 0);
+         sprintf(p, ".xref");

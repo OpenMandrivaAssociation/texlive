@@ -134,6 +134,7 @@ Patch12:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-sourc
 Patch17:	poppler-compat-fixes-up-to-0.70.patch
 Patch18:	texlive-poppler-0.71.patch
 Patch19:	luatex-poppler-0.70-const-fixes.patch
+Patch21:	texlive-poppler-0.72.patch
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -1074,9 +1075,9 @@ texlive tex2aspc.bin package.
 %patch5 -p1 -b .compile~
 %patch6 -p1 -b .p6~
 %patch12 -p1 -b .p12~
-%patch17 -p1 -b .p17
-%patch18 -p1 -b .p18
-%patch19 -p1 -b .p18
+%patch17 -p1 -b .p17~
+%patch18 -p1 -b .p18~
+%patch19 -p1 -b .p19~
 cd libs/luajit
 libtoolize --force
 aclocal
@@ -1105,6 +1106,8 @@ sed -i~ 's|-lXp ||' texk/xdvik/configure
 find texk/web2c/{lua,pdf}texdir -type f | xargs sed -e 's|gTrue|true|g' -e 's|gFalse|false|g' -e 's|GBool|bool|g' -i
 cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.70.0,}.cc
 cp -pv texk/web2c/pdftexdir/pdftosrc{-newpoppler,}.cc
+
+%patch21 -p1 -b .p21~
 
 #-----------------------------------------------------------------------
 %build
