@@ -23,7 +23,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20180414
-Release:	9
+Release:	10
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -135,6 +135,7 @@ Patch17:	poppler-compat-fixes-up-to-0.70.patch
 Patch18:	texlive-poppler-0.71.patch
 Patch19:	luatex-poppler-0.70-const-fixes.patch
 Patch21:	texlive-poppler-0.72.patch
+Patch22:	texlive-poppler-0.74.patch
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -1108,6 +1109,7 @@ cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.70.0,}.cc
 cp -pv texk/web2c/pdftexdir/pdftosrc{-newpoppler,}.cc
 
 %patch21 -p1 -b .p21~
+%patch22 -p1 -b .p22~
 
 #-----------------------------------------------------------------------
 %build
