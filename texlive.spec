@@ -121,7 +121,6 @@ BuildRequires:	pkgconfig(cairo)
 BuildRequires:	libpaper-devel
 
 #-----------------------------------------------------------------------
-#Patch0:		texlive-format.patch
 Patch1:		texlive-asymptote.patch
 Patch2:		texlive-xdvi.patch
 # New definition only misses default location...
@@ -129,11 +128,8 @@ Patch3:		texlive-texmfcnf.patch
 Patch4:		texlive-20150521-clang-3.8.patch
 Patch5:		texlive-20180414-compile.patch
 Patch6:		texlive-2018-libdl-linkage.patch
-Patch7:		texlive-20190413-poppler-0.75.patch
-# Patches from LFS
-#Patch10:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-gcc7-1.patch
-#Patch11:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-upstream_fixes-2.patch
-Patch12:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-poppler059-1.patch
+# LFS sometimes (not yet for 2019) has useful patches at
+# http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -1130,7 +1126,6 @@ texlive tex2aspc.bin package.
 #-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}-%{version}-source
-#patch0 -p1 -b .p0~
 %if %{_texmf_enable_asymptote}
 %patch1 -p1 -b .p1~
 %endif
@@ -1139,7 +1134,6 @@ texlive tex2aspc.bin package.
 %patch4 -p1 -b .p4~
 %patch5 -p1 -b .compile~
 %patch6 -p1 -b .p6~
-%patch12 -p1 -b .p12~
 cd libs/luajit
 libtoolize --force
 aclocal
@@ -1166,10 +1160,8 @@ sed -i s/SELFAUTOPARENT/TEXMFROOT/ texk/tex4htk/t4ht.c
 ## prevent compiling Xdvi with libXp
 sed -i~ 's|-lXp ||' texk/xdvik/configure
 find texk/web2c/{lua,pdf}texdir -type f | xargs sed -e 's|gTrue|true|g' -e 's|gFalse|false|g' -e 's|GBool|bool|g' -i
-cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.70.0,}.cc
-cp -pv texk/web2c/pdftexdir/pdftosrc{-newpoppler,}.cc
-
-%patch7 -p1 -b .p7~
+cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.75.0,}.cc
+cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.72.0,}.cc
 
 #-----------------------------------------------------------------------
 %build
