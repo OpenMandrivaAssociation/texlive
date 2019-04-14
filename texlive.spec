@@ -18,12 +18,12 @@
 
 %define enable_shared			1
 
-%define historic			1
+%define historic			0
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20180414
-Release:	10
+Version:	20190413
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -32,11 +32,14 @@ URL:		http://tug.org/texlive/
 Source0:	ftp://tug.org/historic/systems/texlive/%(echo %{version}|cut -b1-4)/texlive-%{version}-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/%(echo %{version}|cut -b1-4)/texlive-%{version}-source.tar.xz.sha512
 %else
-# svn co svn://tug.org/texlive/branches/branch2012/Build/source texlive-source
-# tar Jcf texlive-20131212-source.tar.xz  --exclude .svn --transform 's/^texlive-source/texlive-20131212-source/'  texlive-source/
-Source0:	texlive-20131212-source.tar.xz
+# svn co svn://tug.org/texlive/branches/branch2019/Build/source texlive-source
+# cd texlive-source
+# svn export . /tmp/texlive-20190413-source
+# cd /tmp
+# tar cJf texlive-20190413-source.tar.xz texlive-20190413-source/
+Source0:	texlive-%{version}-source.tar.xz
 # sha512sum texlive-20131212-source.tar.xz > texlive-20131212-source.tar.xz.sha512
-Source1:	texlive-20131212-source.tar.xz.sha512
+Source1:	texlive-%{version}-source.tar.xz.sha512
 %endif
 Source100:	%name.rpmlintrc
 Obsoletes:	tetex-usrlocal < 3.0-1
@@ -126,16 +129,11 @@ Patch3:		texlive-texmfcnf.patch
 Patch4:		texlive-20150521-clang-3.8.patch
 Patch5:		texlive-20180414-compile.patch
 Patch6:		texlive-2018-libdl-linkage.patch
+Patch7:		texlive-20190413-poppler-0.75.patch
 # Patches from LFS
 #Patch10:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-gcc7-1.patch
 #Patch11:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-upstream_fixes-2.patch
 Patch12:	http://www.linuxfromscratch.org/patches/blfs/svn/texlive-20170524-source-poppler059-1.patch
-# from upstream
-Patch17:	poppler-compat-fixes-up-to-0.70.patch
-Patch18:	texlive-poppler-0.71.patch
-Patch19:	luatex-poppler-0.70-const-fixes.patch
-Patch21:	texlive-poppler-0.72.patch
-Patch22:	texlive-poppler-0.74.patch
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -317,6 +315,16 @@ texlive chktex.bin package.
 %{_bindir}/chktex
 
 #-----------------------------------------------------------------------
+%package	-n texlive-chkdvifont.bin
+Summary:	binary files of chkdvifont
+
+%description	-n texlive-chkdvifont.bin
+texlive chkdvifont.bin package.
+
+%files -n texlive-chkdvifont.bin
+%{_bindir}/chkdvifont
+
+#-----------------------------------------------------------------------
 %package	-n texlive-cjkutils.bin
 Summary:	binary files of cjkutils
 Conflicts:	texlive < 20110705-7
@@ -348,6 +356,36 @@ texlive cjkutils.bin package.
 %{_bindir}/sjispdflatex
 
 #-----------------------------------------------------------------------
+%package	-n texlive-cluttex.bin
+Summary:	binary files of cluttex
+
+%description	-n texlive-cluttex.bin
+texlive cluttex.bin package.
+
+%files -n texlive-cluttex.bin
+%{_bindir}/cluttex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-clxelatex.bin
+Summary:	binary files of clxelatex
+
+%description	-n texlive-clxelatex.bin
+texlive clxelatex.bin package.
+
+%files -n texlive-clxelatex.bin
+%{_bindir}/clxelatex
+
+#-----------------------------------------------------------------------
+%package	-n texlive-ctanbib.bin
+Summary:	binary files of ctanbib
+
+%description	-n texlive-ctanbib.bin
+texlive ctanbib.bin package.
+
+%files -n texlive-ctanbib.bin
+%{_bindir}/ctanbib
+
+#-----------------------------------------------------------------------
 %package	-n texlive-ctie.bin
 Summary:	binary files of ctie
 Conflicts:	texlive < 20110705-7
@@ -357,6 +395,18 @@ texlive ctie.bin package.
 
 %files -n texlive-ctie.bin
 %{_bindir}/ctie
+
+#-----------------------------------------------------------------------
+%package	-n texlive-ctwill.bin
+Summary:	binary files of ctwill
+
+%description	-n texlive-ctwill.bin
+texlive ctwill.bin package.
+
+%files -n texlive-ctwill.bin
+%{_bindir}/ctwill
+%{_bindir}/ctwill-refsort
+%{_bindir}/ctwill-twinx
 
 #-----------------------------------------------------------------------
 %package	-n texlive-cweb.bin
@@ -505,6 +555,16 @@ texlive dvips.bin package.
 %{_bindir}/dvips
 
 #-----------------------------------------------------------------------
+%package	-n texlive-dvispc.bin
+Summary:	binary files of dvispc
+
+%description	-n texlive-dvispc.bin
+texlive dvispc.bin package.
+
+%files -n texlive-dvispc.bin
+%{_bindir}/dvispc
+
+#-----------------------------------------------------------------------
 %package	-n texlive-dvisvgm.bin
 Summary:	binary files of dvisvgm
 Conflicts:	texlive < 20110705-7
@@ -632,8 +692,7 @@ Conflicts:	texlive < 20110705-7
 texlive luatex.bin package.
 
 %files -n texlive-luatex.bin
-%{_bindir}/luatex53
-%{_bindir}/texlua53
+%{_bindir}/cllualatex
 %{_bindir}/dviluatex
 %{_bindir}/luatex
 %{_bindir}/texlua
@@ -645,7 +704,6 @@ texlive luatex.bin package.
 %{_bindir}/mfluajit-nowin
 
 %libpackage texluajit 2
-%libpackage texlua52 5
 %libpackage texlua53 5
 
 #-----------------------------------------------------------------------
@@ -670,6 +728,7 @@ texlive makeindex.bin package.
 %files -n texlive-makeindex.bin
 %{_bindir}/makeindex
 %{_bindir}/mkindex
+%{_bindir}/xindex
 
 #-----------------------------------------------------------------------
 %package	-n texlive-metafont.bin
@@ -700,6 +759,9 @@ texlive metapost.bin package.
 %{_bindir}/pmpost
 %{_bindir}/updvitomp
 %{_bindir}/upmpost
+%{_bindir}/r-mpost
+%{_bindir}/r-pmpost
+%{_bindir}/r-upmpost
 
 #-----------------------------------------------------------------------
 %package	-n texlive-mfware.bin
@@ -781,6 +843,7 @@ texlive pdftex.bin package.
 %{_bindir}/pdfjadetex
 %{_bindir}/pdfmex
 %{_bindir}/pdftex
+%{_bindir}/pdftex-quiet
 %{_bindir}/pdfxmltex
 %{_bindir}/texsis
 %{_bindir}/utf8mex
@@ -880,14 +943,14 @@ texlive synctex.bin package.
 %files -n texlive-synctex.bin
 %{_bindir}/synctex
 
-%libpackage synctex 1
+%libpackage synctex 2
 
 %define	synctex_devel		%{mklibname -d synctex}
 %package	-n %{synctex_devel}
 Summary:	SyncTeX development files
 Group:		Development/C
 Requires:	texlive-synctex.bin = %{version}-%{release}
-Requires:	%{mklibname synctex 1} = %{version}-%{release}
+Requires:	%{mklibname synctex 2} = %{version}-%{release}
 
 %description	-n %{synctex_devel}
 This package includes the SyncTeX development files.
@@ -998,6 +1061,7 @@ texlive web.bin package.
 %files -n texlive-web.bin
 %{_bindir}/tangle
 %{_bindir}/weave
+%{_bindir}/webquiz
 
 %if %{with dvik}
 #-----------------------------------------------------------------------
@@ -1076,9 +1140,6 @@ texlive tex2aspc.bin package.
 %patch5 -p1 -b .compile~
 %patch6 -p1 -b .p6~
 %patch12 -p1 -b .p12~
-%patch17 -p1 -b .p17~
-%patch18 -p1 -b .p18~
-%patch19 -p1 -b .p19~
 cd libs/luajit
 libtoolize --force
 aclocal
@@ -1108,8 +1169,7 @@ find texk/web2c/{lua,pdf}texdir -type f | xargs sed -e 's|gTrue|true|g' -e 's|gF
 cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.70.0,}.cc
 cp -pv texk/web2c/pdftexdir/pdftosrc{-newpoppler,}.cc
 
-%patch21 -p1 -b .p21~
-%patch22 -p1 -b .p22~
+%patch7 -p1 -b .p7~
 
 #-----------------------------------------------------------------------
 %build
@@ -1215,7 +1275,7 @@ CONFIGURE_TOP=.. \
 	--with-system-cairo					\
 	--with-system-libpaper					\
 	--with-system-zziplib
-%make
+%make LIBGS_LIBS="-lgs"
 popd
 
 %if %{_texmf_enable_asymptote}

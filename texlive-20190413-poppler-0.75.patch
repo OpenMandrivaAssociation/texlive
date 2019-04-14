@@ -1,0 +1,277 @@
+diff -up texlive-20190413-source/texk/dvisvgm/dvisvgm-src/src/Makefile.am.omv~ texlive-20190413-source/texk/dvisvgm/dvisvgm-src/src/Makefile.am
+diff -up texlive-20190413-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-20190413-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20190413-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~	2019-04-13 17:31:54.555022229 +0200
++++ texlive-20190413-source/texk/web2c/pdftexdir/pdftoepdf.cc	2019-04-13 17:41:20.585717057 +0200
+@@ -273,7 +273,7 @@ static int getNewObjectNumber(Ref ref)
+ }
+ #endif
+ 
+-static void copyObject(Object *);
++static void copyObject(const Object *);
+ 
+ static void copyName(char *s)
+ {
+@@ -287,17 +287,16 @@ static void copyName(char *s)
+     }
+ }
+ 
+-static void copyDictEntry(Object * obj, int i)
++static void copyDictEntry(const Object * obj, int i)
+ {
+-    Object obj1;
+     copyName((char *)obj->dictGetKey(i));
+     pdf_puts(" ");
+-    obj1 = obj->dictGetValNF(i);
++    const Object &obj1 = obj->dictGetValNF(i);
+     copyObject(&obj1);
+     pdf_puts("\n");
+ }
+ 
+-static void copyDict(Object * obj)
++static void copyDict(const Object * obj)
+ {
+     int i, l;
+     if (!obj->isDict())
+@@ -307,7 +306,7 @@ static void copyDict(Object * obj)
+         copyDictEntry(obj, i);
+ }
+ 
+-static void copyFontDict(Object * obj, InObj * r)
++static void copyFontDict(Object * obj, const InObj * r)
+ {
+     int i, l;
+     char *key;
+@@ -342,16 +341,15 @@ static void copyStream(Stream * str)
+     pdflastbyte = c2;
+ }
+ 
+-static void copyProcSet(Object * obj)
++static void copyProcSet(const Object * obj)
+ {
+     int i, l;
+-    Object procset;
+     if (!obj->isArray())
+         pdftex_fail("PDF inclusion: invalid ProcSet array type <%s>",
+                     obj->getTypeName());
+     pdf_puts("/ProcSet [ ");
+     for (i = 0, l = obj->arrayGetLength(); i < l; ++i) {
+-        procset = obj->arrayGetNF(i);
++        const Object &procset = obj->arrayGetNF(i);
+         if (!procset.isName())
+             pdftex_fail("PDF inclusion: invalid ProcSet entry type <%s>",
+                         procset.getTypeName());
+@@ -382,10 +380,11 @@ static bool embeddableFont(Object * font
+     return false;
+ }
+ 
+-static void copyFont(char *tag, Object * fontRef)
++static void copyFont(char *tag, const Object * fontRef)
+ {
+-    Object fontdict, subtype, basefont, fontdescRef, fontdesc, charset,
++    Object fontdict, subtype, basefont, fontdesc, charset,
+         stemV;
++    const Object *fontdescRef = nullptr;
+     GfxFont *gfont;
+     fd_entry *fd;
+     fm_entry *fontmap;
+@@ -406,16 +405,16 @@ static void copyFont(char *tag, Object *
+     if (fontdict.isDict()) {
+         subtype = fontdict.dictLookup("Subtype");
+         basefont = fontdict.dictLookup("BaseFont");
+-        fontdescRef = fontdict.dictLookupNF("FontDescriptor");
+-        if (fontdescRef.isRef()) {
+-            fontdesc = fontdescRef.fetch(xref);
++        fontdescRef = &fontdict.dictLookupNF("FontDescriptor");
++        if (fontdescRef->isRef()) {
++            fontdesc = fontdescRef->fetch(xref);
+         }
+     }
+     if (!fixedinclusioncopyfont && fontdict.isDict()
+         && subtype.isName()
+         && !strcmp(subtype.getName(), "Type1")
+         && basefont.isName()
+-        && fontdescRef.isRef()
++        && fontdescRef && fontdescRef->isRef()
+         && fontdesc.isDict()
+         && embeddableFont(&fontdesc)
+         && (fontmap = lookup_fontmap((char *)basefont.getName())) != NULL) {
+@@ -427,10 +426,10 @@ static void copyFont(char *tag, Object *
+         charset = fontdesc.dictLookup("CharSet");
+         if (!charset.isNull() &&
+             charset.isString() && is_subsetable(fontmap))
+-            epdf_mark_glyphs(fd, (char *)charset.getString()->getCString());
++            epdf_mark_glyphs(fd, (char *)charset.getString()->c_str());
+         else
+             embed_whole_font(fd);
+-        addFontDesc(fontdescRef.getRef(), fd);
++        addFontDesc(fontdescRef->getRef(), fd);
+         copyName(tag);
+         gfont = GfxFont::makeFont(xref, tag, fontRef->getRef(),
+                                   fontdict.getDict());
+@@ -443,16 +442,15 @@ static void copyFont(char *tag, Object *
+     }
+ }
+ 
+-static void copyFontResources(Object * obj)
++static void copyFontResources(const Object * obj)
+ {
+-    Object fontRef;
+     int i, l;
+     if (!obj->isDict())
+         pdftex_fail("PDF inclusion: invalid font resources dict type <%s>",
+                     obj->getTypeName());
+     pdf_puts("/Font << ");
+     for (i = 0, l = obj->dictGetLength(); i < l; ++i) {
+-        fontRef = obj->dictGetValNF(i);
++        const Object &fontRef = obj->dictGetValNF(i);
+         if (fontRef.isRef())
+             copyFont((char *)obj->dictGetKey(i), &fontRef);
+         else if (fontRef.isDict()) {   // some programs generate pdf with embedded font object
+@@ -467,7 +465,7 @@ static void copyFontResources(Object * o
+     pdf_puts(">>\n");
+ }
+ 
+-static void copyOtherResources(Object * obj, char *key)
++static void copyOtherResources(const Object * obj, char *key)
+ {
+     // copies all other resources (write_epdf handles Fonts and ProcSets),
+ 
+@@ -549,9 +547,8 @@ static char *convertNumToPDF(double n)
+     return (char *) buf;
+ }
+ 
+-static void copyObject(Object * obj)
++static void copyObject(const Object * obj)
+ {
+-    Object obj1;
+     int i, l, c;
+     Ref ref;
+     char *p;
+@@ -566,7 +563,7 @@ static void copyObject(Object * obj)
+         pdf_printf("%s", convertNumToPDF(obj->getNum()));
+     } else if (obj->isString()) {
+         s = (GooString *)obj->getString();
+-        p = (char *)s->getCString();
++        p = (char *)s->c_str();
+         l = s->getLength();
+         if (strlen(p) == (unsigned int) l) {
+             pdf_puts("(");
+@@ -595,7 +592,7 @@ static void copyObject(Object * obj)
+     } else if (obj->isArray()) {
+         pdf_puts("[");
+         for (i = 0, l = obj->arrayGetLength(); i < l; ++i) {
+-            obj1 = obj->arrayGetNF(i);
++            const Object &obj1 = obj->arrayGetNF(i);
+             if (!obj1.isName())
+                 pdf_puts(" ");
+             copyObject(&obj1);
+@@ -818,7 +815,7 @@ void write_epdf(void)
+     Page *page;
+     Ref *pageRef;
+     Dict *pageDict;
+-    Object contents, obj1, obj2, pageObj, dictObj;
++    Object contents, obj1, pageObj;
+     Object groupDict;
+     bool writeSepGroup = false;
+     Object info;
+@@ -921,23 +918,23 @@ void write_epdf(void)
+     pdf_puts(stripzeros(s));
+ 
+     // Metadata validity check (as a stream it must be indirect)
+-    dictObj = pageDict->lookupNF("Metadata");
++    const Object &dictObj = pageDict->lookupNF("Metadata");
+     if (!dictObj.isNull() && !dictObj.isRef())
+         pdftex_warn("PDF inclusion: /Metadata must be indirect object");
+ 
+     // copy selected items in Page dictionary except Resources & Group
+     for (i = 0; pageDictKeys[i] != NULL; i++) {
+-        dictObj = pageDict->lookupNF(pageDictKeys[i]);
+-        if (!dictObj.isNull()) {
++        const Object &dictObj1 = pageDict->lookupNF(pageDictKeys[i]);
++        if (!dictObj1.isNull()) {
+             pdf_newline();
+             pdf_printf("/%s ", pageDictKeys[i]);
+-            copyObject(&dictObj); // preserves indirection
++            copyObject(&dictObj1); // preserves indirection
+         }
+     } 
+ 
+     // handle page group
+-    dictObj = pageDict->lookupNF("Group");
+-    if (!dictObj.isNull()) {
++    const Object &dictObjG = pageDict->lookupNF("Group");
++    if (!dictObjG.isNull()) {
+         if (pdfpagegroupval == 0) { 
+             // another pdf with page group was included earlier on the
+             // same page; copy the Group entry as is.  See manual for
+@@ -948,11 +945,10 @@ void write_epdf(void)
+             }
+             pdf_newline();
+             pdf_puts("/Group ");
+-            copyObject(&dictObj);
++            copyObject(&dictObjG);
+         } else {
+             // write Group dict as a separate object, since the Page dict also refers to it
+-            dictObj = pageDict->lookup("Group");
+-            if (!dictObj.isDict())
++            if (!pageDict->lookup("Group").isDict())
+                 pdftex_fail("PDF inclusion: /Group dict missing");
+             writeSepGroup = true;
+ /*
+@@ -978,7 +974,7 @@ The changes below seem to work fine.
+             l = dic1.getLength();
+             for (i = 0; i < l; i++) {
+                 groupDict.dictAdd((const char *)copyString(dic1.getKey(i)),
+-                                  dic1.getValNF(i));
++                                  dic1.getValNF(i).copy());
+             }
+ // end modification
+             pdf_printf("/Group %ld 0 R\n", (long)pdfpagegroupval);
+@@ -1000,7 +996,7 @@ The changes below seem to work fine.
+         pdf_newline();
+         pdf_puts("/Resources <<\n");
+         for (i = 0, l = obj1->dictGetLength(); i < l; ++i) {
+-            obj2 = obj1->dictGetVal(i);
++            const Object &obj2 = obj1->dictGetVal(i);
+             key = (char *)obj1->dictGetKey(i);
+             if (strcmp("Font", key) == 0)
+                 copyFontResources(&obj2);
+diff -up texlive-20190413-source/texk/web2c/pdftexdir/pdftosrc.cc.omv~ texlive-20190413-source/texk/web2c/pdftexdir/pdftosrc.cc
+--- texlive-20190413-source/texk/web2c/pdftexdir/pdftosrc.cc.omv~	2019-04-13 17:11:59.179799711 +0200
++++ texlive-20190413-source/texk/web2c/pdftexdir/pdftosrc.cc	2019-04-13 17:42:08.505874065 +0200
+@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
+             fprintf(stderr, "No SourceName found\n");
+             exit(1);
+         }
+-        outname = (char *)srcName.getString()->getCString();
++        outname = (char *)srcName.getString()->c_str();
+         // We cannot free srcName, as objname shares its string.
+         // srcName.free();
+     } else if (objnum > 0) {
+@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
+             fprintf(stderr, "Not a Stream object\n");
+             exit(1);
+         }
+-        sprintf(buf, "%s", fileName->getCString());
++        sprintf(buf, "%s", fileName->c_str());
+         if ((p = strrchr(buf, '.')) == 0)
+             p = strchr(buf, 0);
+         if (objgen == 0)
+@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
+         outname = buf;
+     } else {                    // objnum < 0 means we are extracting the XRef table
+         extract_xref_table = true;
+-        sprintf(buf, "%s", fileName->getCString());
++        sprintf(buf, "%s", fileName->c_str());
+         if ((p = strrchr(buf, '.')) == 0)
+             p = strchr(buf, 0);
+         sprintf(p, ".xref");
+@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
+                 Object objStr, obj1, obj2;
+                 int nObjects, first, n;
+                 int localOffset = 0;
+-                Guint firstOffset;
++                uint firstOffset;
+ 
+                 objStr = xref->fetch(e->offset, 0);
+                 assert(objStr.isStream());
