@@ -128,6 +128,7 @@ Patch3:		texlive-texmfcnf.patch
 Patch4:		texlive-20150521-clang-3.8.patch
 Patch5:		texlive-20180414-compile.patch
 Patch6:		texlive-2018-libdl-linkage.patch
+Patch7:		texlive-20190413-poppler-0.76.patch
 # LFS sometimes (not yet for 2019) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
@@ -1125,15 +1126,7 @@ texlive tex2aspc.bin package.
 
 #-----------------------------------------------------------------------
 %prep
-%setup -q -n %{name}-%{version}-source
-%if %{_texmf_enable_asymptote}
-%patch1 -p1 -b .p1~
-%endif
-%patch2 -p1 -b .p2~
-%patch3 -p1 -b .p3~
-%patch4 -p1 -b .p4~
-%patch5 -p1 -b .compile~
-%patch6 -p1 -b .p6~
+%autosetup -p1 -n %{name}-%{version}-source
 cd libs/luajit
 libtoolize --force
 aclocal

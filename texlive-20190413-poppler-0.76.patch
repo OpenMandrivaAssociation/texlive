@@ -1,0 +1,26 @@
+diff -up texlive-20190413-source/texk/web2c/pdftexdir/pdftosrc-poppler0.72.0.cc.omv~ texlive-20190413-source/texk/web2c/pdftexdir/pdftosrc-poppler0.72.0.cc
+--- texlive-20190413-source/texk/web2c/pdftexdir/pdftosrc-poppler0.72.0.cc.omv~	2019-04-21 17:34:40.777911844 +0200
++++ texlive-20190413-source/texk/web2c/pdftexdir/pdftosrc-poppler0.72.0.cc	2019-04-21 17:35:33.166909302 +0200
+@@ -174,8 +174,7 @@ int main(int argc, char *argv[])
+                 // parse the header: object numbers and offsets
+                 objStr.streamReset();
+                 str = new EmbedStream(objStr.getStream(), Object(objNull), true, first);
+-                lexer = new Lexer(xref, str);
+-                parser = new Parser(xref, lexer, false);
++                parser = new Parser(xref, str, false);
+                 for (n = 0; n < nObjects; ++n) {
+                     obj1 = parser->getObj();
+                     obj2 = parser->getObj();
+diff -up texlive-20190413-source/texk/web2c/pdftexdir/pdftoepdf-poppler0.75.0.cc.omv~ texlive-20190413-source/texk/web2c/pdftexdir/pdftoepdf-poppler0.75.0.cc
+--- texlive-20190413-source/texk/web2c/pdftexdir/pdftoepdf-poppler0.75.0.cc.omv~	2019-04-21 21:01:17.340310409 +0200
++++ texlive-20190413-source/texk/web2c/pdftexdir/pdftoepdf-poppler0.75.0.cc	2019-04-21 21:02:12.224307746 +0200
+@@ -760,8 +760,7 @@ read_pdf_info(char *image_name, char *pa
+         LinkDest *link = pdf_doc->doc->findDest(&name);
+         if (link == 0 || !link->isOk())
+             pdftex_fail("PDF inclusion: invalid destination <%s>", page_name);
+-        Ref ref = link->getPageRef();
+-        page_num = pdf_doc->doc->getCatalog()->findPage(ref.num, ref.gen);
++        page_num = pdf_doc->doc->getCatalog()->findPage(link->getPageRef());
+         if (page_num == 0)
+             pdftex_fail("PDF inclusion: destination is not a page <%s>",
+                         page_name);
