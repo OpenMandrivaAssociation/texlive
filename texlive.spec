@@ -18,11 +18,11 @@
 
 %define enable_shared			1
 
-%define historic			0
+%define historic			1
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20190413
+Version:	20190410
 Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
@@ -34,11 +34,11 @@ Source1:	ftp://tug.org/historic/systems/texlive/%(echo %{version}|cut -b1-4)/tex
 %else
 # svn co svn://tug.org/texlive/branches/branch2019/Build/source texlive-source
 # cd texlive-source
-# svn export . /tmp/texlive-20190413-source
+# svn export . /tmp/texlive-$(date +%Y%m%d)-source
 # cd /tmp
-# tar cJf texlive-20190413-source.tar.xz texlive-20190413-source/
+# tar cJf texlive-$(date +%Y%m%d)-source.tar.xz texlive-$(date +%Y%m%d)-source/
 Source0:	texlive-%{version}-source.tar.xz
-# sha512sum texlive-20131212-source.tar.xz > texlive-20131212-source.tar.xz.sha512
+# sha512sum texlive-$(date +%Y%m%d)-source.tar.xz > texlive-$(date +%Y%m%d)-source.tar.xz.sha512
 Source1:	texlive-%{version}-source.tar.xz.sha512
 %endif
 Source100:	%name.rpmlintrc
