@@ -1195,9 +1195,8 @@ CONFIGURE_TOP=.. \
 	--disable-native-texlive-build				\
 	--enable-missing					\
 %ifarch %{riscv} aarch64 %{mips} %{power64} s390 s390x
-	--disable-luajittex --disable-mfluajit \
+	--disable-luajittex --disable-mfluajit			\
 %endif
-
 %if %{_texmf_enable_biber}
 	--enable-biber						\
 %else
