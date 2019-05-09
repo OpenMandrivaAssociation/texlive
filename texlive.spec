@@ -695,11 +695,13 @@ texlive luatex.bin package.
 %{_bindir}/luatex
 %{_bindir}/texlua
 %{_bindir}/texluac
-%{_bindir}/luajittex
 %{_bindir}/mflua
 %{_bindir}/mflua-nowin
+%ifnarch %{riscv} %{mips} %{power64} s390 s390x
+%{_bindir}/luajittex
 %{_bindir}/mfluajit
 %{_bindir}/mfluajit-nowin
+%endif
 
 %libpackage texluajit 2
 %libpackage texlua53 5
@@ -1194,7 +1196,7 @@ CONFIGURE_TOP=.. \
 	--with-banner-add="/OpenMandriva"			\
 	--disable-native-texlive-build				\
 	--enable-missing					\
-%ifarch %{riscv} aarch64 %{mips} %{power64} s390 s390x
+%ifarch %{riscv} %{mips} %{power64} s390 s390x
 	--disable-luajittex --disable-mfluajit			\
 %endif
 %if %{_texmf_enable_biber}
