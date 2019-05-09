@@ -703,7 +703,9 @@ texlive luatex.bin package.
 %{_bindir}/mfluajit-nowin
 %endif
 
+%ifnarch %{riscv} %{mips} %{power64} s390 s390x
 %libpackage texluajit 2
+%endif
 %libpackage texlua53 5
 
 #-----------------------------------------------------------------------
