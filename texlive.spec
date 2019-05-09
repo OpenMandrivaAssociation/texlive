@@ -129,6 +129,7 @@ Patch4:		texlive-20150521-clang-3.8.patch
 Patch5:		texlive-20180414-compile.patch
 Patch6:		texlive-2018-libdl-linkage.patch
 Patch7:		texlive-20190413-poppler-0.76.patch
+Patch8:		poppler076.patch
 # LFS sometimes (not yet for 2019) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
@@ -1193,6 +1194,10 @@ CONFIGURE_TOP=.. \
 	--with-banner-add="/OpenMandriva"			\
 	--disable-native-texlive-build				\
 	--enable-missing					\
+%ifarch %{riscv} aarch64 %{mips} %{power64} s390 s390x
+	--disable-luajittex --disable-mfluajit \
+%endif
+
 %if %{_texmf_enable_biber}
 	--enable-biber						\
 %else

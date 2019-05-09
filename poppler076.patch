@@ -1,0 +1,25 @@
+diff --git a/texk/web2c/pdftexdir/pdftosrc.cc b/texk/web2c/pdftexdir/pdftosrc.cc
+index 2e72ea61..7868bda8 100644
+--- a/texk/web2c/pdftexdir/pdftosrc.cc
++++ b/texk/web2c/pdftexdir/pdftosrc.cc
+@@ -46,7 +46,6 @@ POPPLER_VERSION should be defined.
+ 
+ #include "Object.h"
+ #include "Stream.h"
+-#include "Lexer.h"
+ #include "Parser.h"
+ #include "Array.h"
+ #include "Dict.h"
+diff --git a/texk/web2c/pdftexdir/pdftoepdf.cc b/texk/web2c/pdftexdir/pdftoepdf.cc
+index 4db0c90a..da91a9b0 100644
+--- a/texk/web2c/pdftexdir/pdftoepdf.cc
++++ b/texk/web2c/pdftexdir/pdftoepdf.cc
+@@ -782,7 +782,7 @@ read_pdf_info(char *image_name, char *page_name, int page_num,
+         if (link == 0 || !link->isOk())
+             pdftex_fail("PDF inclusion: invalid destination <%s>", page_name);
+         Ref ref = link->getPageRef();
+-        page_num = pdf_doc->doc->getCatalog()->findPage(ref.num, ref.gen);
++	page_num = pdf_doc->doc->getCatalog()->findPage(ref);
+         if (page_num == 0)
+             pdftex_fail("PDF inclusion: destination is not a page <%s>",
+                         page_name);
