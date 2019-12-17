@@ -1,0 +1,48 @@
+diff -up texlive-20190410-source/texk/web2c/pdftexdir/pdftosrc-poppler0.72.0.cc.9~ texlive-20190410-source/texk/web2c/pdftexdir/pdftosrc-poppler0.72.0.cc
+--- texlive-20190410-source/texk/web2c/pdftexdir/pdftosrc-poppler0.72.0.cc.9~	2019-12-17 23:19:16.970832591 +0100
++++ texlive-20190410-source/texk/web2c/pdftexdir/pdftosrc-poppler0.72.0.cc	2019-12-17 23:32:22.556794478 +0100
+@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
+         exit(1);
+     }
+     fileName = new GString(argv[1]);
+-    globalParams = new GlobalParams();
++    globalParams = std::make_unique<GlobalParams>();
+     doc = new PDFDoc(fileName);
+     if (!doc->isOk()) {
+         fprintf(stderr, "Invalid PDF file\n");
+@@ -99,8 +99,7 @@ int main(int argc, char *argv[])
+     srcStream = Object(objNull);
+     if (objnum == 0) {
+         srcStream = catalogDict.dictLookup("SourceObject");
+-        static char const_SourceFile[] = "SourceFile";
+-        if (!srcStream.isStream(const_SourceFile)) {
++        if (!srcStream.isStream()) {
+             fprintf(stderr, "No SourceObject found\n");
+             exit(1);
+         }
+@@ -202,5 +201,4 @@ int main(int argc, char *argv[])
+         fprintf(stderr, "Cross-reference table extracted to %s\n", outname);
+     fclose(outfile);
+     delete doc;
+-    delete globalParams;
+ }
+diff -up texlive-20190410-source/texk/web2c/pdftexdir/pdftoepdf-poppler0.75.0.cc.omv~ texlive-20190410-source/texk/web2c/pdftexdir/pdftoepdf-poppler0.75.0.cc
+--- texlive-20190410-source/texk/web2c/pdftexdir/pdftoepdf-poppler0.75.0.cc.omv~	2019-12-18 00:07:36.372691923 +0100
++++ texlive-20190410-source/texk/web2c/pdftexdir/pdftoepdf-poppler0.75.0.cc	2019-12-18 00:07:52.122691159 +0100
+@@ -723,7 +723,7 @@ read_pdf_info(char *image_name, char *pa
+ #endif
+     // initialize
+     if (!isInit) {
+-        globalParams = new GlobalParams();
++        globalParams = std::make_unique<GlobalParams>();
+         globalParams->setErrQuiet(false);
+         isInit = true;
+     }
+@@ -1106,7 +1106,5 @@ void epdf_check_mem()
+             n = p->next;
+             delete_document(p);
+         }
+-        // see above for globalParams
+-        delete globalParams;
+     }
+ }

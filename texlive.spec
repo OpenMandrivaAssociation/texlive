@@ -130,6 +130,7 @@ Patch5:		texlive-20180414-compile.patch
 Patch6:		texlive-2018-libdl-linkage.patch
 Patch7:		texlive-20190413-poppler-0.76.patch
 Patch8:		poppler076.patch
+Patch9:		texlive-2019-poppler-83.patch
 # LFS sometimes (not yet for 2019) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
