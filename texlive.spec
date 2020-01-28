@@ -1280,19 +1280,19 @@ CONFIGURE_TOP=../utils/asymptote
 	--enable-gc=system					\
 	--enable-texlive-build					\
 	--datadir=%{_texmfdir}
-%make
+%make LIBGS_LIBS="-lgs"
 popd
 %endif
 
 #-----------------------------------------------------------------------
 %install
 pushd texlive
-%makeinstall_std
+%makeinstall_std LIBGS_LIBS="-lgs"
 popd
 
 %if %{_texmf_enable_asymptote}
 pushd asymptote
-%makeinstall_std
+%makeinstall_std LIBGS_LIBS="-lgs"
 popd
 %endif
 
