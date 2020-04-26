@@ -22,8 +22,8 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20190410
-Release:	11
+Version:	20200406
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -699,6 +699,8 @@ texlive luatex.bin package.
 %{_bindir}/texluac
 %{_bindir}/mflua
 %{_bindir}/mflua-nowin
+%{_bindir}/luahbtex
+%{_bindir}/luajithbtex
 %ifnarch %{riscv} %{mips} %{power64} s390 s390x
 %{_bindir}/luajittex
 %{_bindir}/mfluajit
@@ -1366,7 +1368,8 @@ pushd %{buildroot}%{_bindir}
 	  texconfig-sys texexec tlcockpit tlshell tpic2pdftex wordcount
 
     # use symlinks from noarch packages
-    rm -f a2ping afm2afm allec arlatex authorindex autoinst bbl2bib	\
+    rm -f chklref ketcindy pamphletangler texplate			\
+	  a2ping afm2afm allec arlatex authorindex autoinst bbl2bib	\
 	  bibexport bibdoiadd bibmradd bibzbladd bundledoc cachepic	\
 	  checkcites checklistings cjk-gs-integrate cmap2enc contextjit \
 	  convbkmk diadia getmapdl pygmentex \
