@@ -128,10 +128,6 @@ Patch3:		texlive-texmfcnf.patch
 Patch4:		texlive-20150521-clang-3.8.patch
 Patch5:		texlive-20180414-compile.patch
 Patch6:		texlive-2018-libdl-linkage.patch
-Patch7:		texlive-20190413-poppler-0.76.patch
-Patch8:		poppler076.patch
-Patch9:		texlive-2019-poppler-83.patch
-Patch10:	texlive-poppler-96.patch
 # LFS sometimes (not yet for 2019) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
@@ -1162,8 +1158,8 @@ sed -i s/SELFAUTOPARENT/TEXMFROOT/ texk/tex4htk/t4ht.c
 ## prevent compiling Xdvi with libXp
 sed -i~ 's|-lXp ||' texk/xdvik/configure
 find texk/web2c/{lua,pdf}texdir -type f | xargs sed -e 's|gTrue|true|g' -e 's|gFalse|false|g' -e 's|GBool|bool|g' -i
-cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.75.0,}.cc
-cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.72.0,}.cc
+cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.86.0,}.cc
+cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.83.0,}.cc
 
 #-----------------------------------------------------------------------
 %build
