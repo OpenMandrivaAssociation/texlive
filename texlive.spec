@@ -23,7 +23,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20200406
-Release:	3
+Release:	4
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -60,7 +60,8 @@ Requires:	texlive-scheme-medium
 Requires:	texlive-scheme-xml
 Requires:	texlive-collection-latexextra
 Requires:	texlive-latex.bin
-Requires(post):	texlive-tlpkg
+# Make sure the triggers are there
+Requires(pre,post):	texlive-tlpkg
 BuildRequires:	texlive-tlpkg
 
 #-----------------------------------------------------------------------
@@ -140,9 +141,6 @@ free software, including support for many languages around the world.
 %files
 %dir %{_texmfvardir}
 %dir %{_texmfconfdir}
-
-%posttrans
-    %{_sbindir}/texlive.post -
 
 #-----------------------------------------------------------------------
 %if %{enable_shared}
