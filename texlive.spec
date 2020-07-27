@@ -1320,7 +1320,7 @@ for i in `find . -type l`; do
 if [ "`readlink $i | grep '..' | wc -l`" == "1" ]; then
 l=`readlink $i | sed s,.*/texmf,/usr/share/texmf,`
 rm -f $i
-if [[ -f %{buildroot}/$l ]]; then
+if [[ -f %{buildroot}/$l && $i != "./ltx2crossrefxml" ]]; then
   cp %{buildroot}/$l $i
 else
   ln -s $l $i
