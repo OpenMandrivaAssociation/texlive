@@ -1314,6 +1314,22 @@ if [ -f %{buildroot}%{_bindir}/otfinfo ]; then
 fi
 %endif
 
+# relocate binaries to %%{_bindir} and fix relative symlinks
+pushd %{buildroot}%{_bindir}
+for i in `find . -type l`; do
+if [ "`readlink $i | grep '..' | wc -l`" == "1" ]; then
+l=`readlink $i | sed s,.*/texmf,/usr/share/texmf,`
+rm -f $i
+if [[ -f %{buildroot}/$l ]]; then
+  cp %{buildroot}/$l $i
+else
+  ln -s $l $i
+fi
+
+fi
+done
+popd
+
 pushd %{buildroot}%{_bindir}
     # missing symbolic links
     ln -sf aleph lamed
