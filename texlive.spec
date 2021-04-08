@@ -18,12 +18,12 @@
 
 %define enable_shared			1
 
-%define historic			1
+%define historic			0
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20200406
-Release:	13
+Version:	20210324
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -37,7 +37,7 @@ Source1:	ftp://tug.org/historic/systems/texlive/%(echo %{version}|cut -b1-4)/tex
 # svn export . /tmp/texlive-$(date +%Y%m%d)-source
 # cd /tmp
 # tar cJf texlive-$(date +%Y%m%d)-source.tar.xz texlive-$(date +%Y%m%d)-source/
-Source0:	texlive-%{version}-source.tar.xz
+Source0:	https://ctan.org/tex-archive/systems/texlive/Source/texlive-%{version}-source.tar.xz
 # sha512sum texlive-$(date +%Y%m%d)-source.tar.xz > texlive-$(date +%Y%m%d)-source.tar.xz.sha512
 Source1:	texlive-%{version}-source.tar.xz.sha512
 %endif
@@ -129,7 +129,8 @@ Patch3:		texlive-texmfcnf.patch
 Patch4:		texlive-20150521-clang-3.8.patch
 Patch5:		texlive-20180414-compile.patch
 Patch6:		texlive-2018-libdl-linkage.patch
-# LFS sometimes (not yet for 2019) has useful patches at
+Patch7:		texlive-20210324-restore-poppler-support.patch
+# LFS sometimes (not yet for 2021) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
 %description
@@ -645,6 +646,67 @@ texlive latex.bin package.
 %{_bindir}/lualatex
 %{_bindir}/pdflatex
 %{_bindir}/ltx2crossrefxml
+%{_bindir}/git-latexdiff
+
+#-----------------------------------------------------------------------
+%package	-n texlive-albatross.bin
+Summary:	binary files of albatross
+
+%description	-n texlive-albatross.bin
+texlive albatross.bin package.
+
+%files -n texlive-albatross.bin
+%{_bindir}/albatross
+
+#-----------------------------------------------------------------------
+%package	-n texlive-hyperxmp-add-bytecount.bin
+Summary:	binary files of hyperxmp-add-bytecount
+
+%description	-n texlive-hyperxmp-add-bytecount.bin
+texlive hyperxmp-add-bytecount.bin package.
+
+%files -n texlive-hyperxmp-add-bytecount.bin
+%{_bindir}/hyperxmp-add-bytecount
+
+#-----------------------------------------------------------------------
+%package	-n texlive-llmk.bin
+Summary:	binary files of llmk
+
+%description	-n texlive-llmk.bin
+texlive llmk.bin package.
+
+%files -n texlive-llmk.bin
+%{_bindir}/llmk
+
+#-----------------------------------------------------------------------
+%package	-n texlive-spix.bin
+Summary:	binary files of spix
+
+%description	-n texlive-spix.bin
+texlive spix.bin package.
+
+%files -n texlive-spix.bin
+%{_bindir}/spix
+
+#-----------------------------------------------------------------------
+%package	-n texlive-tikztosvg.bin
+Summary:	binary files of tikztosvg
+
+%description	-n texlive-tikztosvg.bin
+texlive tikztosvg.bin package.
+
+%files -n texlive-tikztosvg.bin
+%{_bindir}/tikztosvg
+
+#-----------------------------------------------------------------------
+%package	-n texlive-xml2pmx.bin
+Summary:	binary files of xml2pmx
+
+%description	-n texlive-xml2pmx.bin
+texlive xml2pmx.bin package.
+
+%files -n texlive-xml2pmx.bin
+%{_bindir}/xml2pmx
 
 #-----------------------------------------------------------------------
 %package	-n texlive-msxlint.bin
@@ -1155,9 +1217,7 @@ sed -i s/SELFAUTOPARENT/TEXMFROOT/ texk/tex4htk/t4ht.c
 
 ## prevent compiling Xdvi with libXp
 sed -i~ 's|-lXp ||' texk/xdvik/configure
-find texk/web2c/{lua,pdf}texdir -type f | xargs sed -e 's|gTrue|true|g' -e 's|gFalse|false|g' -e 's|GBool|bool|g' -i
-cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.86.0,}.cc
-cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.83.0,}.cc
+#find texk/web2c/{lua,pdf}texdir -type f | xargs sed -e 's|gTrue|true|g' -e 's|gFalse|false|g' -e 's|GBool|bool|g' -i
 
 #-----------------------------------------------------------------------
 %build
@@ -1266,7 +1326,7 @@ CONFIGURE_TOP=.. \
 	--with-system-cairo					\
 	--with-system-libpaper					\
 	--with-system-zziplib
-%make LIBGS_LIBS="-lgs"
+%make_build LIBGS_LIBS="-lgs" XPDF_INCLUDES="`pkg-config --cflags poppler` -DPOPPLER_VERSION=\\\"`pkg-config --modversion poppler`\\\"" XPDF_LIBS="`pkg-config --libs poppler`"
 popd
 
 %if %{_texmf_enable_asymptote}
