@@ -130,6 +130,7 @@ Patch4:		texlive-20150521-clang-3.8.patch
 Patch5:		texlive-20180414-compile.patch
 Patch6:		texlive-2018-libdl-linkage.patch
 Patch7:		texlive-20210324-restore-poppler-support.patch
+Patch8:		texlive-poppler-21.09.patch
 # LFS sometimes (not yet for 2021) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
