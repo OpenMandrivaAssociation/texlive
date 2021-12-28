@@ -23,7 +23,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20210324
-Release:	6
+Release:	8
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -56,8 +56,6 @@ Requires:	tkinter
 Requires:	teckit >= 0:2.5.3-1
 %endif
 
-Requires:	texlive-scheme-medium
-Requires:	texlive-scheme-xml
 Requires:	texlive-collection-latexextra
 Requires:	texlive-latex.bin
 # Make sure the triggers are there
