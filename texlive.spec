@@ -1251,6 +1251,7 @@ chmod +x freetype-config
 export PATH=$PATH:`pwd`
 
 CONFIGURE_TOP=.. \
+CXXFLAGS="%{optflags} -std=gnu++17" \
 %configure							\
 	--with-banner-add="/OpenMandriva"			\
 	--disable-native-texlive-build				\
