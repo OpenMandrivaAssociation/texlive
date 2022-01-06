@@ -1,5 +1,4 @@
 %define _binary_payload w9.gzdio
-%define _source_payload w9.gzdio
 %define _disable_lto 1
 %define _disable_rebuild_configure 1
 
