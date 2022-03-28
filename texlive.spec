@@ -20,7 +20,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20210324
-Release:	10
+Release:	11
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -83,7 +83,7 @@ BuildRequires:	gd-devel
 BuildRequires:	icu-devel >= 49
 %endif
 %if %{_texmf_with_system_poppler}
-BuildRequires:	pkgconfig(poppler) >= 0.71.0
+BuildRequires:	pkgconfig(poppler) >= 22.03.0
 %endif
 BuildRequires:	ghostscript-devel
 BuildRequires:	glibc-static-devel stdc++-static-devel
@@ -126,6 +126,7 @@ Patch5:		texlive-20180414-compile.patch
 Patch6:		texlive-2018-libdl-linkage.patch
 Patch7:		texlive-20210324-restore-poppler-support.patch
 Patch8:		texlive-poppler-21.09.patch
+Patch9:		texlive-20210324-poppler-22.03.patch
 # LFS sometimes (not yet for 2021) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
