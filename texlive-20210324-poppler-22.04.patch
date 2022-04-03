@@ -1,0 +1,91 @@
+diff -up texlive-20210324-source/configure.omv~ texlive-20210324-source/configure
+--- texlive-20210324-source/configure.omv~	2022-04-03 20:16:23.925697835 +0200
++++ texlive-20210324-source/configure	2022-04-03 20:16:31.085731866 +0200
+@@ -22072,7 +22072,7 @@ $as_echo_n "checking requested system \`
+ int
+ main ()
+ {
+-GfxFont *gfxFont; gfxFont->decRefCnt();
++GfxFont *gfxFont; gfxFont->isOk();
+   ;
+   return 0;
+ }
+diff -up texlive-20210324-source/libs/xpdf/ac/xpdf.ac.omv~ texlive-20210324-source/libs/xpdf/ac/xpdf.ac
+--- texlive-20210324-source/libs/xpdf/ac/xpdf.ac.omv~	2022-04-03 20:16:12.238642226 +0200
++++ texlive-20210324-source/libs/xpdf/ac/xpdf.ac	2022-04-03 20:16:21.520686397 +0200
+@@ -9,4 +9,4 @@ dnl
+ ## TL sources)
+ KPSE_TRY_LIBXX([xpdf],
+                [#include <GfxFont.h>],
+-               [GfxFont *gfxFont; gfxFont->decRefCnt();])
++               [GfxFont *gfxFont; gfxFont->isOk();])
+diff -up texlive-20210324-source/texk/web2c/configure.omv~ texlive-20210324-source/texk/web2c/configure
+diff -up texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~	2022-04-03 20:16:40.034774363 +0200
++++ texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc	2022-04-03 20:16:50.050821876 +0200
+@@ -672,11 +672,6 @@ static void writeEncodings()
+     }
+     for (r = encodingList; r != 0; r = n) {
+         n = r->next;
+-#ifdef POPPLER_VERSION
+-        r->font->decRefCnt();
+-#else
+-#error POPPLER_VERSION should be defined.
+-#endif
+         delete r;
+     }
+ }
+diff -up texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~	2022-04-03 20:42:47.171437613 +0200
++++ texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc	2022-04-03 20:55:27.289631954 +0200
+@@ -114,7 +114,7 @@ struct InObj {
+ 
+ struct UsedEncoding {
+     int enc_objnum;
+-    GfxFont *font;
++    std::unique_ptr<GfxFont> font;
+     UsedEncoding *next;
+ };
+ 
+@@ -194,13 +194,13 @@ static void delete_document(PdfDocument
+ 
+ // --------------------------------------------------------------------
+ 
+-static int addEncoding(GfxFont * gfont)
++static int addEncoding(std::unique_ptr<GfxFont> &gfont)
+ {
+     UsedEncoding *n;
+     n = new UsedEncoding;
+     n->next = encodingList;
+     encodingList = n;
+-    n->font = gfont;
++    n->font = std::move(gfont);
+     n->enc_objnum = pdfnewobjnum();
+     return n->enc_objnum;
+ }
+@@ -385,7 +385,6 @@ static void copyFont(char *tag, Object *
+ {
+     Object fontdict, subtype, basefont, fontdescRef, fontdesc, charset,
+         stemV;
+-    GfxFont *gfont;
+     fd_entry *fd;
+     fm_entry *fontmap;
+     // Check whether the font has already been embedded before analysing it.
+@@ -431,7 +430,7 @@ static void copyFont(char *tag, Object *
+             embed_whole_font(fd);
+         addFontDesc(fontdescRef.getRef(), fd);
+         copyName(tag);
+-        gfont = GfxFont::makeFont(xref, tag, fontRef->getRef(),
++        auto gfont = GfxFont::makeFont(xref, tag, fontRef->getRef(),
+                                   fontdict.getDict());
+         pdf_printf(" %d 0 R ", addFont(fontRef->getRef(), fd,
+                                        addEncoding(gfont)));
+@@ -663,7 +662,7 @@ static void writeEncodings()
+                     ("PDF inclusion: CID fonts are not supported"
+                      " (try to disable font replacement to fix this)");
+             }
+-            if ((s = (char *)((Gfx8BitFont *) r->font)->getCharName(i)) != 0)
++            if ((s = (char *)(reinterpret_cast<Gfx8BitFont*>(r->font.get()))->getCharName(i)) != 0)
+                 glyphNames[i] = s;
+             else
+                 glyphNames[i] = notdef;
