@@ -1,43 +1,27 @@
-diff -up texlive-20210324-source/configure.omv~ texlive-20210324-source/configure
---- texlive-20210324-source/configure.omv~	2022-04-03 20:16:23.925697835 +0200
-+++ texlive-20210324-source/configure	2022-04-03 20:16:31.085731866 +0200
-@@ -22072,7 +22072,7 @@ $as_echo_n "checking requested system \`
+diff -up texlive-20220321-source/configure.10~ texlive-20220321-source/configure
+--- texlive-20220321-source/configure.10~	2022-05-05 12:06:29.354158815 +0200
++++ texlive-20220321-source/configure	2022-05-05 12:39:50.604425582 +0200
+@@ -23527,7 +23527,7 @@ printf %s "checking requested system \`x
  int
- main ()
+ main (void)
  {
 -GfxFont *gfxFont; gfxFont->decRefCnt();
 +GfxFont *gfxFont; gfxFont->isOk();
    ;
    return 0;
  }
-diff -up texlive-20210324-source/libs/xpdf/ac/xpdf.ac.omv~ texlive-20210324-source/libs/xpdf/ac/xpdf.ac
---- texlive-20210324-source/libs/xpdf/ac/xpdf.ac.omv~	2022-04-03 20:16:12.238642226 +0200
-+++ texlive-20210324-source/libs/xpdf/ac/xpdf.ac	2022-04-03 20:16:21.520686397 +0200
+diff -up texlive-20220321-source/libs/xpdf/ac/xpdf.ac.10~ texlive-20220321-source/libs/xpdf/ac/xpdf.ac
+--- texlive-20220321-source/libs/xpdf/ac/xpdf.ac.10~	2020-05-14 19:47:47.000000000 +0200
++++ texlive-20220321-source/libs/xpdf/ac/xpdf.ac	2022-05-05 12:06:29.355158821 +0200
 @@ -9,4 +9,4 @@ dnl
  ## TL sources)
  KPSE_TRY_LIBXX([xpdf],
                 [#include <GfxFont.h>],
 -               [GfxFont *gfxFont; gfxFont->decRefCnt();])
 +               [GfxFont *gfxFont; gfxFont->isOk();])
-diff -up texlive-20210324-source/texk/web2c/configure.omv~ texlive-20210324-source/texk/web2c/configure
-diff -up texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc
---- texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~	2022-04-03 20:16:40.034774363 +0200
-+++ texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc	2022-04-03 20:16:50.050821876 +0200
-@@ -672,11 +672,6 @@ static void writeEncodings()
-     }
-     for (r = encodingList; r != 0; r = n) {
-         n = r->next;
--#ifdef POPPLER_VERSION
--        r->font->decRefCnt();
--#else
--#error POPPLER_VERSION should be defined.
--#endif
-         delete r;
-     }
- }
-diff -up texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc
---- texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~	2022-04-03 20:42:47.171437613 +0200
-+++ texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc	2022-04-03 20:55:27.289631954 +0200
+diff -up texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc.10~ texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc.10~	2022-05-05 12:06:29.349158784 +0200
++++ texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc	2022-05-05 12:06:29.355158821 +0200
 @@ -114,7 +114,7 @@ struct InObj {
  
  struct UsedEncoding {
@@ -89,3 +73,15 @@ diff -up texlive-20210324-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-
                  glyphNames[i] = s;
              else
                  glyphNames[i] = notdef;
+@@ -672,11 +671,6 @@ static void writeEncodings()
+     }
+     for (r = encodingList; r != 0; r = n) {
+         n = r->next;
+-#ifdef POPPLER_VERSION
+-        r->font->decRefCnt();
+-#else
+-#error POPPLER_VERSION should be defined.
+-#endif
+         delete r;
+     }
+ }

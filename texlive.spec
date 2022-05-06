@@ -19,8 +19,8 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20210324
-Release:	12
+Version:	20220321
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -418,6 +418,7 @@ texlive cweb.bin package.
 %files -n texlive-cweb.bin
 %{_bindir}/ctangle
 %{_bindir}/cweave
+%{_bindir}/twill
 
 #-----------------------------------------------------------------------
 %package -n texlive-detex.bin
@@ -769,6 +770,7 @@ texlive luatex.bin package.
 %{_bindir}/mflua-nowin
 %{_bindir}/luahbtex
 %{_bindir}/luajithbtex
+%{_bindir}/luafindfont
 %ifnarch %{riscv} %{mips} %{power64} s390 s390x
 %{_bindir}/luajittex
 %{_bindir}/mfluajit
@@ -1172,6 +1174,55 @@ texlive xetex.bin package.
 %{_bindir}/xdvipdfmx
 %{_bindir}/xelatex
 %{_bindir}/xetex
+%{_bindir}/xelatex-unsafe
+%{_bindir}/xetex-unsafe
+
+#-----------------------------------------------------------------------
+%package -n texlive-texlog.bin
+Summary:	texlog binaries, part of TeX Live
+Group:		System/Libraries
+
+%description -n texlive-texlog.bin
+texlog binaries, part of TeX Live
+
+%files -n texlive-texlog.bin
+%{_bindir}/texlogfilter
+%{_bindir}/texlogsieve
+
+#-----------------------------------------------------------------------
+%package -n texlive-optexcount.bin
+Summary:	optexcount binary, part of TeX Live
+Group:		System/Libraries
+
+%description -n texlive-optexcount.bin
+optexcount binary, part of TeX Live
+
+%files -n texlive-optexcount.bin
+%{_bindir}/optexcount
+
+#-----------------------------------------------------------------------
+%package -n texlive-hitex.bin
+Summary:	hitex binaries, part of TeX Live
+Group:		System/Libraries
+
+%description -n texlive-hitex.bin
+hitex binaries, part of TeX Live
+
+%files -n texlive-hitex.bin
+%{_bindir}/hishrink
+%{_bindir}/histretch
+%{_bindir}/hitex
+
+#-----------------------------------------------------------------------
+%package -n texlive-citeproc.bin
+Summary:	citeproc binary, part of TeX Live
+Group:		System/Libraries
+
+%description -n texlive-citeproc.bin
+citeproc binary, part of TeX Live
+
+%files -n texlive-citeproc.bin
+%{_bindir}/citeproc
 
 #-----------------------------------------------------------------------
 %package -n texlive-autosp.bin
