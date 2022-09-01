@@ -128,6 +128,8 @@ Patch7:		texlive-20210324-restore-poppler-support.patch
 Patch8:		texlive-poppler-21.09.patch
 Patch9:		texlive-20210324-poppler-22.03.patch
 Patch10:	texlive-20210324-poppler-22.04.patch
+Patch11:	texlive-20220321-poppler-22.09.patch
+Patch12:	texlive-20220321-clang-15.patch
 # LFS sometimes (not yet for 2021) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
@@ -1310,7 +1312,7 @@ chmod +x freetype-config
 export PATH=$PATH:$(pwd)
 
 CONFIGURE_TOP=.. \
-CXXFLAGS="%{optflags} -std=gnu++17" \
+CXXFLAGS="%{optflags} -std=gnu++17 $(pkg-config --cflags poppler)" \
 %configure							\
 	--with-banner-add="/OpenMandriva"			\
 	--disable-native-texlive-build				\

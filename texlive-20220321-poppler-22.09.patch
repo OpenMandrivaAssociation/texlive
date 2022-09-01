@@ -1,0 +1,11 @@
+diff -up texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~	2022-09-02 00:10:31.682335209 +0200
++++ texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc	2022-09-02 00:11:53.551694452 +0200
+@@ -25,6 +25,7 @@ some kind of pdf images, such as figure_
+ The poppler should be 0.86.0 or newer versions.
+ POPPLER_VERSION should be defined.
+ */
++#include <poppler/poppler-config.h>
+ 
+ /* Do this early in order to avoid a conflict between
+    MINGW32 <rpcndr.h> defining 'boolean' as 'unsigned char' and

@@ -1,0 +1,36 @@
+diff -up texlive-20220321-source/texk/dvisvgm/dvisvgm-src/src/Ghostscript.hpp.omv~ texlive-20220321-source/texk/dvisvgm/dvisvgm-src/src/Ghostscript.hpp
+--- texlive-20220321-source/texk/dvisvgm/dvisvgm-src/src/Ghostscript.hpp.omv~	2022-09-01 23:50:43.084199691 +0200
++++ texlive-20220321-source/texk/dvisvgm/dvisvgm-src/src/Ghostscript.hpp	2022-09-01 23:50:51.168122471 +0200
+@@ -48,7 +48,7 @@ struct Ghostscript {
+ 	bool init (int argc, const char **argv, void *caller=0) {return false;}
+ 	bool available () {return false;}
+ 	bool revision (gsapi_revision_t *r) {return false;}
+-	int revision () {return 0;}
++	int revision () const {return 0;}
+ 	std::string revisionstr () {return "";}
+ 	int set_stdio (Stdin in, Stdout out, Stderr err) {return 0;}
+ 	int run_string_begin (int user_errors, int *pexit_code) {return 0;}
+diff -up texlive-20220321-source/utils/m-tx/mtx-src/prepmx.c.omv~ texlive-20220321-source/utils/m-tx/mtx-src/prepmx.c
+--- texlive-20220321-source/utils/m-tx/mtx-src/prepmx.c.omv~	2022-09-01 23:26:07.539628519 +0200
++++ texlive-20220321-source/utils/m-tx/mtx-src/prepmx.c	2022-09-01 23:26:11.091592858 +0200
+@@ -769,7 +769,7 @@ Static void topOfPMXfile(void)
+ }
+ 
+ 
+-main(int argc, Char *argv[])
++int main(int argc, Char *argv[])
+ {  /* ---- Main program ------------------------ */
+   PASCAL_MAIN(argc, argv);
+   strcpy(this_version, version);
+diff -up texlive-20220321-source/utils/pmx/pmx-src/libf2c/main.c.omv~ texlive-20220321-source/utils/pmx/pmx-src/libf2c/main.c
+--- texlive-20220321-source/utils/pmx/pmx-src/libf2c/main.c.omv~	2022-09-01 23:19:32.432625248 +0200
++++ texlive-20220321-source/utils/pmx/pmx-src/libf2c/main.c	2022-09-01 23:19:40.276545158 +0200
+@@ -106,7 +106,7 @@ char **xargv;
+ #ifdef KR_headers
+ main(argc, argv) int argc; char **argv;
+ #else
+-main(int argc, char **argv)
++int main(int argc, char **argv)
+ #endif
+ {
+ xargc = argc;
