@@ -1,0 +1,20 @@
+diff -up texlive-20220321-source/m4/kpse-xpdf-flags.m4.omv~ texlive-20220321-source/m4/kpse-xpdf-flags.m4
+--- texlive-20220321-source/m4/kpse-xpdf-flags.m4.omv~	2022-10-20 15:27:24.221590035 +0200
++++ texlive-20220321-source/m4/kpse-xpdf-flags.m4	2022-10-20 15:28:55.589125336 +0200
+@@ -44,12 +44,10 @@ test "x$kpse_cv_have_win32" = xno || XPD
+ # Keep this macro's expansion as a valid shell command, though.
+ # since it is used internally in the configure scripts.
+ # --------------------------------
+-AC_DEFUN([KPSE_XPDF_OPTIONS], [dnl
+-[m4_ifval([$1],
+-          [AC_ARG_WITH([system-xpdf],
+-                       AS_HELP_STRING([--with-system-xpdf],
+-                                      [use installed poppler headers and library instead of xpdf library from TL (requires pkg-config)]))])[]dnl
+-]) # KPSE_XPDF_OPTIONS
++AC_DEFUN([KPSE_XPDF_OPTIONS], [
++          AC_ARG_WITH([system-xpdf],
++                      AS_HELP_STRING([--with-system-xpdf],
++                                     [use installed poppler headers and library instead of xpdf library from TL (requires pkg-config)]))])
+ 
+ # KPSE_XPDF_SYSTEM_FLAGS -- as above, no more poppler.
+ # ----------------------

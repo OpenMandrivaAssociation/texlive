@@ -1,6 +1,5 @@
 %define _binary_payload w9.gzdio
 %define _disable_lto 1
-%define _disable_rebuild_configure 1
 
 %define _texmf_enable_asymptote 0
 %define _texmf_enable_biber 0
@@ -130,6 +129,8 @@ Patch9:		texlive-20210324-poppler-22.03.patch
 Patch10:	texlive-20210324-poppler-22.04.patch
 Patch11:	texlive-20220321-poppler-22.09.patch
 Patch12:	texlive-20220321-clang-15.patch
+Patch13:	texlive-20220321-fix-m4-syntax-errors.patch
+Patch14:	texlive-20220321-ghostscript-10.patch
 # LFS sometimes (not yet for 2021) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
@@ -1262,12 +1263,8 @@ texlive tex2aspc.bin package.
 #-----------------------------------------------------------------------
 %prep
 %autosetup -p1 -n %{name}-%{version}-source
-cd libs/luajit
-libtoolize --force
-aclocal
-automake -a
-autoconf
-cd ../..
+# libtool suuuuuuuuuuuuucks!!!!!
+find . -name libtool -o -name ltmain.sh -o -name configure |xargs sed -i -e "s,2\.4\.6,$(libtool --version |head -n1 |rev |cut -d' ' -f1 |rev),g"
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's|^(TEXMFMAIN\s+= ).*|$1%{_texmfdistdir}|;'		  \

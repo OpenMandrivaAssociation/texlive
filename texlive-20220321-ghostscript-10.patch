@@ -1,0 +1,14 @@
+diff -up texlive-20220321-source/texk/dvisvgm/dvisvgm-src/src/Ghostscript.cpp.omv~ texlive-20220321-source/texk/dvisvgm/dvisvgm-src/src/Ghostscript.cpp
+--- texlive-20220321-source/texk/dvisvgm/dvisvgm-src/src/Ghostscript.cpp.omv~	2022-10-20 23:34:30.924387557 +0200
++++ texlive-20220321-source/texk/dvisvgm/dvisvgm-src/src/Ghostscript.cpp	2022-10-20 23:35:13.609670147 +0200
+@@ -28,6 +28,10 @@
+ #include <sstream>
+ #if defined(HAVE_LIBGS)
+ 	#include <ghostscript/ierrors.h>
++	const char *const gs_error_names[] =
++	{
++		ERROR_NAMES
++	}; // This was exported before 10.0, but isn't anymore
+ #else
+ 	#include "ierrors.h"
+ 	#include "FileFinder.hpp"
