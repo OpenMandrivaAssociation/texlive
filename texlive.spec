@@ -114,6 +114,9 @@ BuildRequires:	pkgconfig(harfbuzz)
 BuildRequires:	pkgconfig(graphite2)
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	libpaper-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool
 
 #-----------------------------------------------------------------------
 Patch1:		texlive-asymptote.patch
