@@ -19,7 +19,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20220321
-Release:	13
+Release:	14
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
