@@ -1027,7 +1027,7 @@ texlive synctex.bin package.
 Summary:	SyncTeX development files
 Group:		Development/C
 Requires:	texlive-synctex.bin = %{version}-%{release}
-Requires:	%{mklibname synctex 2} = %{version}-%{release}
+Requires:	%{mklibname synctex} = %{version}-%{release}
 
 %description -n %{synctex_devel}
 This package includes the SyncTeX development files.
