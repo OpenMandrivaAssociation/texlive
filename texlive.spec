@@ -18,15 +18,14 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20220321
-Release:	15
+Version:	20230311
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
 %if %{historic}
 Source0:	ftp://tug.org/historic/systems/texlive/%(echo %{version}|cut -b1-4)/texlive-%{version}-source.tar.xz
-Source1:	ftp://tug.org/historic/systems/texlive/%(echo %{version}|cut -b1-4)/texlive-%{version}-source.tar.xz.sha512
 %else
 # svn co svn://tug.org/texlive/branches/branch2019/Build/source texlive-source
 # cd texlive-source
@@ -34,8 +33,6 @@ Source1:	ftp://tug.org/historic/systems/texlive/%(echo %{version}|cut -b1-4)/tex
 # cd /tmp
 # tar cJf texlive-$(date +%Y%m%d)-source.tar.xz texlive-$(date +%Y%m%d)-source/
 Source0:	https://ctan.org/tex-archive/systems/texlive/Source/texlive-%{version}-source.tar.xz
-# sha512sum texlive-$(date +%Y%m%d)-source.tar.xz > texlive-$(date +%Y%m%d)-source.tar.xz.sha512
-Source1:	texlive-%{version}-source.tar.xz.sha512
 %endif
 Source100:	%{name}.rpmlintrc
 Obsoletes:	tetex-usrlocal < 3.0-1
@@ -124,17 +121,14 @@ Patch2:		texlive-xdvi.patch
 # New definition only misses default location...
 Patch3:		texlive-texmfcnf.patch
 Patch4:		texlive-20150521-clang-3.8.patch
-Patch5:		texlive-20180414-compile.patch
-Patch6:		texlive-2018-libdl-linkage.patch
 Patch7:		texlive-20210324-restore-poppler-support.patch
 Patch8:		texlive-poppler-21.09.patch
 Patch9:		texlive-20210324-poppler-22.03.patch
 Patch10:	texlive-20210324-poppler-22.04.patch
 Patch11:	texlive-20220321-poppler-22.09.patch
-Patch12:	texlive-20220321-clang-15.patch
 Patch13:	texlive-20220321-fix-m4-syntax-errors.patch
 Patch14:	texlive-20220321-ghostscript-10.patch
-# LFS sometimes (not yet for 2021) has useful patches at
+# LFS sometimes (not yet for 2023) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
 
@@ -280,6 +274,7 @@ texlive bibtex.bin package.
 
 %files -n texlive-bibtex.bin
 %{_bindir}/bibtex
+%{_bindir}/bibcop
 
 #-----------------------------------------------------------------------
 %package -n texlive-bibtex8.bin
@@ -1053,6 +1048,8 @@ texlive tex.bin package.
 %files -n texlive-tex.bin
 %{_bindir}/initex
 %{_bindir}/tex
+%{_bindir}/texaccents
+%{_bindir}/textestvis
 
 #-----------------------------------------------------------------------
 %package -n texlive-tex4ht.bin
@@ -1228,7 +1225,7 @@ Group:		System/Libraries
 citeproc binary, part of TeX Live
 
 %files -n texlive-citeproc.bin
-%{_bindir}/citeproc
+%{_bindir}/citeproc-lua
 
 #-----------------------------------------------------------------------
 %package -n texlive-autosp.bin
@@ -1262,6 +1259,29 @@ texlive tex2aspc.bin package.
 
 %files -n texlive-tex2aspc.bin
 %{_bindir}/tex2aspc
+
+#-----------------------------------------------------------------------
+%package digestif.bin
+Summary:	Binary files of digestif
+Group:		System/Libraries
+
+%description digestif.bin
+Binary files of digestif
+
+%files digestif.bin
+%{_bindir}/digestif
+
+
+#-----------------------------------------------------------------------
+%package pagelayout.bin
+Summary:	Binary files of pagelayout
+Group:		System/Libraries
+
+%description pagelayout.bin
+Binary files of pagelayout
+
+%files pagelayout.bin
+%{_bindir}/pagelayoutapi
 
 #-----------------------------------------------------------------------
 %prep

@@ -1,12 +1,12 @@
-diff -up texlive-20210324-source/utils/asymptote/settings.cc.1~ texlive-20210324-source/utils/asymptote/settings.cc
---- texlive-20210324-source/utils/asymptote/settings.cc.1~	2021-04-08 00:00:58.534797828 +0200
-+++ texlive-20210324-source/utils/asymptote/settings.cc	2021-04-08 00:04:52.439594112 +0200
+diff -up texlive-20230311-source/utils/asymptote/settings.cc.1~ texlive-20230311-source/utils/asymptote/settings.cc
+--- texlive-20230311-source/utils/asymptote/settings.cc.1~	2023-04-15 14:38:31.843005548 +0200
++++ texlive-20230311-source/utils/asymptote/settings.cc	2023-04-15 14:40:42.882095720 +0200
 @@ -101,9 +101,9 @@ string defaultPSViewer="open";
  string defaultPDFViewer="open";
  string defaultHTMLViewer="open";
  #else
--string defaultPSViewer="gv";
--string defaultPDFViewer="acroread";
+-string defaultPSViewer="evince";
+-string defaultPDFViewer="evince";
 -string defaultHTMLViewer="google-chrome";
 +string defaultPSViewer="xdg-open";
 +string defaultPDFViewer="xdg-open";
