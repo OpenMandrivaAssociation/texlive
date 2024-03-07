@@ -19,7 +19,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20230311
-Release:	11
+Release:	12
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -606,6 +606,7 @@ texlive gsftopk.bin package.
 %package -n texlive-kpathsea.bin
 Summary:	Binary files of kpathsea
 Group:		System/Libraries
+Provides:	%{_bindir}/texhash
 
 %description -n texlive-kpathsea.bin
 texlive kpathsea.bin package.
