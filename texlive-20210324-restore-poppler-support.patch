@@ -1,7 +1,7 @@
-diff -up texlive-20220321-source/configure.7~ texlive-20220321-source/configure
---- texlive-20220321-source/configure.7~	2022-05-05 11:14:13.380699416 +0200
-+++ texlive-20220321-source/configure	2022-05-05 12:06:06.101015218 +0200
-@@ -23514,6 +23514,8 @@ ac_cpp='$CXXCPP $CPPFLAGS'
+diff -up texlive-20240312-source/configure.5~ texlive-20240312-source/configure
+--- texlive-20240312-source/configure.5~	2024-03-10 22:37:05.000000000 +0100
++++ texlive-20240312-source/configure	2024-05-03 20:14:02.255050392 +0200
+@@ -24316,6 +24316,8 @@ ac_cpp='$CXXCPP $CPPFLAGS'
  ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
  ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
  ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
@@ -10,9 +10,9 @@ diff -up texlive-20220321-source/configure.7~ texlive-20220321-source/configure
  if test "x$need_xpdf:$with_system_xpdf" = xyes:yes; then
    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking requested system \`xpdf' library" >&5
  printf %s "checking requested system \`xpdf' library... " >&6; }
-diff -up texlive-20220321-source/m4/kpse-xpdf-flags.m4.7~ texlive-20220321-source/m4/kpse-xpdf-flags.m4
---- texlive-20220321-source/m4/kpse-xpdf-flags.m4.7~	2020-05-14 19:47:47.000000000 +0200
-+++ texlive-20220321-source/m4/kpse-xpdf-flags.m4	2022-05-05 11:14:13.377699393 +0200
+diff -up texlive-20240312-source/m4/kpse-xpdf-flags.m4.5~ texlive-20240312-source/m4/kpse-xpdf-flags.m4
+--- texlive-20240312-source/m4/kpse-xpdf-flags.m4.5~	2020-05-14 19:47:47.000000000 +0200
++++ texlive-20240312-source/m4/kpse-xpdf-flags.m4	2024-05-03 20:14:02.255050392 +0200
 @@ -45,20 +45,17 @@ test "x$kpse_cv_have_win32" = xno || XPD
  # since it is used internally in the configure scripts.
  # --------------------------------
@@ -42,16 +42,9 @@ diff -up texlive-20220321-source/m4/kpse-xpdf-flags.m4.7~ texlive-20220321-sourc
 -dnl POPPLER_VERSION='-DPOPPLER_VERSION=\"'`$PKG_CONFIG poppler --modversion`'\"'
 -dnl XPDF_INCLUDES="$POPPLER_VERSION $XPDF_INCLUDES"
 -dnl ]) # KPSE_XPDF_SYSTEM_FLAGS
-diff -up texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc.7~ texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc
---- texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc.7~	2020-05-14 23:45:48.000000000 +0200
-+++ texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc	2022-05-05 11:14:13.381699424 +0200
-@@ -1,5 +1,5 @@
- /*
--Copyright 1996-2016 Han The Thanh, <thanh@pdftex.org>
-+Copyright 1996-2017 Han The Thanh, <thanh@pdftex.org>
- 
- This file is part of pdfTeX.
- 
+diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~	2024-01-15 03:15:02.000000000 +0100
++++ texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc	2024-05-03 20:14:02.259050440 +0200
 @@ -17,6 +17,15 @@ You should have received a copy of the G
  with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -683,9 +676,9 @@ diff -up texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc.7~ texlive-20
 -        delete globalParams;
      }
  }
-diff -up texlive-20220321-source/texk/web2c/pdftexdir/pdftosrc.cc.7~ texlive-20220321-source/texk/web2c/pdftexdir/pdftosrc.cc
---- texlive-20220321-source/texk/web2c/pdftexdir/pdftosrc.cc.7~	2020-05-14 23:45:48.000000000 +0200
-+++ texlive-20220321-source/texk/web2c/pdftexdir/pdftosrc.cc	2022-05-05 11:14:13.381699424 +0200
+diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftosrc.cc.5~ texlive-20240312-source/texk/web2c/pdftexdir/pdftosrc.cc
+--- texlive-20240312-source/texk/web2c/pdftexdir/pdftosrc.cc.5~	2020-05-14 23:45:48.000000000 +0200
++++ texlive-20240312-source/texk/web2c/pdftexdir/pdftosrc.cc	2024-05-03 20:14:02.259050440 +0200
 @@ -16,6 +16,14 @@ GNU General Public License for more deta
  You should have received a copy of the GNU General Public License along
  with this program.  If not, see <http://www.gnu.org/licenses/>.

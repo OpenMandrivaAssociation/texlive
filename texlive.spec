@@ -14,12 +14,12 @@
 %define _texmf_with_system_tex4ht 0
 %define _texmf_with_system_teckit 1
 %define enable_shared 1
-%define historic 0
+%define historic 1
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20230311
-Release:	13
+Version:	20240312
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -113,7 +113,7 @@ BuildRequires:	pkgconfig(cairo)
 BuildRequires:	libpaper-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool
+BuildRequires:	slibtool
 
 #-----------------------------------------------------------------------
 Patch1:		texlive-asymptote.patch
@@ -121,6 +121,7 @@ Patch2:		texlive-xdvi.patch
 # New definition only misses default location...
 Patch3:		texlive-texmfcnf.patch
 Patch4:		texlive-20150521-clang-3.8.patch
+Patch5:		texlive-c++20.patch
 Patch7:		texlive-20210324-restore-poppler-support.patch
 Patch8:		texlive-poppler-21.09.patch
 Patch9:		texlive-20210324-poppler-22.03.patch
@@ -407,6 +408,8 @@ texlive ctwill.bin package.
 %{_bindir}/ctwill
 %{_bindir}/ctwill-refsort
 %{_bindir}/ctwill-twinx
+%{_bindir}/ctwill-proofsort
+%{_bindir}/twill-refsort
 
 #-----------------------------------------------------------------------
 %package -n texlive-cweb.bin
@@ -627,6 +630,8 @@ texlive kpathsea.bin package.
 %{_bindir}/mktexpk
 %{_bindir}/mktextfm
 %{_bindir}/texhash
+%{_bindir}/runtexshebang
+%{_bindir}/texfindpkg
 
 #-----------------------------------------------------------------------
 %package -n texlive-lacheck.bin
@@ -654,6 +659,7 @@ texlive latex.bin package.
 %{_bindir}/lualatex
 %{_bindir}/pdflatex
 %{_bindir}/ltx2crossrefxml
+%{_bindir}/ltx2unitxt
 %{_bindir}/git-latexdiff
 
 #-----------------------------------------------------------------------
@@ -1285,6 +1291,22 @@ Binary files of pagelayout
 %{_bindir}/pagelayoutapi
 
 #-----------------------------------------------------------------------
+%package extras
+Summary:	Extra tools for texlive
+Group:		System/Libraries
+
+%description extras
+Extra tools for texlive
+
+%files extras
+%{_bindir}/edtx2dtx
+%{_bindir}/eolang
+%{_bindir}/memoize-clean
+%{_bindir}/memoize-extract
+%{_bindir}/ptekf
+%{_bindir}/texblend
+
+#-----------------------------------------------------------------------
 %prep
 %autosetup -p1 -n %{name}-%{version}-source
 # libtool suuuuuuuuuuuuucks!!!!!
@@ -1333,7 +1355,7 @@ chmod +x freetype-config
 export PATH=$PATH:$(pwd)
 
 CONFIGURE_TOP=.. \
-CXXFLAGS="%{optflags} -std=gnu++17 $(pkg-config --cflags poppler)" \
+CXXFLAGS="%{optflags} -std=gnu++20 $(pkg-config --cflags poppler)" \
 %configure							\
 	--with-banner-add="/OpenMandriva"			\
 	--disable-native-texlive-build				\
@@ -1409,7 +1431,7 @@ CXXFLAGS="%{optflags} -std=gnu++17 $(pkg-config --cflags poppler)" \
 	--with-system-libpaper					\
 	--with-system-zziplib
 
-%make_build LIBGS_LIBS="-lgs" XPDF_INCLUDES="$(pkg-config --cflags poppler) -DPOPPLER_VERSION=\\\"$(pkg-config --modversion poppler)\\\"" XPDF_LIBS="$(pkg-config --libs poppler)"
+%make_build LIBGS_LIBS="-lgs" XPDF_INCLUDES="$(pkg-config --cflags poppler) -DPOPPLER_VERSION=\\\"$(pkg-config --modversion poppler)\\\"" XPDF_LIBS="$(pkg-config --libs poppler)" LIBTOOL=slibtool-shared
 popd
 
 %if %{_texmf_enable_asymptote}
@@ -1420,19 +1442,19 @@ CONFIGURE_TOP=../utils/asymptote
 	--enable-gc=system					\
 	--enable-texlive-build					\
 	--datadir=%{_texmfdir}
-%make_build LIBGS_LIBS="-lgs"
+%make_build LIBGS_LIBS="-lgs" LIBTOOL=slibtool-shared
 popd
 %endif
 
 #-----------------------------------------------------------------------
 %install
 pushd texlive
-%make_install LIBGS_LIBS="-lgs"
+%make_install LIBGS_LIBS="-lgs" LIBTOOL=slibtool-shared
 popd
 
 %if %{_texmf_enable_asymptote}
 pushd asymptote
-%make_install LIBGS_LIBS="-lgs"
+%make_install LIBGS_LIBS="-lgs" LIBTOOL=slibtool-shared
 popd
 %endif
 

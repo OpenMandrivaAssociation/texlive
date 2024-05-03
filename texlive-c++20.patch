@@ -1,0 +1,46 @@
+diff -up texlive-20240312-source/texk/dvisvgm/dvisvgm-src/libs/clipper/clipper.cpp.omv~ texlive-20240312-source/texk/dvisvgm/dvisvgm-src/libs/clipper/clipper.cpp
+--- texlive-20240312-source/texk/dvisvgm/dvisvgm-src/libs/clipper/clipper.cpp.omv~	2024-05-03 22:52:53.599244317 +0200
++++ texlive-20240312-source/texk/dvisvgm/dvisvgm-src/libs/clipper/clipper.cpp	2024-05-03 22:52:58.963299902 +0200
+@@ -1970,7 +1970,7 @@ void Clipper::DeleteFromSEL(TEdge *e)
+ #ifdef use_xyz
+ void Clipper::SetZ(IntPoint& pt, TEdge& e1, TEdge& e2)
+ {
+-  if (pt.Z != 0 || !m_ZFill) return;
++  if (pt.Z || !m_ZFill) return;
+   else if (pt == e1.Bot) pt.Z = e1.Bot.Z;
+   else if (pt == e1.Top) pt.Z = e1.Top.Z;
+   else if (pt == e2.Bot) pt.Z = e2.Bot.Z;
+diff -up texlive-20240312-source/texk/dvisvgm/dvisvgm-src/src/Unicode.cpp.omv~ texlive-20240312-source/texk/dvisvgm/dvisvgm-src/src/Unicode.cpp
+--- texlive-20240312-source/texk/dvisvgm/dvisvgm-src/src/Unicode.cpp.omv~	2024-05-03 23:01:16.060543429 +0200
++++ texlive-20240312-source/texk/dvisvgm/dvisvgm-src/src/Unicode.cpp	2024-05-03 23:05:23.903200570 +0200
+@@ -182,7 +182,7 @@ uint32_t Unicode::toSurrogate (uint32_t
+ 
+ uint32_t Unicode::toLigature (const string &nonlig) {
+ 	struct Ligature {
+-		const char *nonlig;
++		const char8_t *nonlig;
+ 		uint32_t lig;
+ 	} ligatures[39] = {
+ 		{u8"AA",  0xA732}, {u8"aa", 0xA733},
+@@ -212,7 +212,7 @@ uint32_t Unicode::toLigature (const stri
+ 		{u8"VY",  0xA760}, {u8"tz",  0xA761},
+ 	};
+ 	auto it = find_if(begin(ligatures), end(ligatures), [&nonlig](const Ligature &l) {
+-		return l.nonlig == nonlig;
++		return reinterpret_cast<const char *>(l.nonlig) == nonlig;
+ 	});
+ 	return it != end(ligatures) ? it->lig : 0;
+ }
+diff -up texlive-20240312-source/texk/dvisvgm/dvisvgm-src/src/fonts/Base14Fonts.hpp.omv~ texlive-20240312-source/texk/dvisvgm/dvisvgm-src/src/fonts/Base14Fonts.hpp
+--- texlive-20240312-source/texk/dvisvgm/dvisvgm-src/src/fonts/Base14Fonts.hpp.omv~	2024-05-03 22:59:23.483343544 +0200
++++ texlive-20240312-source/texk/dvisvgm/dvisvgm-src/src/fonts/Base14Fonts.hpp	2024-05-03 22:59:48.155606044 +0200
+@@ -25,6 +25,7 @@
+ 
+ struct MemoryFontData {
+ 	MemoryFontData () =delete;
++	MemoryFontData(const char *d, size_t s):data(d),size(s) {}
+ 	const char *data;
+ 	size_t size;
+ };
+diff -up texlive-20240312-source/texk/dvisvgm/dvisvgm-src/src/fonts/Dingbats.cff.cpp.omv~ texlive-20240312-source/texk/dvisvgm/dvisvgm-src/src/fonts/Dingbats.cff.cpp
+diff -up texlive-20240312-source/texlive/.omv~ texlive-20240312-source/texlive/
