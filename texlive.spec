@@ -19,7 +19,7 @@
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20240312
-Release:	1
+Release:	2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -764,6 +764,7 @@ texlive lcdftypetools.bin package.
 %package -n texlive-luatex.bin
 Summary:	Binary files of luatex
 Group:		System/Libraries
+Provides:	%{_bindir}/texlua
 
 %description -n texlive-luatex.bin
 texlive luatex.bin package.
