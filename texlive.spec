@@ -23,7 +23,7 @@ Release:	6
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
-URL:		http://tug.org/texlive/
+URL:		https://tug.org/texlive/
 %if %{historic}
 Source0:	ftp://tug.org/historic/systems/texlive/%(echo %{version}|cut -b1-4)/texlive-%{version}-source.tar.xz
 %else
