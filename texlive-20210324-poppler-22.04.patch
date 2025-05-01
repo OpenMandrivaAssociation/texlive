@@ -1,24 +1,3 @@
-diff -up texlive-20220321-source/configure.10~ texlive-20220321-source/configure
---- texlive-20220321-source/configure.10~	2022-05-05 12:06:29.354158815 +0200
-+++ texlive-20220321-source/configure	2022-05-05 12:39:50.604425582 +0200
-@@ -23527,7 +23527,7 @@ printf %s "checking requested system \`x
- int
- main (void)
- {
--GfxFont *gfxFont; gfxFont->decRefCnt();
-+GfxFont *gfxFont; gfxFont->isOk();
-   ;
-   return 0;
- }
-diff -up texlive-20220321-source/libs/xpdf/ac/xpdf.ac.10~ texlive-20220321-source/libs/xpdf/ac/xpdf.ac
---- texlive-20220321-source/libs/xpdf/ac/xpdf.ac.10~	2020-05-14 19:47:47.000000000 +0200
-+++ texlive-20220321-source/libs/xpdf/ac/xpdf.ac	2022-05-05 12:06:29.355158821 +0200
-@@ -9,4 +9,4 @@ dnl
- ## TL sources)
- KPSE_TRY_LIBXX([xpdf],
-                [#include <GfxFont.h>],
--               [GfxFont *gfxFont; gfxFont->decRefCnt();])
-+               [GfxFont *gfxFont; gfxFont->isOk();])
 diff -up texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc.10~ texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc
 --- texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc.10~	2022-05-05 12:06:29.349158784 +0200
 +++ texlive-20220321-source/texk/web2c/pdftexdir/pdftoepdf.cc	2022-05-05 12:06:29.355158821 +0200

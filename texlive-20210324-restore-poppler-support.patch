@@ -1,7 +1,7 @@
-diff -up texlive-20240312-source/configure.5~ texlive-20240312-source/configure
---- texlive-20240312-source/configure.5~	2024-03-10 22:37:05.000000000 +0100
-+++ texlive-20240312-source/configure	2024-05-03 20:14:02.255050392 +0200
-@@ -24316,6 +24316,8 @@ ac_cpp='$CXXCPP $CPPFLAGS'
+diff -up texlive-20250308-source/configure.6~ texlive-20250308-source/configure
+--- texlive-20250308-source/configure.6~	2025-03-06 23:52:00.000000000 +0100
++++ texlive-20250308-source/configure	2025-04-22 14:24:31.746274460 +0200
+@@ -25902,6 +25902,8 @@ ac_cpp='$CXXCPP $CPPFLAGS'
  ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
  ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
  ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
@@ -10,9 +10,9 @@ diff -up texlive-20240312-source/configure.5~ texlive-20240312-source/configure
  if test "x$need_xpdf:$with_system_xpdf" = xyes:yes; then
    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking requested system \`xpdf' library" >&5
  printf %s "checking requested system \`xpdf' library... " >&6; }
-diff -up texlive-20240312-source/m4/kpse-xpdf-flags.m4.5~ texlive-20240312-source/m4/kpse-xpdf-flags.m4
---- texlive-20240312-source/m4/kpse-xpdf-flags.m4.5~	2020-05-14 19:47:47.000000000 +0200
-+++ texlive-20240312-source/m4/kpse-xpdf-flags.m4	2024-05-03 20:14:02.255050392 +0200
+diff -up texlive-20250308-source/m4/kpse-xpdf-flags.m4.6~ texlive-20250308-source/m4/kpse-xpdf-flags.m4
+--- texlive-20250308-source/m4/kpse-xpdf-flags.m4.6~	2020-05-14 19:47:47.000000000 +0200
++++ texlive-20250308-source/m4/kpse-xpdf-flags.m4	2025-04-22 14:24:31.746964993 +0200
 @@ -45,20 +45,17 @@ test "x$kpse_cv_have_win32" = xno || XPD
  # since it is used internally in the configure scripts.
  # --------------------------------
@@ -42,9 +42,9 @@ diff -up texlive-20240312-source/m4/kpse-xpdf-flags.m4.5~ texlive-20240312-sourc
 -dnl POPPLER_VERSION='-DPOPPLER_VERSION=\"'`$PKG_CONFIG poppler --modversion`'\"'
 -dnl XPDF_INCLUDES="$POPPLER_VERSION $XPDF_INCLUDES"
 -dnl ]) # KPSE_XPDF_SYSTEM_FLAGS
-diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc
---- texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~	2024-01-15 03:15:02.000000000 +0100
-+++ texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc	2024-05-03 20:14:02.259050440 +0200
+diff -up texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc.6~ texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc.6~	2024-08-04 23:32:59.000000000 +0200
++++ texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc	2025-04-22 14:31:28.653121166 +0200
 @@ -17,6 +17,15 @@ You should have received a copy of the G
  with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -82,7 +82,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
  #include <assert.h>
  
  #include "Object.h"
-@@ -75,31 +90,6 @@ extern integer zround(double);
+@@ -76,31 +91,6 @@ extern integer zround(double);
  #define MASK_SUPPRESS_PTEX_PAGENUMBER 0x04
  #define MASK_SUPPRESS_PTEX_INFODICT   0x08
  
@@ -114,7 +114,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
  // When copying the Resources of the selected page, all objects are copied
  // recusively top-down. Indirect objects however are not fetched during
  // copying, but get a new object number from pdfTeX and then will be
-@@ -130,7 +120,7 @@ struct UsedEncoding {
+@@ -131,7 +121,7 @@ struct UsedEncoding {
  
  static InObj *inObjList;
  static UsedEncoding *encodingList;
@@ -123,7 +123,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
  
  // --------------------------------------------------------------------
  // Maintain list of open embedded PDF files
-@@ -203,18 +193,6 @@ static void delete_document(PdfDocument
+@@ -204,18 +194,6 @@ static void delete_document(PdfDocument
      delete pdf_doc;
  }
  
@@ -142,7 +142,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
  // --------------------------------------------------------------------
  
  static int addEncoding(GfxFont * gfont)
-@@ -311,10 +289,10 @@ static void copyName(char *s)
+@@ -312,10 +290,10 @@ static void copyName(char *s)
  
  static void copyDictEntry(Object * obj, int i)
  {
@@ -156,7 +156,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
      copyObject(&obj1);
      pdf_puts("\n");
  }
-@@ -339,7 +317,7 @@ static void copyFontDict(Object * obj, I
+@@ -340,7 +318,7 @@ static void copyFontDict(Object * obj, I
      pdf_puts("<<\n");
      assert(r->type == objFont); // FontDescriptor is in fd_tree
      for (i = 0, l = obj->dictGetLength(); i < l; ++i) {
@@ -165,7 +165,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
          if (strncmp("FontDescriptor", key, strlen("FontDescriptor")) == 0
              || strncmp("BaseFont", key, strlen("BaseFont")) == 0
              || strncmp("Encoding", key, strlen("Encoding")) == 0)
-@@ -367,17 +345,17 @@ static void copyStream(Stream * str)
+@@ -368,17 +346,17 @@ static void copyStream(Stream * str)
  static void copyProcSet(Object * obj)
  {
      int i, l;
@@ -188,7 +188,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
          pdf_puts(" ");
      }
      pdf_puts("]\n");
-@@ -385,10 +363,29 @@ static void copyProcSet(Object * obj)
+@@ -386,10 +364,29 @@ static void copyProcSet(Object * obj)
  
  #define REPLACE_TYPE1C true
  
@@ -220,7 +220,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
      GfxFont *gfont;
      fd_entry *fd;
      fm_entry *fontmap;
-@@ -404,33 +401,39 @@ static void copyFont(char *tag, Object *
+@@ -405,33 +402,39 @@ static void copyFont(char *tag, Object *
      }
      // Only handle included Type1 (and Type1C) fonts; anything else will be copied.
      // Type1C fonts are replaced by Type1 fonts, if REPLACE_TYPE1C is true.
@@ -280,7 +280,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
          pdf_printf(" %d 0 R ", addFont(fontRef->getRef(), fd,
                                         addEncoding(gfont)));
      } else {
-@@ -442,24 +445,24 @@ static void copyFont(char *tag, Object *
+@@ -443,24 +446,24 @@ static void copyFont(char *tag, Object *
  
  static void copyFontResources(Object * obj)
  {
@@ -312,7 +312,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
      }
      pdf_puts(">>\n");
  }
-@@ -548,7 +551,7 @@ static char *convertNumToPDF(double n)
+@@ -549,7 +552,7 @@ static char *convertNumToPDF(double n)
  
  static void copyObject(Object * obj)
  {
@@ -321,7 +321,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
      int i, l, c;
      Ref ref;
      char *p;
-@@ -562,8 +565,8 @@ static void copyObject(Object * obj)
+@@ -563,8 +566,8 @@ static void copyObject(Object * obj)
      } else if (obj->isNum()) {
          pdf_printf("%s", convertNumToPDF(obj->getNum()));
      } else if (obj->isString()) {
@@ -332,7 +332,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
          l = s->getLength();
          if (strlen(p) == (unsigned int) l) {
              pdf_puts("(");
-@@ -586,14 +589,14 @@ static void copyObject(Object * obj)
+@@ -587,14 +590,14 @@ static void copyObject(Object * obj)
              pdf_puts(">");
          }
      } else if (obj->isName()) {
@@ -350,7 +350,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
                  pdf_puts(" ");
              copyObject(&obj1);
          }
-@@ -603,9 +606,8 @@ static void copyObject(Object * obj)
+@@ -604,9 +607,8 @@ static void copyObject(Object * obj)
          copyDict(obj);
          pdf_puts(">>");
      } else if (obj->isStream()) {
@@ -361,7 +361,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
          pdf_puts(">>\n");
          pdf_puts("stream\n");
          copyStream(obj->getStream()->getUndecodedStream());
-@@ -629,9 +631,8 @@ static void writeRefs()
+@@ -630,9 +632,8 @@ static void writeRefs()
      InObj *r;
      for (r = inObjList; r != 0; r = r->next) {
          if (!r->written) {
@@ -372,7 +372,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
              if (r->type == objFont) {
                  assert(!obj1.isStream());
                  pdfbeginobj(r->num, 2);         // \pdfobjcompresslevel = 2 is for this
-@@ -647,7 +648,6 @@ static void writeRefs()
+@@ -648,7 +649,6 @@ static void writeRefs()
                  pdf_puts("\n");
                  pdfendobj();
              }
@@ -380,7 +380,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
          }
      }
  }
-@@ -664,7 +664,7 @@ static void writeEncodings()
+@@ -665,7 +665,7 @@ static void writeEncodings()
                      ("PDF inclusion: CID fonts are not supported"
                       " (try to disable font replacement to fix this)");
              }
@@ -389,7 +389,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
                  glyphNames[i] = s;
              else
                  glyphNames[i] = notdef;
-@@ -673,13 +673,17 @@ static void writeEncodings()
+@@ -674,13 +674,17 @@ static void writeEncodings()
      }
      for (r = encodingList; r != 0; r = n) {
          n = r->next;
@@ -409,7 +409,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
  {
      if (pagebox_spec == pdfboxspecmedia)
          return page->getMediaBox();
-@@ -711,13 +715,17 @@ read_pdf_info(char *image_name, char *pa
+@@ -712,13 +716,17 @@ read_pdf_info(char *image_name, char *pa
  {
      PdfDocument *pdf_doc;
      Page *page;
@@ -432,7 +432,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
      }
      // open PDF file
      pdf_doc = find_add_document(image_name);
-@@ -727,32 +735,36 @@ read_pdf_info(char *image_name, char *pa
+@@ -728,32 +736,36 @@ read_pdf_info(char *image_name, char *pa
      // this works only for PDF 1.x -- but since any versions of PDF newer
      // than 1.x will not be backwards compatible to PDF 1.x, pdfTeX will
      // then have to changed drastically anyway.
@@ -479,7 +479,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
      } else {
          // get page by number
          if (page_num <= 0 || page_num > epdf_num_pages)
-@@ -805,8 +817,8 @@ void write_epdf(void)
+@@ -806,8 +818,8 @@ void write_epdf(void)
      Page *page;
      Ref *pageRef;
      Dict *pageDict;
@@ -490,7 +490,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
      bool writeSepGroup = false;
      Object info;
      char *key;
-@@ -833,10 +845,10 @@ void write_epdf(void)
+@@ -835,10 +847,10 @@ void write_epdf(void)
      encodingList = 0;
      page = pdf_doc->doc->getCatalog()->getPage(epdf_selected_page);
      pageRef = pdf_doc->doc->getCatalog()->getPageRef(epdf_selected_page);
@@ -504,16 +504,16 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
      // write the Page header
      pdf_puts("/Type /XObject\n");
      pdf_puts("/Subtype /Form\n");
-@@ -852,7 +864,7 @@ void write_epdf(void)
-         pdf_printf("/%s.PageNumber %i\n", pdfkeyprefix, (int) epdf_selected_page);
+@@ -854,7 +866,7 @@ void write_epdf(void)
+         pdf_printf("/%s%sPageNumber %i\n", pdfkeyprefix, sep, (int) epdf_selected_page);
      }
      if ((suppress_ptex_info & MASK_SUPPRESS_PTEX_INFODICT) == 0) {
 -        pdf_doc->doc->getDocInfoNF(&info);
-+        info = pdf_doc->doc->getDocInfoNF().copy();
++	info = pdf_doc->doc->getDocInfoNF().copy();
          if (info.isRef()) {
              // the info dict must be indirect (PDF Ref p. 61)
-             pdf_printf("/%s.InfoDict ", pdfkeyprefix);
-@@ -908,14 +920,14 @@ void write_epdf(void)
+             pdf_printf("/%s%sInfoDict ", pdfkeyprefix, sep);
+@@ -910,14 +922,14 @@ void write_epdf(void)
      pdf_puts(stripzeros(s));
  
      // Metadata validity check (as a stream it must be indirect)
@@ -532,7 +532,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
              pdf_newline();
              pdf_printf("/%s ", pageDictKeys[i]);
              copyObject(&dictObj); // preserves indirection
-@@ -923,8 +935,8 @@ void write_epdf(void)
+@@ -925,8 +937,8 @@ void write_epdf(void)
      } 
  
      // handle page group
@@ -543,7 +543,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
          if (pdfpagegroupval == 0) { 
              // another pdf with page group was included earlier on the
              // same page; copy the Group entry as is.  See manual for
-@@ -938,11 +950,36 @@ void write_epdf(void)
+@@ -940,11 +952,36 @@ void write_epdf(void)
              copyObject(&dictObj);
          } else {
              // write Group dict as a separate object, since the Page dict also refers to it
@@ -583,7 +583,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
              pdf_printf("/Group %ld 0 R\n", (long)pdfpagegroupval);
          }
      }
-@@ -955,28 +992,28 @@ void write_epdf(void)
+@@ -957,28 +994,28 @@ void write_epdf(void)
          pdftex_warn
              ("PDF inclusion: /Resources missing. 'This practice is not recommended' (PDF Ref)");
      } else {
@@ -618,7 +618,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
  
          // Variant A: get stream and recompress under control
          // of \pdfcompresslevel
-@@ -987,36 +1024,35 @@ void write_epdf(void)
+@@ -989,36 +1026,35 @@ void write_epdf(void)
  
          // Variant B: copy stream without recompressing
          //
@@ -668,7 +668,7 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
              if (i < l - 1)
                  pdf_newline();  // add a newline after each stream except the last
          }
-@@ -1070,7 +1106,5 @@ void epdf_check_mem()
+@@ -1072,7 +1108,5 @@ void epdf_check_mem()
              n = p->next;
              delete_document(p);
          }
@@ -676,9 +676,9 @@ diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftoepdf.cc.5~ texlive-20
 -        delete globalParams;
      }
  }
-diff -up texlive-20240312-source/texk/web2c/pdftexdir/pdftosrc.cc.5~ texlive-20240312-source/texk/web2c/pdftexdir/pdftosrc.cc
---- texlive-20240312-source/texk/web2c/pdftexdir/pdftosrc.cc.5~	2020-05-14 23:45:48.000000000 +0200
-+++ texlive-20240312-source/texk/web2c/pdftexdir/pdftosrc.cc	2024-05-03 20:14:02.259050440 +0200
+diff -up texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc.6~ texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc
+--- texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc.6~	2020-05-14 23:45:48.000000000 +0200
++++ texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc	2025-04-22 14:24:31.747287862 +0200
 @@ -16,6 +16,14 @@ GNU General Public License for more deta
  You should have received a copy of the GNU General Public License along
  with this program.  If not, see <http://www.gnu.org/licenses/>.

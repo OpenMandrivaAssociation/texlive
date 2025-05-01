@@ -18,8 +18,8 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20240312
-Release:	10
+Version:	20250308
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -1302,10 +1302,25 @@ Extra tools for texlive
 %files extras
 %{_bindir}/edtx2dtx
 %{_bindir}/eolang
-%{_bindir}/memoize-clean
-%{_bindir}/memoize-extract
 %{_bindir}/ptekf
 %{_bindir}/texblend
+%{_bindir}/aom-fullref
+%{_bindir}/bookshelf-listallfonts
+%{_bindir}/bookshelf-mkfontsel
+%{_bindir}/datatool2bib
+%{_bindir}/explcheck
+%{_bindir}/l3sys-query
+%{_bindir}/latexminted
+%{_bindir}/markdown2tex
+%{_bindir}/memoize-clean.pl
+%{_bindir}/memoize-clean.py
+%{_bindir}/memoize-extract.pl
+%{_bindir}/memoize-extract.py
+%{_bindir}/ppmcheckpdf
+%{_bindir}/sqltex
+%{_bindir}/texprof
+%{_bindir}/texprofile
+%{_bindir}/typog-grep
 
 #-----------------------------------------------------------------------
 %prep
