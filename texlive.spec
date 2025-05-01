@@ -129,6 +129,7 @@ Patch10:	texlive-20210324-poppler-22.04.patch
 Patch11:	texlive-20220321-poppler-22.09.patch
 Patch13:	texlive-20220321-fix-m4-syntax-errors.patch
 Patch14:	texlive-20220321-ghostscript-10.patch
+Patch15:	https://github.com/objectionary/eolang.sty/pull/106/commits/2c3bf97dd85e1748b2028ffa056a75c0d9432f88.patch
 # LFS sometimes (not yet for 2023) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
