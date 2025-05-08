@@ -1,0 +1,43 @@
+diff -up texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~	2025-05-06 19:39:45.397906152 +0200
++++ texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc	2025-05-06 19:40:25.541802646 +0200
+@@ -402,7 +402,7 @@ static void copyFont(char *tag, Object *
+     // Only handle included Type1 (and Type1C) fonts; anything else will be copied.
+     // Type1C fonts are replaced by Type1 fonts, if REPLACE_TYPE1C is true.
+     fontdict = fontRef->fetch(xref);
+-    fontdesc = Object(objNull);
++    fontdesc = Object::null();
+     if (fontdict.isDict()) {
+         subtype = fontdict.dictLookup("Subtype");
+         basefont = fontdict.dictLookup("BaseFont");
+diff -up texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc.omv~ texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc
+--- texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc.omv~	2025-05-06 19:41:19.855597276 +0200
++++ texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc	2025-05-06 19:51:50.643117132 +0200
+@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
+         fprintf(stderr, "No Catalog found\n");
+         exit(1);
+     }
+-    srcStream = Object(objNull);
++    srcStream = Object::null();
+     if (objnum == 0) {
+         srcStream = catalogDict.dictLookup("SourceObject");
+         static const char *const_SourceFile = "SourceFile";
+@@ -153,7 +153,6 @@ int main(int argc, char *argv[])
+                         (long unsigned) e->offset, e->gen,
+                         (e->type == xrefEntryFree ? "f" : "n"));
+             else {              // e->offset is the object number of the object stream
+-                Stream *str;
+                 Lexer *lexer;
+                 Parser *parser;
+                 Object objStr, obj1, obj2;
+@@ -171,8 +170,8 @@ int main(int argc, char *argv[])
+ 
+                 // parse the header: object numbers and offsets
+                 objStr.streamReset();
+-                str = new EmbedStream(objStr.getStream(), Object(objNull), true, first);
+-                parser = new Parser(xref, str, false);
++		std::unique_ptr<Stream> str = std::unique_ptr<Stream>(new EmbedStream(objStr.getStream(), Object::null(), true, first));
++                parser = new Parser(xref, std::move(str), false);
+                 for (n = 0; n < nObjects; ++n) {
+                     obj1 = parser->getObj();
+                     obj2 = parser->getObj();
