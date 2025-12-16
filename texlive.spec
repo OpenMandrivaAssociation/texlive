@@ -114,6 +114,7 @@ BuildRequires:	libpaper-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	slibtool
+BuildRequires:	make
 
 #-----------------------------------------------------------------------
 Patch1:		texlive-asymptote.patch
