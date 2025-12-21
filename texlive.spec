@@ -53,6 +53,7 @@ Requires:	texlive-collection-latexextra
 Requires:	texlive-latex.bin
 # Make sure the triggers are there
 Requires(pre,post):	texlive-tlpkg
+BuildRequires:	libtool-base
 BuildRequires:	texlive-tlpkg
 
 #-----------------------------------------------------------------------
