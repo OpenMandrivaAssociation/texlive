@@ -1,0 +1,33 @@
+diff -up texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~	2026-02-06 23:41:01.125731532 +0100
++++ texlive-20250308-source/texk/web2c/pdftexdir/pdftoepdf.cc	2026-02-06 23:52:23.250081533 +0100
+@@ -335,7 +335,7 @@ static void copyFontDict(Object * obj, I
+ static void copyStream(Stream * str)
+ {
+     int c, c2 = 0;
+-    str->reset();
++    str->setPos(0);
+     while ((c = str->getChar()) != EOF) {
+         pdfout(c);
+         c2 = c;
+diff -up texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc.omv~ texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc
+--- texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc.omv~	2026-02-06 23:47:18.446576707 +0100
++++ texlive-20250308-source/texk/web2c/pdftexdir/pdftosrc.cc	2026-02-06 23:54:18.736731959 +0100
+@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
+                 firstOffset = objStr.getStream()->getBaseStream()->getStart() + first;
+ 
+                 // parse the header: object numbers and offsets
+-                objStr.streamReset();
++                objStr.getStream()->setPos(0);
+ 		std::unique_ptr<Stream> str = std::unique_ptr<Stream>(new EmbedStream(objStr.getStream(), Object::null(), true, first));
+                 parser = new Parser(xref, std::move(str), false);
+                 for (n = 0; n < nObjects; ++n) {
+@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
+         }
+     } else {
+         s = srcStream.getStream();
+-        s->reset();
++        s->setPos(0);
+         while ((c = s->getChar()) != EOF)
+             fputc(c, outfile);
+     }
