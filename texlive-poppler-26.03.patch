@@ -1,0 +1,12 @@
+diff -up texlive-20260301-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~ texlive-20260301-source/texk/web2c/pdftexdir/pdftoepdf.cc
+--- texlive-20260301-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~	2026-03-07 21:50:23.168401178 +0100
++++ texlive-20260301-source/texk/web2c/pdftexdir/pdftoepdf.cc	2026-03-07 21:50:58.663427252 +0100
+@@ -433,7 +433,7 @@ static void copyFont(char *tag, Object *
+         addFontDesc(fontdescRef.getRef(), fd);
+         copyName(tag);
+         auto gfont = GfxFont::makeFont(xref, tag, fontRef->getRef(),
+-                                  fontdict.getDict());
++                                  *fontdict.getDict());
+         pdf_printf(" %d 0 R ", addFont(fontRef->getRef(), fd,
+                                        addEncoding(gfont)));
+     } else {
