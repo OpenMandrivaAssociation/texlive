@@ -18,8 +18,8 @@
 
 #-----------------------------------------------------------------------
 Name:		texlive
-Version:	20250308
-Release:	11
+Version:	20260301
+Release:	1
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -53,7 +53,7 @@ Requires:	texlive-collection-latexextra
 Requires:	texlive-latex.bin
 # Make sure the triggers are there
 Requires(pre,post):	texlive-tlpkg
-BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	texlive-tlpkg
 
 #-----------------------------------------------------------------------
@@ -132,7 +132,6 @@ Patch11:	texlive-20220321-poppler-22.09.patch
 Patch12:	texlive-20250506-poppler-25.05.patch
 Patch13:	texlive-20220321-fix-m4-syntax-errors.patch
 Patch14:	texlive-20220321-ghostscript-10.patch
-Patch15:	https://github.com/objectionary/eolang.sty/pull/106/commits/2c3bf97dd85e1748b2028ffa056a75c0d9432f88.patch
 patch16:	texlive-2025-poppler-25.11.patch
 Patch17:	texlive-2025-poppler-26.02.patch
 # LFS sometimes (not yet for 2023) has useful patches at
@@ -636,6 +635,7 @@ texlive kpathsea.bin package.
 %{_bindir}/mktexpk
 %{_bindir}/mktextfm
 %{_bindir}/texhash
+%{_bindir}/runtexfile
 %{_bindir}/runtexshebang
 %{_bindir}/texfindpkg
 
@@ -664,6 +664,7 @@ texlive latex.bin package.
 %{_bindir}/latex
 %{_bindir}/lualatex
 %{_bindir}/pdflatex
+%{_bindir}/show-pdf-tags
 %{_bindir}/ltx2crossrefxml
 %{_bindir}/ltx2unitxt
 %{_bindir}/git-latexdiff
@@ -1006,7 +1007,6 @@ texlive ptex.bin package.
 %{_bindir}/pdvitype
 %{_bindir}/platex
 %{_bindir}/ppltotf
-%{_bindir}/ptex
 %{_bindir}/ptftopl
 
 #-----------------------------------------------------------------------
@@ -1168,6 +1168,7 @@ texlive xdvi.bin package.
 
 %files -n texlive-xdvi.bin
 %{_bindir}/xdvi
+%{_bindir}/xdvipsk
 %{_bindir}/xdvi-xaw
 %{_datadir}/applications/xdvi.desktop
 %endif
