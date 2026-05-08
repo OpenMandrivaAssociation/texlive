@@ -135,6 +135,7 @@ Patch14:	texlive-20220321-ghostscript-10.patch
 patch16:	texlive-2025-poppler-25.11.patch
 Patch17:	texlive-2025-poppler-26.02.patch
 Patch18:	texlive-poppler-26.03.patch
+Patch19:	texlive-poppler-26.05.patch
 # LFS sometimes (not yet for 2023) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------
