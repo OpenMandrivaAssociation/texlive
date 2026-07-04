@@ -80,7 +80,7 @@ BuildRequires:	gd-devel
 BuildRequires:	icu-devel >= 49
 %endif
 %if %{_texmf_with_system_poppler}
-BuildRequires:	pkgconfig(poppler) >= 22.04.0
+BuildRequires:	pkgconfig(poppler) >= 26.06.0
 %endif
 BuildRequires:	ghostscript-devel
 BuildRequires:	glibc-static-devel stdc++-static-devel
@@ -136,6 +136,7 @@ patch16:	texlive-2025-poppler-25.11.patch
 Patch17:	texlive-2025-poppler-26.02.patch
 Patch18:	texlive-poppler-26.03.patch
 Patch19:	texlive-poppler-26.05.patch
+Patch20:	texlive-poppler-26.07.patch
 # LFS sometimes (not yet for 2023) has useful patches at
 # http://www.linuxfromscratch.org/patches/blfs/svn
 #-----------------------------------------------------------------------

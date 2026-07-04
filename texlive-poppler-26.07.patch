@@ -1,0 +1,297 @@
+--- texlive-20260301-source/texk/web2c/pdftexdir/pdftoepdf.cc.omv~
++++ texlive-20260301-source/texk/web2c/pdftexdir/pdftoepdf.cc
+@@ -291,9 +291,10 @@
+ static void copyDictEntry(Object * obj, int i)
+ {
+     Object obj1;
+-    copyName((char *)obj->dictGetKey(i));
++    const Dict *dict = obj->getDict();
++    copyName((char *)dict->getKey(i).c_str());
+     pdf_puts(" ");
+-    obj1 = obj->dictGetValNF(i).copy();
++    obj1 = dict->getValNF(i).copy();
+     copyObject(&obj1);
+     pdf_puts("\n");
+ }
+@@ -311,14 +312,15 @@
+ static void copyFontDict(Object * obj, InObj * r)
+ {
+     int i, l;
+-    char *key;
++    const char *key;
+     if (!obj->isDict())
+         pdftex_fail("PDF inclusion: invalid dict type <%s>",
+                     obj->getTypeName());
+     pdf_puts("<<\n");
+     assert(r->type == objFont); // FontDescriptor is in fd_tree
+-    for (i = 0, l = obj->dictGetLength(); i < l; ++i) {
+-        key = (char *)obj->dictGetKey(i);
++    const Dict *dict = obj->getDict();
++    for (i = 0, l = dict->getLength(); i < l; ++i) {
++        key = dict->getKey(i).c_str();
+         if (strncmp("FontDescriptor", key, strlen("FontDescriptor")) == 0
+             || strncmp("BaseFont", key, strlen("BaseFont")) == 0
+             || strncmp("Encoding", key, strlen("Encoding")) == 0)
+@@ -351,8 +353,9 @@
+         pdftex_fail("PDF inclusion: invalid ProcSet array type <%s>",
+                     obj->getTypeName());
+     pdf_puts("/ProcSet [ ");
+-    for (i = 0, l = obj->arrayGetLength(); i < l; ++i) {
+-        procset = obj->arrayGetNF(i).copy();
++    const Array *array = obj->getArray();
++    for (i = 0, l = array->getLength(); i < l; ++i) {
++        procset = array->getNF(i).copy();
+         if (!procset.isName())
+             pdftex_fail("PDF inclusion: invalid ProcSet entry type <%s>",
+                         procset.getTypeName());
+@@ -377,7 +380,7 @@
+         fontfile = fontdesc->dictLookup("FontFile3");
+         if (!fontfile.isStream())
+             return false;
+-        ffsubtype = fontfile.streamGetDict()->lookup("Subtype");
++        ffsubtype = fontfile.getStream()->getDict()->lookup("Subtype");
+         return ffsubtype.isName() && !strcmp(ffsubtype.getName(), "Type1C");
+     }
+     return false;
+@@ -451,12 +454,13 @@
+         pdftex_fail("PDF inclusion: invalid font resources dict type <%s>",
+                     obj->getTypeName());
+     pdf_puts("/Font << ");
+-    for (i = 0, l = obj->dictGetLength(); i < l; ++i) {
+-        fontRef = obj->dictGetValNF(i).copy();
++    const Dict *dict = obj->getDict();
++    for (i = 0, l = dict->getLength(); i < l; ++i) {
++        fontRef = dict->getValNF(i).copy();
+         if (fontRef.isRef())
+-            copyFont((char *)obj->dictGetKey(i), &fontRef);
++            copyFont((char *)dict->getKey(i).c_str(), &fontRef);
+         else if (fontRef.isDict()) {   // some programs generate pdf with embedded font object
+-            copyName((char *)obj->dictGetKey(i));
++            copyName((char *)dict->getKey(i).c_str());
+             pdf_puts(" ");
+             copyObject(&fontRef);
+         }
+@@ -467,7 +471,7 @@
+     pdf_puts(">>\n");
+ }
+ 
+-static void copyOtherResources(Object * obj, char *key)
++static void copyOtherResources(Object * obj, const char *key)
+ {
+     // copies all other resources (write_epdf handles Fonts and ProcSets),
+ 
+@@ -486,7 +490,7 @@
+                     key, obj->getTypeName());
+         return;
+     }
+-    copyName(key);
++    copyName((char *)key);
+     pdf_puts(" ");
+     copyObject(obj);
+ }
+@@ -594,8 +598,9 @@
+         pdf_puts("null");
+     } else if (obj->isArray()) {
+         pdf_puts("[");
+-        for (i = 0, l = obj->arrayGetLength(); i < l; ++i) {
+-            obj1 = obj->arrayGetNF(i).copy();
++        const Array *array = obj->getArray();
++        for (i = 0, l = array->getLength(); i < l; ++i) {
++            obj1 = array->getNF(i).copy();
+             if (!obj1.isName())
+                 pdf_puts(" ");
+             copyObject(&obj1);
+@@ -678,7 +683,7 @@
+ }
+ 
+ // get the pagebox according to the pagebox_spec
+-static const PDFRectangle *get_pagebox(Page * page, int pagebox_spec)
++static const PDFRectangle &get_pagebox(Page * page, int pagebox_spec)
+ {
+     if (pagebox_spec == pdfboxspecmedia)
+         return page->getMediaBox();
+@@ -710,7 +715,6 @@
+ {
+     PdfDocument *pdf_doc;
+     Page *page;
+-    const PDFRectangle *pagebox;
+ #ifdef POPPLER_VERSION
+     int pdf_major_version_found, pdf_minor_version_found;
+ #else
+@@ -770,20 +774,20 @@
+     page = pdf_doc->doc->getCatalog()->getPage(page_num);
+ 
+     // get the pagebox (media, crop...) to use.
+-    pagebox = get_pagebox(page, pagebox_spec);
+-    if (pagebox->x2 > pagebox->x1) {
+-        epdf_orig_x = pagebox->x1;
+-        epdf_width = pagebox->x2 - pagebox->x1;
++    const PDFRectangle &pagebox = get_pagebox(page, pagebox_spec);
++    if (pagebox.x2 > pagebox.x1) {
++        epdf_orig_x = pagebox.x1;
++        epdf_width = pagebox.x2 - pagebox.x1;
+     } else {
+-        epdf_orig_x = pagebox->x2;
+-        epdf_width = pagebox->x1 - pagebox->x2;
++        epdf_orig_x = pagebox.x2;
++        epdf_width = pagebox.x1 - pagebox.x2;
+     }
+-    if (pagebox->y2 > pagebox->y1) {
+-        epdf_orig_y = pagebox->y1;
+-        epdf_height = pagebox->y2 - pagebox->y1;
++    if (pagebox.y2 > pagebox.y1) {
++        epdf_orig_y = pagebox.y1;
++        epdf_height = pagebox.y2 - pagebox.y1;
+     } else {
+-        epdf_orig_y = pagebox->y2;
+-        epdf_height = pagebox->y1 - pagebox->y2;
++        epdf_orig_y = pagebox.y2;
++        epdf_height = pagebox.y1 - pagebox.y2;
+     }
+ 
+     // get page rotation
+@@ -816,7 +820,7 @@
+     Object groupDict;
+     bool writeSepGroup = false;
+     Object info;
+-    char *key;
++    const char *key;
+     char s[256];
+     int i, l;
+     int rotate;
+@@ -844,7 +848,6 @@
+     pageObj = xref->fetch(pageRef->num, pageRef->gen);
+     pageDict = pageObj.getDict();
+     rotate = page->getRotate();
+-    const PDFRectangle *pagebox;
+     // write the Page header
+     pdf_puts("/Type /XObject\n");
+     pdf_puts("/Subtype /Form\n");
+@@ -868,7 +871,7 @@
+         }
+     }
+     // get the pagebox (media, crop...) to use.
+-    pagebox = get_pagebox(page, epdf_page_box);
++    const PDFRectangle &pagebox = get_pagebox(page, epdf_page_box);
+ 
+     // handle page rotation
+     if (rotate != 0) {
+@@ -884,21 +887,21 @@
+             case 90:
+                 scale[1] = -1;
+                 scale[2] = 1;
+-                scale[4] = pagebox->x1 - pagebox->y1;
+-                scale[5] = pagebox->y1 + pagebox->x2;
++                scale[4] = pagebox.x1 - pagebox.y1;
++                scale[5] = pagebox.y1 + pagebox.x2;
+                 writematrix = true;
+                 break;
+             case 180:
+                 scale[0] = scale[3] = -1;
+-                scale[4] = pagebox->x1 + pagebox->x2;
+-                scale[5] = pagebox->y1 + pagebox->y2;
++                scale[4] = pagebox.x1 + pagebox.x2;
++                scale[5] = pagebox.y1 + pagebox.y2;
+                 writematrix = true;
+                 break;          // width and height are exchanged
+             case 270:
+                 scale[1] = 1;
+                 scale[2] = -1;
+-                scale[4] = pagebox->x1 + pagebox->y2;
+-                scale[5] = pagebox->y1 - pagebox->x1;
++                scale[4] = pagebox.x1 + pagebox.y2;
++                scale[5] = pagebox.y1 - pagebox.x1;
+                 writematrix = true;
+                 break;
+             }
+@@ -912,7 +915,7 @@
+     }
+ 
+     sprintf(s, "/BBox [%.8f %.8f %.8f %.8f]\n",
+-            pagebox->x1, pagebox->y1, pagebox->x2, pagebox->y2);
++            pagebox.x1, pagebox.y1, pagebox.x2, pagebox.y2);
+     pdf_puts(stripzeros(s));
+ 
+     // Metadata validity check (as a stream it must be indirect)
+@@ -972,7 +975,7 @@
+             }
+             l = dic1.getLength();
+             for (i = 0; i < l; i++) {
+-                groupDict.dictAdd((const char *)copyString(dic1.getKey(i)),
++                groupDict.dictAdd(dic1.getKey(i),
+                                   dic1.getValNF(i).copy());
+             }
+ // end modification
+@@ -994,15 +997,16 @@
+                         obj1->getTypeName());
+         pdf_newline();
+         pdf_puts("/Resources <<\n");
+-        for (i = 0, l = obj1->dictGetLength(); i < l; ++i) {
+-            obj2 = obj1->dictGetVal(i);
+-            key = (char *)obj1->dictGetKey(i);
++        const Dict *resDict = obj1->getDict();
++        for (i = 0, l = resDict->getLength(); i < l; ++i) {
++            obj2 = resDict->getVal(i);
++            key = resDict->getKey(i).c_str();
+             if (strcmp("Font", key) == 0)
+                 copyFontResources(&obj2);
+             else if (strcmp("ProcSet", key) == 0)
+                 copyProcSet(&obj2);
+             else
+-                copyOtherResources(&obj2, (char *)key);
++                copyOtherResources(&obj2, key);
+         }
+         pdf_puts(">>\n");
+     }
+@@ -1020,21 +1024,22 @@
+ 
+         // Variant B: copy stream without recompressing
+         //
+-        obj1 = contents.streamGetDict()->lookup("F");
++        const Dict *contentsDict = contents.getStream()->getDict();
++        obj1 = contentsDict->lookup("F");
+         if (!obj1.isNull()) {
+             pdftex_fail("PDF inclusion: Unsupported external stream");
+         }
+-        obj1 = contents.streamGetDict()->lookup("Length");
++        obj1 = contentsDict->lookup("Length");
+         assert(!obj1.isNull());
+         pdf_puts("/Length ");
+         copyObject(&obj1);
+         pdf_puts("\n");
+-        obj1 = contents.streamGetDict()->lookup("Filter");
++        obj1 = contentsDict->lookup("Filter");
+         if (!obj1.isNull()) {
+             pdf_puts("/Filter ");
+             copyObject(&obj1);
+             pdf_puts("\n");
+-            obj1 = contents.streamGetDict()->lookup("DecodeParms");
++            obj1 = contentsDict->lookup("DecodeParms");
+             if (!obj1.isNull()) {
+                 pdf_puts("/DecodeParms ");
+                 copyObject(&obj1);
+--- texlive-20260301-source/texk/web2c/pdftexdir/pdftosrc.cc.omv~
++++ texlive-20260301-source/texk/web2c/pdftexdir/pdftosrc.cc
+@@ -98,7 +98,8 @@
+     if (objnum == 0) {
+         srcStream = catalogDict.dictLookup("SourceObject");
+         static const char *const_SourceFile = "SourceFile";
+-        if (!srcStream.isDict(const_SourceFile)) {
++        if (!srcStream.isStream() ||
++            !srcStream.getStream()->getDict()->is(const_SourceFile)) {
+             fprintf(stderr, "No SourceObject found\n");
+             exit(1);
+         }
+@@ -160,9 +161,10 @@
+ 
+                 objStr = xref->fetch(e->offset, 0);
+                 assert(objStr.isStream());
+-                obj1 = objStr.streamGetDict()->lookup("N");
++                const Dict *objStrDict = objStr.getStream()->getDict();
++                obj1 = objStrDict->lookup("N");
+                 nObjects = obj1.getInt();
+-                obj1 = objStr.streamGetDict()->lookup("First");
++                obj1 = objStrDict->lookup("First");
+                 first = obj1.getInt();
+                 firstOffset = objStr.getStream()->getBaseStream()->getStart() + first;
+ 
