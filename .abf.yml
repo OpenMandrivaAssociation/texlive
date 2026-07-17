@@ -1,2 +1,3 @@
 sources:
   texlive-20260301-source.tar.xz: e4c322ce771f80d03423bfc2bb8c6d00e98652e3
+  texlive.rpmlintrc: 94d3a50fa92a050f019a7dffcbb2f1018418094f
