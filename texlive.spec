@@ -61,10 +61,16 @@ Requires:	tkinter
 Requires:	teckit >= 0:2.5.3-1
 %endif
 
-Requires:	texlive-collection-latexextra
+# Engines + wrappers from this SRPM. Do NOT hard-require huge collections:
+# collections pull texlive(name) for hundreds of modules, many of which are
+# not yet published with that Provide (install becomes unsatisfiable).
 Requires:	texlive-latex.bin
 # Make sure the triggers are there
 Requires(pre,post):	texlive-tlpkg
+# Full document stack — soft until leaf modules are published with texlive(*)
+Recommends:	texlive-collection-basic
+Recommends:	texlive-collection-latex
+Recommends:	texlive-collection-latexextra
 BuildRequires:	slibtool
 BuildRequires:	texlive-tlpkg
 
