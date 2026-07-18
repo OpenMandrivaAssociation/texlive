@@ -16,13 +16,22 @@
 %define enable_shared 1
 %define historic 1
 
-# From texlive-tlpkg macros; fallback if macros not loaded yet in parse
+# Path layout (same as texlive-tlpkg macros.texlive). Define locally so
+# %files/%install expand even if macros.texlive is not yet in the chroot.
 %{!?_tlpkgdir:%global _tlpkgdir %{_datadir}/tlpkg}
+%{!?_texmfdir:%global _texmfdir %{_datadir}/texmf}
+%{!?_texmfdistdir:%global _texmfdistdir %{_datadir}/texmf-dist}
+%{!?_texmflocaldir:%global _texmflocaldir %{_datadir}/texmf-local}
+%{!?_texmfextradir:%global _texmfextradir %{_datadir}/texmf-extra}
+%{!?_texmffontsdir:%global _texmffontsdir %{_datadir}/texmf-fonts}
+%{!?_texmfprojectdir:%global _texmfprojectdir %{_datadir}/texmf-project}
+%{!?_texmfvardir:%global _texmfvardir %{_localstatedir}/lib/texmf}
+%{!?_texmfconfdir:%global _texmfconfdir %{_sysconfdir}/texmf}
 
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	20260301
-Release:	7
+Release:	8
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
